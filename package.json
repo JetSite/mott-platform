@@ -1,0 +1,33 @@
+{
+  "name": "@mott/root",
+  "private": true,
+  "engines": {
+    "node": ">=20.16.0"
+  },
+  "packageManager": "pnpm@9.11.0",
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo run clean",
+    "db:push": "turbo -F @mott/db push",
+    "db:studio": "turbo -F @mott/db studio",
+    "dev": "turbo watch dev --continue",
+    "dev:next": "turbo watch dev -F @mott/nextjs...",
+    "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
+    "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
+    "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
+    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
+    "lint:ws": "pnpm dlx sherif@latest",
+    "postinstall": "pnpm lint:ws",
+    "typecheck": "turbo run typecheck",
+    "ui-add": "turbo run ui-add"
+  },
+  "devDependencies": {
+    "@mott/prettier-config": "workspace:*",
+    "@turbo/gen": "^2.1.2",
+    "prettier": "catalog:",
+    "turbo": "^2.1.2",
+    "typescript": "catalog:"
+  },
+  "prettier": "@mott/prettier-config"
+}
