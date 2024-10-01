@@ -1,6 +1,7 @@
 "use client";
 
 import type { RouterOutputs } from "@mott/api";
+
 import { CreatePostSchema } from "@mott/db/schema";
 import { cn } from "@mott/ui";
 import { Button } from "@mott/ui/button";

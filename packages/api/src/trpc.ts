@@ -7,11 +7,12 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 import type { Session } from "@mott/auth";
-import { auth, validateToken } from "@mott/auth";
-import { db } from "@mott/db/client";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+
+import { auth, validateToken } from "@mott/auth";
+import { db } from "@mott/db/client";
 
 /**
  * Isomorphic Session getter for API requests
