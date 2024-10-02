@@ -4,7 +4,7 @@ import type {
   Session as NextAuthSession,
 } from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import Discord from "next-auth/providers/discord";
+import Google from "next-auth/providers/google";
 
 import { db } from "@mott/db/client";
 import { Account, Session, User } from "@mott/db/schema";
@@ -31,7 +31,12 @@ export const authConfig = {
   adapter,
 
   secret: env.AUTH_SECRET,
-  providers: [Discord],
+  providers: [
+    Google({
+      clientId: env.AUTH_GOOGLE_CLIENT_ID,
+      clientSecret: env.AUTH_GOOGLE_CLIENT_SECRET,
+    }),
+  ],
   callbacks: {
     session: (opts) => {
       if (!("user" in opts)) {
