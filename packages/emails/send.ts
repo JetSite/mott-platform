@@ -24,7 +24,7 @@ export type EmailHtml = {
   from: string;
 };
 export const sendEmail = async (email: Emails) => {
-  if (env.MAILDEV_ENABLED === "true") {
+  if (env.EMAIL_SANDBOX_ENABLED === "true") {
     const mailOptions: Mail.Options = {
       from: email.from,
       to: email.to,
@@ -32,7 +32,7 @@ export const sendEmail = async (email: Emails) => {
       subject: email.subject,
     };
     const transporter = nodemailer.createTransport({
-      host: env.MAILDEV_HOST,
+      host: env.EMAIL_SANDBOX_HOST,
       secure: false,
       port: 2500,
     });
