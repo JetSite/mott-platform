@@ -8,12 +8,19 @@ import {
 
 import type {
   AccessCodeForm,
+  CompanyChatPlatformForm,
+  CompanyForm,
   EmailForm,
   FullNameForm,
   SignUpForm,
 } from "./types";
 
-type FormValues = AccessCodeForm | EmailForm | FullNameForm;
+type FormValues =
+  | AccessCodeForm
+  | EmailForm
+  | FullNameForm
+  | CompanyForm
+  | CompanyChatPlatformForm;
 interface FormValuesType {
   formValues: SignUpForm;
   updateFormValues: (values: FormValues) => void;
@@ -25,6 +32,8 @@ const defaultValues: SignUpForm = {
   accessCode: "",
   email: "",
   fullname: "",
+  companyName: "",
+  companyWebsite: "",
 };
 
 export const SignUpFormProvider = ({

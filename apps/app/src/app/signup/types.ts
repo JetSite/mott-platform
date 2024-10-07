@@ -15,8 +15,22 @@ export const fullNameSchema = z.object({
   fullname: z.string().min(3, { message: "Question code is required" }),
 });
 
+export const companySchema = z.object({
+  companyName: z.string().min(3, { message: "Company name is required" }),
+  companyWebsite: z.string().url({ message: "Url is not valid" }),
+});
+
+export const companyChatPlatform = z.object({
+  companyChatPlatform: z.string(),
+});
+
 export type AccessCodeForm = z.infer<typeof accessCodeSchema>;
 export type EmailForm = z.infer<typeof emailSchema>;
 export type FullNameForm = z.infer<typeof fullNameSchema>;
+export type CompanyForm = z.infer<typeof companySchema>;
+export type CompanyChatPlatformForm = z.infer<typeof companyChatPlatform>;
 
-export type SignUpForm = AccessCodeForm & EmailForm & FullNameForm;
+export type SignUpForm = AccessCodeForm &
+  EmailForm &
+  FullNameForm &
+  CompanyForm;
