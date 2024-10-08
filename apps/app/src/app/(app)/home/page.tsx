@@ -1,12 +1,10 @@
 import { ConnectionBanner } from "./_components/connection-banner";
-import { HomeHeader } from "./_components/home-header";
 import { options, settings } from "./_components/menuItems";
 import { OptionItem } from "./_components/option-item";
 
 export default function UserHomePage() {
   return (
-    <div className="m-auto flex h-full max-w-[512px] flex-col pb-6 pl-5 pr-3">
-      <HomeHeader />
+    <div>
       <ConnectionBanner />
 
       <div className="mb-14">
@@ -29,6 +27,7 @@ export default function UserHomePage() {
               icon={setting.icon}
               title={setting.title}
               subtitle={setting.subtitle}
+              path={setting.path ?? "/home"}
             />
           ))}
         </div>
@@ -46,6 +45,7 @@ export default function UserHomePage() {
               icon={option.icon}
               title={option.title}
               subtitle={option.subtitle}
+              path={"/home"}
             />
           ))}
         </div>

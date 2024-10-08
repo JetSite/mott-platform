@@ -5,7 +5,7 @@ import { Button } from "@mott/ui/button";
 import { LogoIcon } from "~/components/icons/logo-icon";
 import { MenuIcon } from "~/components/icons/menu-icon";
 
-export const HomeHeader = () => {
+export const Header = () => {
   return (
     <div className="mb-[32px] flex h-[66px] w-full items-center pb-2 pt-2">
       <LogoIcon />
