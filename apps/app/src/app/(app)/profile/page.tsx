@@ -51,7 +51,7 @@ export default function ProfilePage() {
     console.log(data);
   };
 
-  const onAddFiles = (files: FileList | undefined) => {
+  const onAddFiles = (files: FileList | null) => {
     if (!files) {
       return;
     }
@@ -173,7 +173,7 @@ export default function ProfilePage() {
                       type="file"
                       multiple
                       placeholder="Knowledge"
-                      onChange={(e) => onAddFiles(e.target.files ?? undefined)}
+                      onChange={(e) => onAddFiles(e.target.files)}
                     />
                     {files.map((file) => (
                       <FileItem
