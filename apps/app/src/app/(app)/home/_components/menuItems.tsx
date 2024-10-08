@@ -19,6 +19,7 @@ export const settings = [
   {
     icon: <AvatarIcon {...iconProps} />,
     title: "Profile",
+    path: "/profile",
     subtitle:
       "Set up your personal preferences and custom instructions within your current workspace.",
   },
