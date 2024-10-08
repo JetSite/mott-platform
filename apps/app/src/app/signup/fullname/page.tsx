@@ -14,8 +14,8 @@ import {
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
 
+import type { FullNameForm } from "../types";
 import { useSignUpFormContext } from "../signup-form-context";
-import type { FullNameForm} from "../types";
 import { fullNameSchema } from "../types";
 
 export default function FullNamePage() {

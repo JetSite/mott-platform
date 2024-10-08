@@ -6,33 +6,25 @@ import { Button } from "@mott/ui/button";
 
 import { useSignUpFormContext } from "../signup-form-context";
 
-export default function WelcomePage() {
+export default function WelcomeCompanyPage() {
   const router = useRouter();
   const { formValues } = useSignUpFormContext();
 
   const handleNext = () => {
-    router.push("/signup/welcome-company");
+    router.push("/signup/your-company");
   };
 
   return (
     <>
-      <div className="mb-[86px]">
+      <div className="mb-[92px]">
         <h1 className="mb-[20px] text-3xl font-bold tracking-tight">
           Welcome, {formValues.fullname}!
         </h1>
-        <h2 className="mb-[58px] text-2xl font-bold tracking-tight text-slate-300">
-          Now you can {""}
-          <span className="text-2xl font-bold text-black">
-            chat with Mott {""}
-          </span>
-          in your corporate
-          <span className="text-2xl font-bold text-black">{""} Slack.</span>
+        <h2 className="mb-[50px] text-2xl font-bold tracking-tight text-slate-300">
+          Let`s set up your corporate account and workspace now.
         </h2>
         <h2 className="text-2xl font-bold tracking-tight text-slate-300">
-          For better results,
-          <span className="text-2xl font-bold text-black">
-            {""} adjust your settings.
-          </span>
+          There are 3 steps only.
         </h2>
       </div>
 

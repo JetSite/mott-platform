@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@mott/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,39 +14,21 @@ import {
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
 
-import type { AccessCodeForm } from "../types";
+import type { CompanyForm } from "../types";
 import { useSignUpFormContext } from "../signup-form-context";
-import { accessCodeSchema } from "../types";
+import { companySchema } from "../types";
 
-const LEFT_SECONDS = 30;
-
-function useCountdownTimer() {
-  const [timeLeft, setTimeLeft] = useState(LEFT_SECONDS);
-
-  useEffect(() => {
-    if (timeLeft === 0) return;
-
-    const timerId = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
-
-    return () => clearInterval(timerId);
-  }, [timeLeft]);
-
-  return timeLeft;
-}
-
-export default function AccessCodePage() {
+export default function YourCompanyPage() {
   const router = useRouter();
+
   const form = useForm({
-    schema: accessCodeSchema,
+    schema: companySchema,
     mode: "onSubmit",
   });
 
   const { updateFormValues } = useSignUpFormContext();
-  const timeLeft = useCountdownTimer();
 
-  const onSubmit = async (data: AccessCodeForm) => {
+  const onSubmit = async (data: CompanyForm) => {
     const isStepValid = await form.trigger();
 
     if (!isStepValid) {
@@ -56,40 +36,56 @@ export default function AccessCodePage() {
     }
 
     updateFormValues(data);
-    router.push("/signup/fullname");
+    router.push("/signup/corporate-chat");
   };
 
   const handleBack = () => {
-    router.push("/signup");
+    router.push("/signup/welcome-company");
   };
 
   return (
     <>
-      <div className="mb-24">
-        <h1 className="text-2xl font-bold tracking-tight">Enter Access Code</h1>
-        <h2 className="text-lg font-medium tracking-tight text-slate-300">
-          Enter the 6-digit code to confirm you received the text message.
+      <div className="mb-6 mt-[-80px]">
+        <h1 className="mb-2 text-3xl font-bold tracking-tight">Your Company</h1>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-300">
+          We`re glad to have you on the Mott platform! Let`s set up your company
+          account and workspace now.
         </h2>
       </div>
       <Form {...form}>
         <form
-          className="flex w-full max-w-2xl flex-col gap-4"
+          className="mt-12 flex w-full max-w-2xl flex-col gap-4"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormField
             control={form.control}
-            name="accessCode"
+            name="companyName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-sm font-medium text-gray-600">
-                  Code
+                  Company name
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Code" />
+                  <Input
+                    {...field}
+                    placeholder="Enter your company name here.."
+                  />
                 </FormControl>
-                <FormDescription>
-                  Get new code ({timeLeft} seconds)
-                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="companyWebsite"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm font-medium text-gray-600">
+                  Corporate website
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="https://www.yoursite.com" />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -99,7 +95,7 @@ export default function AccessCodePage() {
             size="lg"
             variant="primary"
             aria-label="Continue"
-            className="mt-7 bg-black text-white hover:bg-white hover:text-black"
+            className="mt-16 bg-black text-white hover:bg-white hover:text-black"
           >
             Continue
           </Button>
