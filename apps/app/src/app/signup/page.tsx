@@ -17,7 +17,7 @@ import {
 import { Input } from "@mott/ui/input";
 
 import type { EmailForm } from "./types";
-import { GoogleIcon } from "../../components/google-icon";
+import { GoogleIcon } from "~/components/icons/google-icon";
 import { useSignUpFormContext } from "./signup-form-context";
 import { emailSchema } from "./types";
 

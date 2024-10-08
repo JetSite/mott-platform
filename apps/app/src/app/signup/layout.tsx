@@ -1,6 +1,6 @@
 "use client";
 
-import { LogoIcon } from "../../components/logo-icon";
+import { LogoIcon } from "~/components/icons/logo-icon";
 import { SignUpFormProvider } from "./signup-form-context";
 
 export default function SignUpLayout(props: { children: React.ReactNode }) {

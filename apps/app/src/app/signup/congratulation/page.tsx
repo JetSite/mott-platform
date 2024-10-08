@@ -1,10 +1,18 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { Button } from "@mott/ui/button";
 
 import { ThumbsUpIcon } from "~/components/thumbs-up-icon";
 
 export default function CongratulationPage() {
+  const router = useRouter();
+
+  const handleDone = () => {
+    router.push("/home");
+  };
+
   return (
     <>
       <div className="mb-[100px] mt-[-14px]">
@@ -25,6 +33,7 @@ export default function CongratulationPage() {
         variant="primary"
         aria-label="Get Started"
         className="w-full bg-black text-white hover:bg-white hover:text-black"
+        onClick={handleDone}
       >
         Done
       </Button>
