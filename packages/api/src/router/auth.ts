@@ -21,11 +21,11 @@ export const authRouter = {
   }),
   generateOTP: publicProcedure
     .input(z.object({ email: z.string().email() }))
-    .mutation(async ({ input }) => {
+    .mutation(({ input }) => {
       console.log(input);
       const otp = Math.floor(100000 + Math.random() * 900000).toString();
       // await saveOTPForEmail(input.email, otp);
       // await sendEmailWithOTP(input.email, otp);
-      return { success: true, message: "OTP sent to the provided email" };
+      return { success: true, otp, message: "OTP sent to the provided email" };
     }),
 } satisfies TRPCRouterRecord;
