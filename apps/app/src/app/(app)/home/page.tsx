@@ -45,7 +45,7 @@ export default function UserHomePage() {
               icon={option.icon}
               title={option.title}
               subtitle={option.subtitle}
-              path={"/home"}
+              path={option.path ?? "/home"}
             />
           ))}
         </div>

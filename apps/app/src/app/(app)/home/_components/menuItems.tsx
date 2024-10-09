@@ -6,6 +6,7 @@ import { InstrtuctionIcon } from "~/components/icons/instruction-icon";
 import { MemberIcon } from "~/components/icons/member-icon";
 import { PlanIcon } from "~/components/icons/plan-icon";
 import { RolesIcon } from "~/components/icons/roles-icon";
+import { SettingsIcon } from "~/components/icons/settings-icon";
 import { TaskIcon } from "~/components/icons/task-icon";
 
 const iconProps = {
@@ -32,6 +33,13 @@ export const settings = [
 ];
 
 export const options = [
+  {
+    icon: <SettingsIcon {...iconProps} />,
+    title: "Workspace Settings",
+    path: "/settings",
+    subtitle:
+      "Customize your workspace by adjusting the name, icon, country, language, and other preferences to enhance usability and personalization.",
+  },
   {
     icon: <ChatIcon {...iconProps} />,
     title: "Chat & Communications",
