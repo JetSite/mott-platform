@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  mott_discord_bot:
+    build:
+      dockerfile: ./docker/app/Dockerfile
+      context: ./
+    container_name: mott_discord_bot
+    restart: always
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - default
+
+networks:
+  default:
+    name: app_network

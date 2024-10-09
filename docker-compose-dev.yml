@@ -1,0 +1,7 @@
+version: "3"
+services:
+  mott_discord_bot:
+    build:
+      dockerfile: ./apps/discord/Dockerfile
+    container_name: mott_discord_bot
+    restart: always
