@@ -75,7 +75,7 @@ export default function ProfilePage() {
     <div>
       <div className="mb-8">
         <div className="mb-3">
-          <h1 className="mb-2 text-2xl font-bold">Profile</h1>
+          <h1 className="mb-3 text-2xl font-semibold">Profile</h1>
           <h2 className="text-sm font-normal text-slate-300">
             Set up your personal preferences and custom instructions within your
             current workspace.
@@ -151,6 +151,20 @@ export default function ProfilePage() {
             )}
           />
 
+          <div className="mt-[-20px] flex justify-end gap-3">
+            <Button variant="outline" size="md" aria-label="Cancel">
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              size="md"
+              aria-label="Save"
+              className="w-full max-w-[143px]"
+            >
+              Save
+            </Button>
+          </div>
+
           <FormField
             control={customInstructionForm.control}
             name="knowledge"
@@ -158,7 +172,7 @@ export default function ProfilePage() {
               <FormItem>
                 <FormLabel className="text-sm font-medium text-gray-600">
                   Knowledge
-                  <h2 className="text-sm font-normal text-slate-300">
+                  <h2 className="mb-3 text-sm font-normal text-slate-300">
                     When you upload files under the Knowledge section, content
                     from those files may be referenced in conversations with
                     Mott.
@@ -187,7 +201,6 @@ export default function ProfilePage() {
                       variant="outline"
                       size="md"
                       aria-label="Connect"
-                      className=""
                       onClick={handleSelectFiles}
                     >
                       Upload Files
