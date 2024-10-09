@@ -5,7 +5,7 @@ export const settingsSchema = z.object({
   logo: z.any(),
   assistantName: z.string(),
   assistantLogo: z.any(),
-  country: z.string(),
+  region: z.string(),
   language: z.string(),
 });
 
