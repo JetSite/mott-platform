@@ -7,7 +7,7 @@ import { MenuIcon } from "~/components/icons/menu-icon";
 
 export const Header = () => {
   return (
-    <div className="mb-[32px] flex h-[66px] w-full items-center pb-2 pt-2">
+    <div className="mb-[32px] flex h-[66px] w-full items-center pb-2 pt-2 max-md:px-5">
       <LogoIcon />
       <div className="flex h-full w-full items-center justify-end gap-5">
         <Button

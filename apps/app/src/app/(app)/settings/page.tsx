@@ -12,23 +12,11 @@ import { Input } from "@mott/ui/input";
 
 import type { SettingsForm } from "./types";
 import { ImageInput } from "./_components/image-input";
-import { SettingsSelect } from "./_components/settings-select";
+import { RegionalSettings } from "./_components/regional-settings";
 import { settingsSchema } from "./types";
 
 const DEFAULT_LOGO = "/assets/avatar.png";
 const DEFAULT_ASSISTANTS_AVATAR = "/assets/assistantsAvatar.png";
-
-const countries = [
-  { title: "United States", value: "United States" },
-  { title: "Germany", value: "Germany" },
-  { title: "Italy", value: "Italy" },
-];
-
-const languages = [
-  { title: "English", value: "English" },
-  { title: "German", value: "German" },
-  { title: "Italian", value: "Italian" },
-];
 
 export default function SettingsPage() {
   const form = useForm({
@@ -130,20 +118,7 @@ export default function SettingsPage() {
             )}
           />
 
-          <h1 className="mb-3 text-lg font-semibold">Country & Language</h1>
-          <div className="flex flex-wrap gap-4">
-            <SettingsSelect
-              nameField="country"
-              control={form.control}
-              items={countries}
-            />
-
-            <SettingsSelect
-              nameField="language"
-              control={form.control}
-              items={languages}
-            />
-          </div>
+          <RegionalSettings control={form.control} />
         </form>
       </Form>
     </div>

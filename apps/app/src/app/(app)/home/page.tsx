@@ -1,12 +1,24 @@
+import {
+  getProfileSettingsItems,
+  getWorkSpaceItems,
+} from "../_components/menu-items";
 import { ConnectionBanner } from "./_components/connection-banner";
-import { options, settings } from "./_components/menuItems";
 import { OptionItem } from "./_components/option-item";
 
+const iconConfig = {
+  width: 31,
+  height: 31,
+  color: "#D4D4D4",
+  className: "flex-shrink-0",
+};
+
 export default function UserHomePage() {
+  const options = getWorkSpaceItems(iconConfig);
+  const settings = getProfileSettingsItems(iconConfig);
+
   return (
     <div>
       <ConnectionBanner />
-
       <div className="mb-14">
         <h1 className="mb-3 text-2xl font-bold">Hi, Greg Dredger!</h1>
         <h2 className="text-sm font-medium text-slate-300">

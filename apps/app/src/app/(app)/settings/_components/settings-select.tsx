@@ -1,6 +1,6 @@
 import type { Control } from "react-hook-form";
 
-import { FormControl, FormField, FormItem } from "@mott/ui/form";
+import { FormControl, FormField, FormItem, FormLabel } from "@mott/ui/form";
 import {
   Select,
   SelectContent,
@@ -16,6 +16,8 @@ interface SelectItems {
 
 interface SettingsSelectProps {
   nameField: string;
+  label: string;
+  placeholder: string;
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   control: Control<any>;
   items: SelectItems[];
@@ -24,6 +26,8 @@ interface SettingsSelectProps {
 export const SettingsSelect = ({
   nameField,
   control,
+  label,
+  placeholder,
   items,
 }: SettingsSelectProps) => {
   return (
@@ -32,6 +36,9 @@ export const SettingsSelect = ({
       name={nameField}
       render={({ field }) => (
         <FormItem className="flex-1">
+          <FormLabel className="text-sm font-medium text-black">
+            {label}
+          </FormLabel>
           <Select
             onValueChange={field.onChange}
             defaultValue={field.value as string}
@@ -39,7 +46,7 @@ export const SettingsSelect = ({
           >
             <FormControl className="mt-2 flex h-10 gap-10 overflow-hidden whitespace-nowrap rounded-md border border-solid border-slate-200 bg-white px-3.5 py-2 text-base text-gray-700">
               <SelectTrigger>
-                <SelectValue placeholder="Select country" />
+                <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
             <SelectContent className="text-base">
