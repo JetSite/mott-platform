@@ -1,4 +1,4 @@
-name: Deploy Staging
+name: Deploy Discord
 on:
   push:
     branches: [main]
@@ -7,7 +7,7 @@ on:
 env:
   IMAGE_NAME: mott-bot-discord-test
   CR_REGISTRY: crpuj7sj0saatki2q31i
-  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA_STAGING }}
+  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
   IMAGE_TAG: ${{ github.sha }}
 jobs:
   # Deploy to EKS

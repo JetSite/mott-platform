@@ -180,7 +180,7 @@ importers:
         specifier: 'catalog:'
         version: 22.7.5
       babel-eslint:
-        specifier: ^10.1.0
+        specifier: 10.1.0
         version: 10.1.0(eslint@9.12.0(jiti@2.3.3))
       eslint:
         specifier: ^9.12.0

@@ -48,4 +48,4 @@ RUN adduser --system --uid 1001 expressjs
 USER expressjs
 COPY --from=installer /app .
 
-CMD node apps/discord/dist/index.js
+CMD node apps/discord/dist/index.mjs
