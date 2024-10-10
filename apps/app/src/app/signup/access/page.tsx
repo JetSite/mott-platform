@@ -4,23 +4,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@mott/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  useForm,
-} from "@mott/ui/form";
-import { Input } from "@mott/ui/input";
+import { Form, FormControl, FormField, FormItem, useForm } from "@mott/ui/form";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@mott/ui/input-otp";
 
 import type { AccessCodeForm } from "../types";
 import { useSignUpFormContext } from "../signup-form-context";
 import { accessCodeSchema } from "../types";
 
 const LEFT_SECONDS = 30;
+const COUNT_NUMBER_CODE = 6;
 
 function useCountdownTimer() {
   const [timeLeft, setTimeLeft] = useState(LEFT_SECONDS);
@@ -45,12 +37,13 @@ export default function AccessCodePage() {
     mode: "onSubmit",
   });
 
+  const errorMessage = form.formState.errors.accessCode?.message;
+
   const { updateFormValues } = useSignUpFormContext();
   const timeLeft = useCountdownTimer();
 
   const onSubmit = async (data: AccessCodeForm) => {
     const isStepValid = await form.trigger();
-
     if (!isStepValid) {
       return;
     }
@@ -67,7 +60,7 @@ export default function AccessCodePage() {
     <>
       <div className="mb-24">
         <h1 className="text-2xl font-bold tracking-tight">Enter Access Code</h1>
-        <h2 className="text-lg font-medium tracking-tight text-slate-300">
+        <h2 className="text-lg font-medium tracking-tight text-neutral-400">
           Enter the 6-digit code to confirm you received the text message.
         </h2>
       </div>
@@ -76,24 +69,44 @@ export default function AccessCodePage() {
           className="flex w-full max-w-2xl flex-col gap-4"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <FormField
-            control={form.control}
-            name="accessCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm font-medium text-gray-600">
-                  Code
-                </FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Code" />
-                </FormControl>
-                <FormDescription>
-                  Get new code ({timeLeft} seconds)
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
+          <div className="flex justify-between gap-[10px]">
+            <FormField
+              control={form.control}
+              name="accessCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <InputOTP maxLength={6} {...field}>
+                      <>
+                        {Array.from(
+                          { length: COUNT_NUMBER_CODE },
+                          (_, index) => (
+                            <InputOTPGroup key={index}>
+                              <InputOTPSlot
+                                className={`h-10 w-[45px] ${errorMessage && "border border-red-600"}`}
+                                index={index}
+                              />
+                            </InputOTPGroup>
+                          ),
+                        )}
+                      </>
+                    </InputOTP>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="h-10">
+            {errorMessage && (
+              <p className={"text-[0.8rem] font-medium text-destructive"}>
+                {errorMessage}
+              </p>
             )}
-          />
+            <p className={"text-[0.8rem] text-neutral-400"}>
+              Get new code ({timeLeft} seconds)
+            </p>
+          </div>
+
           <Button
             type="submit"
             size="lg"

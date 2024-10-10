@@ -36,9 +36,7 @@ export const SettingsSelect = ({
       name={nameField}
       render={({ field }) => (
         <FormItem className="flex-1">
-          <FormLabel className="text-sm font-medium text-black">
-            {label}
-          </FormLabel>
+          <FormLabel className="text-neutral-900">{label}</FormLabel>
           <Select
             onValueChange={field.onChange}
             defaultValue={field.value as string}

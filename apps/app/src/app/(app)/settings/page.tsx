@@ -38,7 +38,7 @@ export default function SettingsPage() {
     <div>
       <div className="mb-7">
         <h1 className="mb-3 text-2xl font-semibold">Workspace Settings</h1>
-        <h2 className="text-sm font-medium text-gray-400">
+        <h2 className="text-sm font-normal text-neutral-500">
           Customize your workspace by adjusting the name, icon, country,
           language, and other preferences to enhance usability and
           personalization.
@@ -56,9 +56,7 @@ export default function SettingsPage() {
             name="workspaceName"
             render={({ field }) => (
               <FormItem className="mb-7">
-                <FormLabel className="text-sm font-medium text-gray-600">
-                  Workspace Name
-                </FormLabel>
+                <FormLabel>Workspace Name</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="Workspace Name" />
                 </FormControl>
@@ -70,9 +68,7 @@ export default function SettingsPage() {
             name="logo"
             render={() => (
               <FormItem className="mb-7">
-                <FormLabel className="text-sm font-medium text-gray-600">
-                  Logo
-                </FormLabel>
+                <FormLabel>Logo</FormLabel>
                 <FormControl>
                   <ImageInput
                     defaultLogo={DEFAULT_LOGO}
@@ -89,9 +85,7 @@ export default function SettingsPage() {
             name="assistantName"
             render={({ field }) => (
               <FormItem className="mb-7">
-                <FormLabel className="text-sm font-medium text-gray-600">
-                  Assistant`s Name
-                </FormLabel>
+                <FormLabel>Assistant`s Name</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="Assistant’s Name" />
                 </FormControl>
@@ -104,9 +98,7 @@ export default function SettingsPage() {
             name="assistantLogo"
             render={() => (
               <FormItem className="mb-10">
-                <FormLabel className="text-sm font-medium text-gray-600">
-                  Assistant`s Avatar
-                </FormLabel>
+                <FormLabel>Assistant`s Avatar</FormLabel>
                 <FormControl>
                   <ImageInput
                     defaultLogo={DEFAULT_ASSISTANTS_AVATAR}

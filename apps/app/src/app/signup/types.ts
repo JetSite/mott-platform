@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const accessCodeSchema = z.object({
-  accessCode: z.string().min(6, { message: "Access code is required" }),
+  accessCode: z.string().length(6, { message: "Access code  is required" }),
 });
 
 export const emailSchema = z.object({
@@ -12,7 +12,7 @@ export const emailSchema = z.object({
 });
 
 export const fullNameSchema = z.object({
-  fullname: z.string().min(3, { message: "Question code is required" }),
+  fullname: z.string().min(3, { message: "Full name is required" }),
 });
 
 export const companySchema = z.object({
@@ -30,7 +30,13 @@ export type FullNameForm = z.infer<typeof fullNameSchema>;
 export type CompanyForm = z.infer<typeof companySchema>;
 export type CompanyChatPlatformForm = z.infer<typeof companyChatPlatform>;
 
-export type SignUpForm = AccessCodeForm &
-  EmailForm &
+export type FormValues =
+  | { accessCode: string }
+  | EmailForm
+  | FullNameForm
+  | CompanyForm
+  | CompanyChatPlatformForm;
+
+export type SignUpForm = { accessCode: string } & EmailForm &
   FullNameForm &
   CompanyForm;

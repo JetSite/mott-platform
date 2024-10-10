@@ -20,10 +20,10 @@ export default function WelcomeCompanyPage() {
         <h1 className="mb-[20px] text-3xl font-bold tracking-tight">
           Welcome, {formValues.fullname}!
         </h1>
-        <h2 className="mb-[50px] text-2xl font-bold tracking-tight text-slate-300">
+        <h2 className="mb-[50px] text-2xl font-bold tracking-tight text-neutral-400">
           Let`s set up your corporate account and workspace now.
         </h2>
-        <h2 className="text-2xl font-bold tracking-tight text-slate-300">
+        <h2 className="text-2xl font-bold tracking-tight text-neutral-400">
           There are 3 steps only.
         </h2>
       </div>
