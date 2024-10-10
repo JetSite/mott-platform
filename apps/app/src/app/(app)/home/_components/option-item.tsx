@@ -20,7 +20,7 @@ export const OptionItem = ({
         <Link className="text-lg font-semibold text-black" href={path}>
           {title}
         </Link>
-        <p className="text-[12px] text-gray-500">{subtitle}</p>
+        <p className="text-[12px] text-neutral-500">{subtitle}</p>
       </div>
     </div>
   );

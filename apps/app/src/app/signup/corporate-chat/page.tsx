@@ -64,7 +64,7 @@ export default function CorporateChatPage() {
     <>
       <div className="mb-6 mt-[-80px]">
         <h1 className="text-3xl font-bold tracking-tight">Corporate Chat</h1>
-        <h2 className="text-lg font-semibold tracking-tight text-slate-300">
+        <h2 className="text-lg font-semibold tracking-tight text-neutral-400">
           Please select the chat platform your company uses for communication.
         </h2>
       </div>

@@ -22,7 +22,7 @@ export default function CongratulationPage() {
         <h1 className="mb-[18px] text-3xl font-bold tracking-tight">
           Congratulations!
         </h1>
-        <h2 className="mb-[58px] text-2xl font-semibold tracking-tight text-slate-300">
+        <h2 className="mb-[58px] text-2xl font-semibold tracking-tight text-neutral-400">
           Mott registered the account successfully. Go to your settings to get
           started.
         </h2>

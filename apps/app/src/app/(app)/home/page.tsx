@@ -21,7 +21,7 @@ export default function UserHomePage() {
       <ConnectionBanner />
       <div className="mb-14">
         <h1 className="mb-3 text-2xl font-bold">Hi, Greg Dredger!</h1>
-        <h2 className="text-sm font-medium text-slate-300">
+        <h2 className="text-sm font-medium text-neutral-400">
           Adjust and personalize the settings of your workspace, including
           managing connections, user access, and other customization options.
         </h2>

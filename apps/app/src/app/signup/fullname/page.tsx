@@ -46,7 +46,7 @@ export default function FullNamePage() {
     <>
       <div className="mb-24">
         <h1 className="text-2xl font-bold tracking-tight">Your Name</h1>
-        <h2 className="text-lg font-medium tracking-tight text-slate-300">
+        <h2 className="text-lg font-medium tracking-tight text-neutral-400">
           Please enter your name so we can personalize your experience.
         </h2>
       </div>

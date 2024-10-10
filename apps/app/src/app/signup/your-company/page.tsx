@@ -47,7 +47,7 @@ export default function YourCompanyPage() {
     <>
       <div className="mb-6 mt-[-80px]">
         <h1 className="mb-2 text-3xl font-bold tracking-tight">Your Company</h1>
-        <h2 className="text-lg font-semibold tracking-tight text-slate-300">
+        <h2 className="text-lg font-semibold tracking-tight text-neutral-400">
           We`re glad to have you on the Mott platform! Let`s set up your company
           account and workspace now.
         </h2>

@@ -20,7 +20,7 @@ export default function WelcomePage() {
         <h1 className="mb-[20px] text-3xl font-bold tracking-tight">
           Welcome, {formValues.fullname}!
         </h1>
-        <h2 className="mb-[58px] text-2xl font-bold tracking-tight text-slate-300">
+        <h2 className="mb-[58px] text-2xl font-bold tracking-tight text-neutral-400">
           Now you can {""}
           <span className="text-2xl font-bold text-black">
             chat with Mott {""}
@@ -28,7 +28,7 @@ export default function WelcomePage() {
           in your corporate
           <span className="text-2xl font-bold text-black">{""} Slack.</span>
         </h2>
-        <h2 className="text-2xl font-bold tracking-tight text-slate-300">
+        <h2 className="text-2xl font-bold tracking-tight text-neutral-400">
           For better results,
           <span className="text-2xl font-bold text-black">
             {""} adjust your settings.

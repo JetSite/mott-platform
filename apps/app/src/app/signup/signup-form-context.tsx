@@ -6,21 +6,8 @@ import {
   useState,
 } from "react";
 
-import type {
-  AccessCodeForm,
-  CompanyChatPlatformForm,
-  CompanyForm,
-  EmailForm,
-  FullNameForm,
-  SignUpForm,
-} from "./types";
+import type { FormValues, SignUpForm } from "./types";
 
-type FormValues =
-  | AccessCodeForm
-  | EmailForm
-  | FullNameForm
-  | CompanyForm
-  | CompanyChatPlatformForm;
 interface FormValuesType {
   formValues: SignUpForm;
   updateFormValues: (values: FormValues) => void;
