@@ -1,5 +1,6 @@
 import axios from "axios";
-import { Message } from "discord.js";
+import { Message, TextChannel } from "discord.js";
+
 import { discordClient } from "..";
 
 export async function messageCreateListener(message: Message) {
@@ -12,16 +13,17 @@ export async function messageCreateListener(message: Message) {
         .trim();
       let response;
       const processingMessage = await message.reply(
-        "Please hold on, your request is being diligently processed by Mott..."
+        "Please hold on, your request is being diligently processed by Mott...",
       );
-      const typingInterval = setInterval(
-        () => message.channel.sendTyping(),
-        5000
-      );
+      const typingInterval = setInterval(() => {
+        if ("sendTyping" in message.channel) {
+          (message.channel as TextChannel).sendTyping();
+        }
+      }, 5000);
 
       try {
         response = await axios.post(
-          `${process.env.BACKEND_URL}/api/mott-ai`,
+          `${process.env.STRAPI_URL}/api/mott-ai`,
           {
             message: prompt,
             authorId: message.author.id,
@@ -34,9 +36,9 @@ export async function messageCreateListener(message: Message) {
           },
           {
             headers: {
-              Authorization: `Bearer ${process.env.API_TOKEN}`,
+              Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
             },
-          }
+          },
         );
         await processingMessage.delete();
 

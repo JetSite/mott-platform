@@ -1,0 +1,18 @@
+{
+  "name": "@mott/jobs",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test src"
+  },
+  "dependencies": {
+    "@trigger.dev/sdk": "3.0.12"
+  },
+  "devDependencies": {
+    "@mott/tsconfig": "workspace:*",
+    "@trigger.dev/build": "^3.0.12"
+  }
+}
