@@ -74,9 +74,9 @@ export default function ProfilePage() {
   return (
     <div>
       <div className="mb-8">
-        <div className="mb-3">
+        <div className="mb-8">
           <h1 className="mb-3 text-2xl font-semibold">Profile</h1>
-          <h2 className="text-sm font-normal text-slate-300">
+          <h2 className="text-sm font-normal text-neutral-400">
             Set up your personal preferences and custom instructions within your
             current workspace.
           </h2>
@@ -91,9 +91,7 @@ export default function ProfilePage() {
               name="fullname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium text-gray-600">
-                    Full name
-                  </FormLabel>
+                  <FormLabel>Full name</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="Full name" />
                   </FormControl>
@@ -105,9 +103,7 @@ export default function ProfilePage() {
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium text-gray-600">
-                    Role
-                  </FormLabel>
+                  <FormLabel>Role</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="Role" />
                   </FormControl>
@@ -119,8 +115,8 @@ export default function ProfilePage() {
       </div>
 
       <div className="mb-4">
-        <h1 className="text-xl font-bold">My Custom Instructions</h1>
-        <h2 className="text-sm font-normal text-slate-300">
+        <h1 className="text-lg font-semibold">My Custom Instructions</h1>
+        <h2 className="text-sm font-normal text-neutral-400">
           These top instructions guide everything Mott does.
         </h2>
       </div>
@@ -137,9 +133,7 @@ export default function ProfilePage() {
             name="instructions"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm font-medium text-gray-600">
-                  Instructions
-                </FormLabel>
+                <FormLabel>Instructions</FormLabel>
                 <FormControl>
                   <Textarea
                     {...field}
@@ -170,9 +164,9 @@ export default function ProfilePage() {
             name="knowledge"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm font-medium text-gray-600">
+                <FormLabel>
                   Knowledge
-                  <h2 className="mb-3 text-sm font-normal text-slate-300">
+                  <h2 className="mb-3 text-sm font-normal text-neutral-500">
                     When you upload files under the Knowledge section, content
                     from those files may be referenced in conversations with
                     Mott.

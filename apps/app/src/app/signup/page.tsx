@@ -49,7 +49,7 @@ export default function AuthPage() {
             <h1 className="text-2xl font-bold tracking-tight">
               Your data, your way.
             </h1>
-            <h2 className="mb-6 text-2xl font-bold tracking-tight text-slate-300">
+            <h2 className="mb-6 text-2xl font-bold tracking-tight text-neutral-400">
               Create your Mott account
             </h2>
             <Button
@@ -74,7 +74,7 @@ export default function AuthPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium text-gray-600">
+                      <FormLabel className="text-sm font-medium">
                         Email
                       </FormLabel>
                       <FormControl>
@@ -107,7 +107,7 @@ export default function AuthPage() {
       </div>
 
       <div className="h-8 text-center text-xs">
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-neutral-400">
           By continuing, you agree to the Terms & Conditions and Privacy
           Policies.
         </span>

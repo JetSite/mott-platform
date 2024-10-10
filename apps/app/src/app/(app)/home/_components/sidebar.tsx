@@ -31,6 +31,7 @@ const Section = ({ title, items }: SectionProps) => (
       {items.map((item, index) => (
         <Link
           className="text-lg font-semibold text-black"
+          key={index}
           href={item.path ?? "/home"}
         >
           <div
