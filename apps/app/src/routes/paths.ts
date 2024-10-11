@@ -1,5 +1,5 @@
 const ROOTS = {
-  DASHBOARD: "",
+  DASHBOARD: "/",
 };
 
 export const paths = {

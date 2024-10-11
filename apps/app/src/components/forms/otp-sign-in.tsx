@@ -24,45 +24,38 @@ import { GoogleIcon } from "~/components/icons/google-icon";
 import { useBoolean } from "~/hooks/use-boolean";
 import { paths } from "~/routes/paths";
 
-const LEFT_SECONDS = 30;
 const COUNT_NUMBER_CODE = 6;
-
-function useCountdownTimer() {
-  const [timeLeft, setTimeLeft] = useState(LEFT_SECONDS);
-
-  useEffect(() => {
-    if (timeLeft === 0) {
-      return;
-    }
-
-    const timerId = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
-
-    return () => clearInterval(timerId);
-  }, [timeLeft]);
-
-  return timeLeft;
-}
 
 export default function OtpSignIn() {
   const router = useRouter();
   const loading = useBoolean();
+  const otpLoading = useBoolean();
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [email, setEmail] = useState("");
-  const timeLeft = useCountdownTimer();
 
   const emailForm = useForm({
     schema: emailSchema,
     mode: "onSubmit",
+    defaultValues: {
+      email: "",
+    },
   });
 
   const otpForm = useForm({
     schema: otpSchema,
     mode: "onSubmit",
+    defaultValues: {
+      otp: "",
+    },
   });
 
   const errorMessage = otpForm.formState.errors.otp?.message;
+
+  useEffect(() => {
+    if (showOtpInput) {
+      otpForm.reset({ otp: "" });
+    }
+  }, [showOtpInput, otpForm]);
 
   const onEmailSubmit = async (data: EmailForm) => {
     loading.onTrue();
@@ -77,6 +70,7 @@ export default function OtpSignIn() {
     });
     if (login?.error) {
       toast.error(login.error);
+      loading.onFalse();
       return;
     }
     setEmail(data.email);
@@ -84,14 +78,32 @@ export default function OtpSignIn() {
     loading.onFalse();
   };
 
+  const handleOtpComplete = async (otp: string) => {
+    await onOtpSubmit({ otp });
+  };
+
   const onOtpSubmit = async (data: OtpForm) => {
+    otpLoading.onTrue();
     const isStepValid = await otpForm.trigger();
     if (!isStepValid) {
       return;
     }
 
-    console.log(data);
+    const url = new URL("/api/auth/callback/resend", window.location.href);
+    url.searchParams.append("token", data.otp);
+    url.searchParams.append("email", email);
+    const res = await fetch(url);
+
+    if (res.status !== 200) {
+      toast.error("Wrong access code");
+      otpLoading.onFalse();
+      return;
+    }
+
+    toast.success("Login successful");
+    setShowOtpInput(false);
     router.push(paths.dashboard.root);
+    otpLoading.onFalse();
   };
 
   const handleBack = () => {
@@ -162,7 +174,7 @@ export default function OtpSignIn() {
                   className="mt-6"
                   loading={loading.value}
                 >
-                  {loading.value ? "Loading..." : "Continue"}
+                  {loading.value ? "Logging in..." : "Continue"}
                 </Button>
               </form>
             </Form>
@@ -182,7 +194,11 @@ export default function OtpSignIn() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <InputOTP maxLength={6} {...field}>
+                      <InputOTP
+                        maxLength={6}
+                        onComplete={handleOtpComplete}
+                        {...field}
+                      >
                         <>
                           {Array.from(
                             { length: COUNT_NUMBER_CODE },
@@ -208,9 +224,7 @@ export default function OtpSignIn() {
                   {errorMessage.toString()}
                 </p>
               )}
-              <p className={"text-[0.8rem] text-neutral-400"}>
-                Get new code ({timeLeft} seconds)
-              </p>
+              <p className={"text-[0.8rem] text-neutral-400"}>Get new code</p>
             </div>
 
             <Button
@@ -219,8 +233,9 @@ export default function OtpSignIn() {
               variant="primary"
               aria-label="Continue"
               className="mt-7"
+              loading={otpLoading.value}
             >
-              Continue
+              {otpLoading.value ? "Verifying..." : "Continue"}
             </Button>
           </form>
         </Form>
