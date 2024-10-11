@@ -67,6 +67,7 @@ export default function LoginPage() {
               size="lg"
               aria-label="Sign in with Google"
               className="mb-10 flex h-[50px] w-full gap-2"
+              onClick={() => signIn("google")}
             >
               <GoogleIcon />
               <p>Continue with Google</p>
