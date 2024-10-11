@@ -17,7 +17,7 @@ interface FormValuesType {
 const LoginFormContext = createContext<FormValuesType | null>(null);
 
 const defaultValues: LoginForm = {
-  accessCode: "",
+  otp: "",
   email: "",
   fullName: "",
   companyName: "",
