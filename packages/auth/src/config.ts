@@ -56,7 +56,6 @@ export const authConfig = {
             emailVerified: true,
           },
         });
-        console.log("user", user);
         const sendTitle = user ? "Sign in" : "Sign up";
         await sendEmail({
           to: [identifier],
