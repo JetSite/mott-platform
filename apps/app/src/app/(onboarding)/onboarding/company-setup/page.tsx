@@ -1,5 +1,6 @@
 "use client";
 
+import type { CompanyForm } from "@mott/validators";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@mott/ui/button";
@@ -13,12 +14,12 @@ import {
   useForm,
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
+import { companySchema } from "@mott/validators";
 
-import type { CompanyForm } from "../types";
-import { useSignUpFormContext } from "../signup-form-context";
-import { companySchema } from "../types";
+import { useLoginFormContext } from "~/components/forms/login-form-context";
+import { paths } from "~/routes/paths";
 
-export default function YourCompanyPage() {
+export default function CompanySetupPage() {
   const router = useRouter();
 
   const form = useForm({
@@ -26,7 +27,7 @@ export default function YourCompanyPage() {
     mode: "onSubmit",
   });
 
-  const { updateFormValues } = useSignUpFormContext();
+  const { updateFormValues } = useLoginFormContext();
 
   const onSubmit = async (data: CompanyForm) => {
     const isStepValid = await form.trigger();
@@ -36,11 +37,11 @@ export default function YourCompanyPage() {
     }
 
     updateFormValues(data);
-    router.push("/signup/corporate-chat");
+    router.push(paths.onboarding.corporateChat);
   };
 
   const handleBack = () => {
-    router.push("/signup/welcome-company");
+    router.push(paths.onboarding.welcomeCompany);
   };
 
   return (

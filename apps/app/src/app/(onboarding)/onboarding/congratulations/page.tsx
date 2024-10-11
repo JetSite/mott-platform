@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@mott/ui/button";
 
-import { ThumbsUpIcon } from "~/components/thumbs-up-icon";
+import { ThumbsUpIcon } from "~/components/icons/thumbs-up-icon";
 
 export default function CongratulationPage() {
   const router = useRouter();

@@ -1,15 +1,16 @@
 "use client";
 
+import type { AccessCodeForm } from "@mott/validators";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@mott/ui/button";
 import { Form, FormControl, FormField, FormItem, useForm } from "@mott/ui/form";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@mott/ui/input-otp";
+import { accessCodeSchema } from "@mott/validators";
 
-import type { AccessCodeForm } from "../types";
-import { useSignUpFormContext } from "../signup-form-context";
-import { accessCodeSchema } from "../types";
+import { useLoginFormContext } from "~/components/forms/login-form-context";
+import { paths } from "~/routes/paths";
 
 const LEFT_SECONDS = 30;
 const COUNT_NUMBER_CODE = 6;
@@ -18,7 +19,9 @@ function useCountdownTimer() {
   const [timeLeft, setTimeLeft] = useState(LEFT_SECONDS);
 
   useEffect(() => {
-    if (timeLeft === 0) return;
+    if (timeLeft === 0) {
+      return;
+    }
 
     const timerId = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
@@ -39,7 +42,7 @@ export default function AccessCodePage() {
 
   const errorMessage = form.formState.errors.accessCode?.message;
 
-  const { updateFormValues } = useSignUpFormContext();
+  const { updateFormValues } = useLoginFormContext();
   const timeLeft = useCountdownTimer();
 
   const onSubmit = async (data: AccessCodeForm) => {
@@ -49,11 +52,11 @@ export default function AccessCodePage() {
     }
 
     updateFormValues(data);
-    router.push("/signup/fullname");
+    router.push(paths.onboarding.fullName);
   };
 
   const handleBack = () => {
-    router.push("/signup");
+    router.push(paths.login.root);
   };
 
   return (

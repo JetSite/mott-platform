@@ -1,5 +1,6 @@
 "use client";
 
+import type { EmailForm } from "@mott/validators";
 import React from "react";
 import { useRouter } from "next/navigation";
 
@@ -15,15 +16,15 @@ import {
   useForm,
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
+import { emailSchema } from "@mott/validators";
 
-import type { EmailForm } from "./types";
+import { useLoginFormContext } from "~/components/forms/login-form-context";
 import { GoogleIcon } from "~/components/icons/google-icon";
-import { useSignUpFormContext } from "./signup-form-context";
-import { emailSchema } from "./types";
+import { paths } from "~/routes/paths";
 
-export default function AuthPage() {
+export default function LoginPage() {
   const router = useRouter();
-  const { updateFormValues } = useSignUpFormContext();
+  const { updateFormValues } = useLoginFormContext();
 
   const form = useForm({
     schema: emailSchema,
@@ -38,7 +39,7 @@ export default function AuthPage() {
     }
 
     updateFormValues(data);
-    router.push("/signup/access");
+    router.push(paths.login.accessCode);
   };
 
   return (

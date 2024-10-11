@@ -1,5 +1,6 @@
 "use client";
 
+import type { FullNameForm } from "@mott/validators";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@mott/ui/button";
@@ -13,10 +14,10 @@ import {
   useForm,
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
+import { fullNameSchema } from "@mott/validators";
 
-import type { FullNameForm } from "../types";
-import { useSignUpFormContext } from "../signup-form-context";
-import { fullNameSchema } from "../types";
+import { useLoginFormContext } from "~/components/forms/login-form-context";
+import { paths } from "~/routes/paths";
 
 export default function FullNamePage() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function FullNamePage() {
     mode: "onSubmit",
   });
 
-  const { updateFormValues } = useSignUpFormContext();
+  const { updateFormValues } = useLoginFormContext();
 
   const onSubmit = async (data: FullNameForm) => {
     const isStepValid = await form.trigger();
@@ -35,11 +36,11 @@ export default function FullNamePage() {
     }
 
     updateFormValues(data);
-    router.push("/signup/welcome");
+    router.push(paths.onboarding.welcome);
   };
 
   const handleBack = () => {
-    router.push("/signup/access");
+    router.push(paths.login.accessCode);
   };
 
   return (
@@ -58,7 +59,7 @@ export default function FullNamePage() {
         >
           <FormField
             control={form.control}
-            name="fullname"
+            name="fullName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-sm font-medium text-gray-600">

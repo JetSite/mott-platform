@@ -1,17 +1,17 @@
 "use client";
 
+import { LoginFormProvider } from "~/components/forms/login-form-context";
 import { LogoIcon } from "~/components/icons/logo-icon";
-import { SignUpFormProvider } from "./signup-form-context";
 
-export default function SignUpLayout(props: { children: React.ReactNode }) {
+export default function LoginLayout(props: { children: React.ReactNode }) {
   return (
-    <SignUpFormProvider>
+    <LoginFormProvider>
       <div className="container h-screen">
         <div className="m-auto flex h-full max-w-[324px] flex-col pb-4 pt-[76px]">
           <LogoIcon />
           <div className="mt-[100px]">{props.children}</div>
         </div>
       </div>
-    </SignUpFormProvider>
+    </LoginFormProvider>
   );
 }

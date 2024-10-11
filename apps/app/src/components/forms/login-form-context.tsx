@@ -1,3 +1,6 @@
+"use client";
+
+import type { FormValues, LoginForm } from "@mott/validators";
 import {
   createContext,
   useCallback,
@@ -6,29 +9,27 @@ import {
   useState,
 } from "react";
 
-import type { FormValues, SignUpForm } from "./types";
-
 interface FormValuesType {
-  formValues: SignUpForm;
+  formValues: LoginForm;
   updateFormValues: (values: FormValues) => void;
 }
 
-const SignUpFormContext = createContext<FormValuesType | null>(null);
+const LoginFormContext = createContext<FormValuesType | null>(null);
 
-const defaultValues: SignUpForm = {
+const defaultValues: LoginForm = {
   accessCode: "",
   email: "",
-  fullname: "",
+  fullName: "",
   companyName: "",
   companyWebsite: "",
 };
 
-export const SignUpFormProvider = ({
+export const LoginFormProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [formValues, setFormValues] = useState<SignUpForm>(defaultValues);
+  const [formValues, setFormValues] = useState<LoginForm>(defaultValues);
 
   const updateFormValues = useCallback((updatedData: FormValues) => {
     setFormValues((prevData) => ({ ...prevData, ...updatedData }));
@@ -42,17 +43,19 @@ export const SignUpFormProvider = ({
   }, [formValues, updateFormValues]);
 
   return (
-    <SignUpFormContext.Provider value={values}>
+    <LoginFormContext.Provider value={values}>
       {children}
-    </SignUpFormContext.Provider>
+    </LoginFormContext.Provider>
   );
 };
 
-export const useSignUpFormContext = () => {
-  const context = useContext(SignUpFormContext);
+export const useLoginFormContext = () => {
+  const context = useContext(LoginFormContext);
 
   if (context === null) {
-    throw new Error("SignUp context must be used within the context provider");
+    throw new Error(
+      "LoginForm context must be used within the context provider",
+    );
   }
 
   return context;

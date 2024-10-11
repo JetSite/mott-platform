@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
+import { Inter } from "next/font/google";
 
 import { cn } from "@mott/ui";
 import { ThemeProvider, ThemeToggle } from "@mott/ui/theme";
@@ -12,10 +11,15 @@ import "~/app/globals.css";
 
 import { env } from "~/env";
 
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 export const metadata: Metadata = {
   metadataBase: new URL(
     env.VERCEL_ENV === "production"
-      ? "https://mott.ai"
+      ? "https://app.mott.ai"
       : "http://localhost:3000",
   ),
   title: "Mott.ai",
@@ -23,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mott.ai",
     description: "AI-powered platform for intelligent automation",
-    url: "https://mott.ai",
+    url: "https://app.mott.ai",
     siteName: "Mott.ai",
   },
 };
@@ -41,8 +45,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       <body
         className={cn(
           "min-h-screen bg-background font-sans text-foreground antialiased",
-          GeistSans.variable,
-          GeistMono.variable,
+          inter.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="light">

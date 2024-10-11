@@ -4,21 +4,22 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@mott/ui/button";
 
-import { useSignUpFormContext } from "../signup-form-context";
+import { useLoginFormContext } from "~/components/forms/login-form-context";
+import { paths } from "~/routes/paths";
 
 export default function WelcomePage() {
   const router = useRouter();
-  const { formValues } = useSignUpFormContext();
+  const { formValues } = useLoginFormContext();
 
   const handleNext = () => {
-    router.push("/signup/welcome-company");
+    router.push(paths.onboarding.welcomeCompany);
   };
 
   return (
     <>
       <div className="mb-[86px]">
         <h1 className="mb-[20px] text-3xl font-bold tracking-tight">
-          Welcome, {formValues.fullname}!
+          Welcome, {formValues.fullName}!
         </h1>
         <h2 className="mb-[58px] text-2xl font-bold tracking-tight text-neutral-400">
           Now you can {""}

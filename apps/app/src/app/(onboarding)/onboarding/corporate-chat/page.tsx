@@ -1,5 +1,6 @@
 "use client";
 
+import type { CompanyChatPlatformForm } from "@mott/validators";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -12,10 +13,10 @@ import {
   FormLabel,
   useForm,
 } from "@mott/ui/form";
+import { companyChatPlatform } from "@mott/validators";
 
-import type { CompanyChatPlatformForm } from "../types";
-import { useSignUpFormContext } from "../signup-form-context";
-import { companyChatPlatform } from "../types";
+import { useLoginFormContext } from "~/components/forms/login-form-context";
+import { paths } from "~/routes/paths";
 
 interface ChatPlatform {
   name: string;
@@ -38,7 +39,7 @@ export default function CorporateChatPage() {
     mode: "onSubmit",
   });
 
-  const { updateFormValues } = useSignUpFormContext();
+  const { updateFormValues } = useLoginFormContext();
 
   const onSubmit = async (data: CompanyChatPlatformForm) => {
     const isStepValid = await form.trigger();
@@ -48,7 +49,7 @@ export default function CorporateChatPage() {
     }
 
     updateFormValues(data);
-    router.push("/signup/congratulation");
+    router.push(paths.onboarding.congratulations);
   };
 
   const handleSelectPlatform = async (name: string) => {
@@ -57,7 +58,7 @@ export default function CorporateChatPage() {
   };
 
   const handleBack = () => {
-    router.push("/signup/your-company");
+    router.push(paths.onboarding.companySetup);
   };
 
   return (

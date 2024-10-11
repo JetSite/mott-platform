@@ -1,5 +1,9 @@
+import Link from "next/link";
+
+import { Button } from "@mott/ui/button";
+
+import { paths } from "~/routes/paths";
 import { HydrateClient } from "~/trpc/server";
-import { AuthShowcase } from "../components/auth-showcase";
 
 export default function HomePage() {
   return (
@@ -9,7 +13,9 @@ export default function HomePage() {
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             Welcome to <span className="text-primary">Mott.ai</span>
           </h1>
-          <AuthShowcase />
+          <Button asChild>
+            <Link href={paths.login.root}>Login</Link>
+          </Button>
         </div>
       </main>
     </HydrateClient>

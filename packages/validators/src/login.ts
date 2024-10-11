@@ -12,7 +12,7 @@ export const emailSchema = z.object({
 });
 
 export const fullNameSchema = z.object({
-  fullname: z.string().min(3, { message: "Full name is required" }),
+  fullName: z.string().min(3, { message: "Full name is required" }),
 });
 
 export const companySchema = z.object({
@@ -37,6 +37,6 @@ export type FormValues =
   | CompanyForm
   | CompanyChatPlatformForm;
 
-export type SignUpForm = { accessCode: string } & EmailForm &
+export type LoginForm = { accessCode: string } & EmailForm &
   FullNameForm &
   CompanyForm;
