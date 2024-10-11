@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
 import { cn } from "@mott/ui";
-import { ThemeProvider, ThemeToggle } from "@mott/ui/theme";
+import { ThemeProvider } from "@mott/ui/theme";
 import { Toaster } from "@mott/ui/toast";
 
 import { TRPCReactProvider } from "~/trpc/react";

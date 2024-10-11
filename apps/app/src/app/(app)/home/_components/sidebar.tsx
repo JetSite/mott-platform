@@ -69,7 +69,7 @@ export const Sidebar = () => {
   const profileItems = getProfileSettingsItems(iconConfig);
 
   return (
-    <nav className="flex w-full max-w-[286px] flex-col max-md:hidden">
+    <nav className="flex flex-col">
       <Section title="My Profile" items={profileItems} />
       <Section title="Workspace" items={workspaceItems} />
       <OtherSection />
