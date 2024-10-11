@@ -40,7 +40,7 @@ export default function FullNamePage() {
   };
 
   const handleBack = () => {
-    router.push(paths.login.accessCode);
+    router.push(paths.login);
   };
 
   return (
