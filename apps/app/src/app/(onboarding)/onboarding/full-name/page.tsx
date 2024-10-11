@@ -77,7 +77,7 @@ export default function FullNamePage() {
             size="lg"
             variant="primary"
             aria-label="Continue"
-            className="mt-14 bg-black text-white hover:bg-white hover:text-black"
+            className="mt-14"
           >
             Continue
           </Button>
