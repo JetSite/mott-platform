@@ -3,10 +3,7 @@ const ROOTS = {
 };
 
 export const paths = {
-  login: {
-    root: "/login",
-    accessCode: "/login/access",
-  },
+  login: "/login",
   onboarding: {
     fullName: "/onboarding/full-name",
     welcome: "/onboarding/welcome",

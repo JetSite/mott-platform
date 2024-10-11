@@ -13,9 +13,9 @@ import {
   SelectValue,
 } from "@mott/ui/select";
 
-import { Sidebar } from "~/app/(app)/home/_components/sidebar";
 import { LogoIcon } from "~/components/icons/logo-icon";
 import { MenuIcon } from "~/components/icons/menu-icon";
+import { Sidebar } from "~/components/layout/sidebar";
 import { useTargetClick } from "~/utils/use-target-click";
 
 const workSpaces = [

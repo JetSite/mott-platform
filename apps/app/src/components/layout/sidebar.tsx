@@ -3,11 +3,8 @@
 import React from "react";
 import Link from "next/link";
 
-import type { MenuItem } from "../../_components/menu-items";
-import {
-  getProfileSettingsItems,
-  getWorkSpaceItems,
-} from "../../_components/menu-items";
+import type { MenuItem } from "./menu-items";
+import { getProfileSettingsItems, getWorkSpaceItems } from "./menu-items";
 
 const iconConfig = {
   width: 28,

@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-export function InstrtuctionIcon(props: SVGProps<SVGSVGElement>) {
+export function InstructionIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width="31"

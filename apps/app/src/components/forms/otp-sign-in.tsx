@@ -118,7 +118,9 @@ export default function OtpSignIn() {
             size="lg"
             aria-label="Sign in with Google"
             className="mb-10 flex h-[50px] w-full gap-2"
-            onClick={() => signIn("google", { redirectTo: "/home" })}
+            onClick={() =>
+              signIn("google", { redirectTo: paths.dashboard.root })
+            }
           >
             <GoogleIcon />
             <p>Continue with Google</p>

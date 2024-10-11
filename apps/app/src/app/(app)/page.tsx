@@ -1,9 +1,10 @@
+import { ConnectionBanner } from "~/components/banners/connection-banner";
 import {
   getProfileSettingsItems,
   getWorkSpaceItems,
-} from "../_components/menu-items";
-import { ConnectionBanner } from "./_components/connection-banner";
-import { OptionItem } from "./_components/option-item";
+} from "~/components/layout/menu-items";
+import { OptionItem } from "~/components/layout/option-item";
+import { paths } from "~/routes/paths";
 
 const iconConfig = {
   width: 31,
@@ -12,7 +13,7 @@ const iconConfig = {
   className: "flex-shrink-0",
 };
 
-export default function UserHomePage() {
+export default function DashboardPage() {
   const options = getWorkSpaceItems(iconConfig);
   const settings = getProfileSettingsItems(iconConfig);
 
@@ -39,7 +40,7 @@ export default function UserHomePage() {
               icon={setting.icon}
               title={setting.title}
               subtitle={setting.subtitle}
-              path={setting.path ?? "/home"}
+              path={setting.path ?? paths.dashboard.root}
             />
           ))}
         </div>

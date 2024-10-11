@@ -2,7 +2,7 @@ import { AvatarIcon, Link1Icon, StackIcon } from "@radix-ui/react-icons";
 
 import { ChatIcon } from "~/components/icons/chat-icon";
 import { DbIcon } from "~/components/icons/db-icon";
-import { InstrtuctionIcon } from "~/components/icons/instruction-icon";
+import { InstructionIcon } from "~/components/icons/instruction-icon";
 import { MemberIcon } from "~/components/icons/member-icon";
 import { PlanIcon } from "~/components/icons/plan-icon";
 import { RolesIcon } from "~/components/icons/roles-icon";
@@ -69,7 +69,7 @@ export const getWorkSpaceItems = (iconProps: IconConfig): MenuItem[] => {
         "Enables you to refine and optimize the understanding of your data structure.",
     },
     {
-      icon: <InstrtuctionIcon {...iconProps} />,
+      icon: <InstructionIcon {...iconProps} />,
       title: "Custom Instructions",
       subtitle:
         "Define how your workspace behaves for specific needs, tailored exclusively for your project.",

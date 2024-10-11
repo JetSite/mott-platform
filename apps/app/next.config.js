@@ -6,6 +6,7 @@ await createJiti(fileURLToPath(import.meta.url)).import("./src/env");
 
 /** @type {import("next").NextConfig} */
 const config = {
+  poweredByHeader: false,
   reactStrictMode: true,
 
   /** Enables hot reloading for local packages without a build step */

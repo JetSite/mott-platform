@@ -1,5 +1,5 @@
 import { Header } from "~/components/header";
-import { Sidebar } from "./home/_components/sidebar";
+import { Sidebar } from "../../components/layout/sidebar";
 
 export default function AppLayout(props: { children: React.ReactNode }) {
   return (
