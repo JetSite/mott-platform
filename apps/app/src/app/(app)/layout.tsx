@@ -7,7 +7,9 @@ export default function AppLayout(props: { children: React.ReactNode }) {
       <div className="m-auto max-w-[1280px]">
         <Header />
         <div className="m-auto flex gap-[20px]">
-          <Sidebar />
+          <div className="w-full max-w-[286px] flex-col max-md:hidden">
+            <Sidebar />
+          </div>
           <div className="max-w-[774px] rounded-lg bg-white px-[62px] py-[48px] max-md:px-5 max-md:py-5">
             {props.children}
           </div>
