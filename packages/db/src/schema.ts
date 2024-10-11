@@ -1,6 +1,8 @@
-import { relations, sql } from "drizzle-orm";
+import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
 import {
   integer,
+  pgEnum,
   pgTable,
   primaryKey,
   text,
@@ -8,28 +10,6 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod";
-
-export const Post = pgTable("post", {
-  id: uuid("id").notNull().primaryKey().defaultRandom(),
-  title: varchar("name", { length: 256 }).notNull(),
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt", {
-    mode: "date",
-    withTimezone: true,
-  }).$onUpdateFn(() => sql`now()`),
-});
-
-export const CreatePostSchema = createInsertSchema(Post, {
-  title: z.string().max(256),
-  content: z.string().max(256),
-}).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
 
 export const User = pgTable("user", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),
@@ -104,3 +84,27 @@ export const VerificationToken = pgTable(
     }),
   }),
 );
+
+export const workspacePlans = ["free", "pro", "enterprise"] as const;
+
+export const workspacePlanEnum = pgEnum("workspace_plan", workspacePlans);
+
+export const Workspace = pgTable("workspaces", {
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
+
+  name: text("name"),
+  companyName: varchar("company_name", { length: 255 }).notNull(),
+  companyWebsite: varchar("company_website", { length: 255 }),
+  ownerId: text("owner_id")
+    .notNull()
+    .references(() => User.id, { onDelete: "cascade" }),
+  plan: workspacePlanEnum("plan").notNull().default("free"),
+  slug: text("slug").notNull().unique(),
+  stripeId: text("stripe_id"),
+  subscriptionId: text("subscription_id"),
+  paidUntil: timestamp("paid_until", { mode: "date" }),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+});
