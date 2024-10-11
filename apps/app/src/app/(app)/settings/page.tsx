@@ -15,7 +15,7 @@ import { ImageInput } from "./_components/image-input";
 import { RegionalSettings } from "./_components/regional-settings";
 import { settingsSchema } from "./types";
 
-const DEFAULT_LOGO = "/assets/avatar.png";
+const DEFAULT_LOGO = "/assets/hims.png";
 const DEFAULT_ASSISTANTS_AVATAR = "/assets/assistantsAvatar.png";
 
 export default function SettingsPage() {
