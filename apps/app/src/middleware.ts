@@ -1,4 +1,6 @@
-export { auth as middleware } from "@mott/auth";
+import { middleware as auth } from "@mott/auth/middleware";
+
+export default auth;
 
 // Or like this if you need to do something here.
 // export default auth((req) => {

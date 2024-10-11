@@ -1,5 +1,6 @@
-import { WelcomeEmail } from "./emails/welcome";
+import OtpSignInEmail from "./emails/otp-sign-in";
+import WelcomeEmail from "./emails/welcome";
 
-export { WelcomeEmail };
+export { OtpSignInEmail, WelcomeEmail };
 
 export { sendEmail, sendEmailHtml } from "./send";

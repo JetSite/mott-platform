@@ -3,6 +3,7 @@
 import type { EmailForm } from "@mott/validators";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 import { Button } from "@mott/ui/button";
 import {
@@ -16,6 +17,7 @@ import {
   useForm,
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
+import { toast } from "@mott/ui/toast";
 import { emailSchema } from "@mott/validators";
 
 import { useLoginFormContext } from "~/components/forms/login-form-context";
@@ -37,7 +39,14 @@ export default function LoginPage() {
     if (!isStepValid) {
       return;
     }
-
+    const login = await signIn("resend", {
+      email: data.email,
+      redirect: false,
+    });
+    if (login?.error) {
+      toast.error(login.error);
+      return;
+    }
     updateFormValues(data);
     router.push(paths.login.accessCode);
   };

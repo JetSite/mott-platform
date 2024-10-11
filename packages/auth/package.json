@@ -8,7 +8,8 @@
       "react-server": "./src/index.rsc.ts",
       "default": "./src/index.ts"
     },
-    "./env": "./env.ts"
+    "./env": "./env.ts",
+    "./middleware": "./src/middleware.ts"
   },
   "license": "MIT",
   "scripts": {
@@ -21,6 +22,7 @@
     "@auth/core": "0.37.0",
     "@auth/drizzle-adapter": "^1.7.0",
     "@mott/db": "workspace:*",
+    "@mott/emails": "workspace:*",
     "@t3-oss/env-nextjs": "^0.11.1",
     "next": "^14.2.15",
     "next-auth": "5.0.0-beta.22",

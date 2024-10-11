@@ -18,7 +18,11 @@ import { emailTailwindConfig } from "../tailwind";
 
 const baseUrl = "https://app.mott.ai";
 
-export const WelcomeEmail = ({ username = "username" }: any) => {
+export default function WelcomeEmail({
+  username = "username",
+}: {
+  username: string;
+}) {
   return (
     <Html>
       <Head />
@@ -63,6 +67,4 @@ export const WelcomeEmail = ({ username = "username" }: any) => {
       </Tailwind>
     </Html>
   );
-};
-
-export default WelcomeEmail;
+}
