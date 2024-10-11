@@ -32,7 +32,7 @@ export default function WelcomeCompanyPage() {
         size="lg"
         variant="primary"
         aria-label="Get Started"
-        className="w-full bg-black text-white hover:bg-white hover:text-black"
+        className="w-full"
         onClick={handleNext}
       >
         Get Started

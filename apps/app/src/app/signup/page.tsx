@@ -96,7 +96,7 @@ export default function AuthPage() {
                   size="lg"
                   variant="primary"
                   aria-label="Continue"
-                  className="mt-6 bg-black text-white hover:bg-white hover:text-black"
+                  className="mt-6"
                 >
                   Continue
                 </Button>

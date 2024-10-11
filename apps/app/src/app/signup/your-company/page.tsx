@@ -95,7 +95,7 @@ export default function YourCompanyPage() {
             size="lg"
             variant="primary"
             aria-label="Continue"
-            className="mt-16 bg-black text-white hover:bg-white hover:text-black"
+            className="mt-16"
           >
             Continue
           </Button>

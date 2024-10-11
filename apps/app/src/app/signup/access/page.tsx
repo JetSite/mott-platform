@@ -112,7 +112,7 @@ export default function AccessCodePage() {
             size="lg"
             variant="primary"
             aria-label="Continue"
-            className="mt-7 bg-black text-white hover:bg-white hover:text-black"
+            className="mt-7"
           >
             Continue
           </Button>
