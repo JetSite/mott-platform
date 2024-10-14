@@ -2,7 +2,7 @@ import { Button } from "@mott/ui/button";
 
 export const ConnectionBanner = () => {
   return (
-    <div className="relative mb-[54px] max-w-[349px] rounded-lg shadow-[0px_4px_9px_7px_rgba(0,0,0,0.04)]">
+    <div className="relative mb-[54px] w-[349px] rounded-lg shadow-[0px_4px_9px_7px_rgba(0,0,0,0.04)]">
       <div className="h-[152px] w-full rounded-lg bg-[#FFF7ED]"></div>
       <div className="absolute top-2 h-[152px] w-full rounded-lg border border-white bg-[#FFF7ED]"></div>
       <div className="absolute top-4 h-[152px] w-full rounded-lg border border-white bg-[#FFF7ED] p-[14px]">
@@ -15,7 +15,7 @@ export const ConnectionBanner = () => {
           variant="primary"
           size="lg"
           aria-label="Connect"
-          className="mt-4 w-full"
+          className="mt-2 w-full"
         >
           Connect
         </Button>
