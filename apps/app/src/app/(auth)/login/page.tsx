@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import OtpSignIn from "~/components/forms/otp-sign-in";
+import OtpSignIn from "~/components/forms/sign-in/otp-sign-in";
 
 export default function LoginPage() {
   return <OtpSignIn />;
