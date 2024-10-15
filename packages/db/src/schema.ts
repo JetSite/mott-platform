@@ -7,12 +7,27 @@ import {
   primaryKey,
   text,
   timestamp,
-  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 
+export const onboardingStepEnum = pgEnum("onboarding_step", [
+  "welcome",
+  "company_info",
+  "chat_selection",
+  "completed",
+]);
+export const corporateChatEnum = pgEnum("corporate_chat", [
+  "discord",
+  "slack",
+  "teams",
+  "google_chat",
+  "whatsapp",
+  "imessage",
+]);
 export const User = pgTable("user", {
-  id: uuid("id").notNull().primaryKey().defaultRandom(),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("emailVerified", {
@@ -20,8 +35,24 @@ export const User = pgTable("user", {
     withTimezone: true,
   }),
   image: varchar("image", { length: 255 }),
+  onboardingStep: onboardingStepEnum("onboarding_step")
+    .notNull()
+    .default("welcome"),
 });
 
+export const OnboardingData = pgTable("onboarding_data", {
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => User.id, { onDelete: "cascade" }),
+  companyName: varchar("company_name", { length: 255 }),
+  companyWebsite: varchar("company_website", { length: 255 }),
+  corporateChat: corporateChatEnum("corporate_chat"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+});
 export const UserRelations = relations(User, ({ many }) => ({
   accounts: many(Account),
 }));
@@ -29,7 +60,7 @@ export const UserRelations = relations(User, ({ many }) => ({
 export const Account = pgTable(
   "account",
   {
-    userId: uuid("userId")
+    userId: text("userId")
       .notNull()
       .references(() => User.id, { onDelete: "cascade" }),
     type: varchar("type", { length: 255 })
@@ -58,7 +89,7 @@ export const AccountRelations = relations(Account, ({ one }) => ({
 
 export const Session = pgTable("session", {
   sessionToken: varchar("sessionToken", { length: 255 }).notNull().primaryKey(),
-  userId: uuid("userId")
+  userId: text("userId")
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
   expires: timestamp("expires", {
