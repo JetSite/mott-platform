@@ -3,6 +3,7 @@
 import type { EmailForm, OtpForm } from "@mott/validators";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { CheckCircle, Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
 
 import { Button } from "@mott/ui/custom/button";
@@ -32,7 +33,8 @@ export default function OtpSignIn() {
   const otpLoading = useBoolean();
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [email, setEmail] = useState("");
-
+  const [resendingCode, setResendingCode] = useState(false);
+  const [codeResent, setCodeResent] = useState(false);
   const emailForm = useForm({
     schema: emailSchema,
     mode: "onSubmit",
@@ -57,24 +59,43 @@ export default function OtpSignIn() {
     }
   }, [showOtpInput, otpForm]);
 
+  const handleResendCode = async () => {
+    setResendingCode(true);
+    setCodeResent(false);
+    const isCodeSent = await sendOtpCode(email);
+    if (isCodeSent) {
+      setCodeResent(true);
+      setTimeout(() => setCodeResent(false), 3000);
+    }
+    setResendingCode(false);
+  };
+
+  const sendOtpCode = async (email: string) => {
+    const login = await signIn("resend", {
+      email: email,
+      redirect: false,
+    });
+    if (login?.error) {
+      toast.error(login.error);
+      return false;
+    }
+    return true;
+  };
+
   const onEmailSubmit = async (data: EmailForm) => {
     loading.onTrue();
     const isStepValid = await emailForm.trigger();
 
     if (!isStepValid) {
-      return;
-    }
-    const login = await signIn("resend", {
-      email: data.email,
-      redirect: false,
-    });
-    if (login?.error) {
-      toast.error(login.error);
       loading.onFalse();
       return;
     }
-    setEmail(data.email);
-    setShowOtpInput(true);
+
+    const isCodeSent = await sendOtpCode(data.email);
+    if (isCodeSent) {
+      setEmail(data.email);
+      setShowOtpInput(true);
+    }
     loading.onFalse();
   };
 
@@ -101,7 +122,6 @@ export default function OtpSignIn() {
     }
 
     toast.success("Login successful");
-    setShowOtpInput(false);
     router.push(paths.dashboard.root);
     otpLoading.onFalse();
   };
@@ -218,21 +238,34 @@ export default function OtpSignIn() {
                 )}
               />
             </div>
-            <div className="h-10">
+            <div className="flex h-10 items-center">
               {errorMessage && (
                 <p className={"text-[0.8rem] font-medium text-destructive"}>
                   {errorMessage.toString()}
                 </p>
               )}
-              <p className={"text-[0.8rem] text-neutral-400"}>Get new code</p>
+              <div className="flex items-center gap-2">
+                {resendingCode && <Loader2 className="h-4 w-4 animate-spin" />}
+                {codeResent && (
+                  <CheckCircle className="h-4 w-4 text-green-500" />
+                )}
+                <button
+                  type="button"
+                  onClick={handleResendCode}
+                  disabled={resendingCode}
+                  className={
+                    "text-[0.8rem] text-neutral-400 transition-colors hover:text-neutral-600"
+                  }
+                >
+                  Get new code
+                </button>
+              </div>
             </div>
-
             <Button
               type="submit"
               size="lg"
               variant="primary"
               aria-label="Continue"
-              className="mt-7"
               loading={otpLoading.value}
             >
               {otpLoading.value ? "Verifying..." : "Continue"}
