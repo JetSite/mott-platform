@@ -1,6 +1,7 @@
 "use client";
 
-import type { CompanyChatPlatformForm } from "@mott/validators";
+import type { CorporateChat } from "@mott/db/schema";
+import type { CorporateChatForm } from "@mott/validators";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -13,47 +14,58 @@ import {
   FormLabel,
   useForm,
 } from "@mott/ui/form";
-import { companyChatPlatform } from "@mott/validators";
+import { toast } from "@mott/ui/toast";
+import { corporateChatSchema } from "@mott/validators";
 
-import { useLoginFormContext } from "~/components/forms/login-form-context";
+import { useBoolean } from "~/hooks/use-boolean";
 import { paths } from "~/routes/paths";
+import { api } from "~/trpc/react";
 
 interface ChatPlatform {
+  code: CorporateChat;
   name: string;
   img: string;
 }
 
 const platforms: ChatPlatform[] = [
-  { name: "Slack", img: "/assets/slack.png" },
-  { name: "Microsoft Teams", img: "/assets/teams.png" },
-  { name: "Google Chat", img: "/assets/google.png" },
-  { name: "WhatsApp", img: "/assets/whatsapp.png" },
-  { name: "iMessage", img: "/assets/imessage.png" },
+  { code: "slack", name: "Slack", img: "/assets/slack.png" },
+  { code: "teams", name: "Microsoft Teams", img: "/assets/teams.png" },
+  { code: "google", name: "Google Chat", img: "/assets/google.png" },
+  { code: "whatsapp", name: "WhatsApp", img: "/assets/whatsapp.png" },
+  { code: "imessage", name: "iMessage", img: "/assets/imessage.png" },
 ];
 
 export default function CorporateChatPage() {
   const router = useRouter();
+  const loading = useBoolean();
+  const { mutateAsync: saveCorporateChat } =
+    api.auth.saveCorporateChat.useMutation();
 
   const form = useForm({
-    schema: companyChatPlatform,
+    schema: corporateChatSchema,
     mode: "onSubmit",
   });
 
-  const { updateFormValues } = useLoginFormContext();
-
-  const onSubmit = async (data: CompanyChatPlatformForm) => {
+  const onSubmit = async (data: CorporateChatForm) => {
     const isStepValid = await form.trigger();
 
     if (!isStepValid) {
       return;
     }
 
-    updateFormValues(data);
+    try {
+      loading.onTrue();
+      await saveCorporateChat({ corporateChat: data.corporateChat });
+    } catch (error) {
+      console.error("Error saving corporate chat:", error);
+      toast.error("Error saving corporate chat");
+    }
+
     router.push(paths.onboarding.congratulations);
   };
 
-  const handleSelectPlatform = async (name: string) => {
-    form.setValue("companyChatPlatform", name);
+  const handleSelectPlatform = async (code: CorporateChat) => {
+    form.setValue("corporateChat", code);
     await form.handleSubmit(onSubmit)();
   };
 
@@ -79,11 +91,11 @@ export default function CorporateChatPage() {
               <FormField
                 key={platform.name}
                 control={form.control}
-                name="companyChatPlatform"
+                name="corporateChat"
                 render={() => (
                   <FormItem
                     className="cursor-pointer rounded-lg border p-2 pl-28"
-                    onClick={() => handleSelectPlatform(platform.name)}
+                    onClick={() => handleSelectPlatform(platform.code)}
                   >
                     <div className="flex items-center gap-3">
                       <FormControl>
@@ -91,7 +103,8 @@ export default function CorporateChatPage() {
                           src={platform.img}
                           width={26}
                           height={26}
-                          alt="Slack"
+                          alt={platform.name}
+                          unoptimized
                         />
                       </FormControl>
                       <FormLabel className="text-sm font-medium text-gray-600">

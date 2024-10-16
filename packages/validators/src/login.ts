@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { CorporateChat } from "@mott/db/schema";
+
 export const otpSchema = z.object({
   otp: z.string().length(6, { message: "Access code  is required" }),
 });
@@ -20,23 +22,24 @@ export const companySchema = z.object({
   companyWebsite: z.string().url({ message: "Url is not valid" }),
 });
 
-export const companyChatPlatform = z.object({
-  companyChatPlatform: z.string(),
+export const corporateChatSchema = z.object({
+  corporateChat: z.nativeEnum(CorporateChat),
 });
 
 export type OtpForm = z.infer<typeof otpSchema>;
 export type EmailForm = z.infer<typeof emailSchema>;
 export type FullNameForm = z.infer<typeof fullNameSchema>;
 export type CompanyForm = z.infer<typeof companySchema>;
-export type CompanyChatPlatformForm = z.infer<typeof companyChatPlatform>;
+export type CorporateChatForm = z.infer<typeof corporateChatSchema>;
 
 export type FormValues =
   | { otp: string }
   | EmailForm
   | FullNameForm
   | CompanyForm
-  | CompanyChatPlatformForm;
+  | CorporateChatForm;
 
 export type LoginForm = { otp: string } & EmailForm &
   FullNameForm &
-  CompanyForm;
+  CompanyForm &
+  CorporateChatForm;

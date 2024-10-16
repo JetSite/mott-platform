@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { invalidateSessionToken } from "@mott/auth";
-import { OnboardingData, User } from "@mott/db/schema";
+import { CorporateChat, OnboardingData, User } from "@mott/db/schema";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
@@ -81,10 +81,31 @@ export const authRouter = {
     )
     .mutation(async ({ ctx, input }) => {
       await ctx.db
-        .update(OnboardingData)
-        .set({
+        .insert(OnboardingData)
+        .values({
+          userId: ctx.session.user.id,
           companyName: input.companyName,
           companyWebsite: input.companyWebsite,
+          updatedAt: new Date(),
+        })
+        .onConflictDoUpdate({
+          target: OnboardingData.id,
+          set: {
+            companyName: input.companyName,
+            companyWebsite: input.companyWebsite,
+            updatedAt: new Date(),
+          },
+        });
+
+      return { success: true };
+    }),
+  saveCorporateChat: protectedProcedure
+    .input(z.object({ corporateChat: z.nativeEnum(CorporateChat) }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(OnboardingData)
+        .set({
+          corporateChat: input.corporateChat,
           updatedAt: new Date(),
         })
         .where(eq(OnboardingData.userId, ctx.session.user.id));

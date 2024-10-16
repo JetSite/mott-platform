@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 import { Button } from "@mott/ui/button";
 
 import { ThumbsUpIcon } from "~/components/icons/thumbs-up-icon";
+import { paths } from "~/routes/paths";
 
 export default function CongratulationPage() {
   const router = useRouter();
 
   const handleDone = () => {
-    router.push("/home");
+    router.push(paths.dashboard.root);
   };
 
   return (

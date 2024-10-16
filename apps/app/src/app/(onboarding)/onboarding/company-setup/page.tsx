@@ -37,7 +37,6 @@ export default function CompanySetupPage() {
     if (!isStepValid) {
       return;
     }
-
     try {
       loading.onTrue();
       await saveCompanyInfo({
