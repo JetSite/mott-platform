@@ -13,6 +13,7 @@ import { emailSchema, otpSchema } from "@mott/validators";
 
 import { useBoolean } from "~/hooks/use-boolean";
 import { paths } from "~/routes/paths";
+import { api } from "~/trpc/react";
 import { TERMS_TEXT } from "./constants";
 import EmailSignInForm from "./email-sign-in-form";
 import Header from "./header";
@@ -48,6 +49,9 @@ export default function OtpSignIn() {
   const [email, setEmail] = useState("");
   const [resendingCode, setResendingCode] = useState(false);
   const [codeResent, setCodeResent] = useState(false);
+  const { mutateAsync: checkOnboardingStatus } =
+    api.auth.checkOnboardingStatus.useMutation();
+
   const emailForm = useForm({
     schema: emailSchema,
     mode: "onSubmit",
@@ -137,7 +141,12 @@ export default function OtpSignIn() {
       }
 
       toast.success("Login successful");
-      router.push(paths.dashboard.root);
+      const onboardingStatus = await checkOnboardingStatus();
+      if (onboardingStatus.completed) {
+        router.push(paths.dashboard.root);
+      } else {
+        router.push(paths.onboarding.welcome);
+      }
     } catch (error) {
       console.error("Error during OTP submission:", error);
       toast.error(error instanceof Error ? error.message : "An error occurred");

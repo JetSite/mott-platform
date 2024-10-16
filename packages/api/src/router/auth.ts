@@ -1,7 +1,8 @@
 import type { TRPCRouterRecord } from "@trpc/server";
-import { z } from "zod";
+import { eq } from "drizzle-orm";
 
 import { invalidateSessionToken } from "@mott/auth";
+import { OnboardingData } from "@mott/db/schema";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
@@ -19,13 +20,39 @@ export const authRouter = {
     await invalidateSessionToken(opts.ctx.token);
     return { success: true };
   }),
-  generateOTP: publicProcedure
-    .input(z.object({ email: z.string().email() }))
-    .mutation(({ input }) => {
-      console.log(input);
-      const otp = Math.floor(100000 + Math.random() * 900000).toString();
-      // await saveOTPForEmail(input.email, otp);
-      // await sendEmailWithOTP(input.email, otp);
-      return { success: true, otp, message: "OTP sent to the provided email" };
-    }),
+  checkOnboardingStatus: protectedProcedure.mutation(async ({ ctx }) => {
+    const onboardingData = await ctx.db.query.OnboardingData.findFirst({
+      where: eq(OnboardingData.userId, ctx.session.user.id),
+      columns: {
+        companyName: true,
+        companyWebsite: true,
+        corporateChat: true,
+      },
+    });
+
+    if (!onboardingData) {
+      return {
+        completed: false,
+        currentStep: "welcome",
+        stepDescription: "Welcome to the onboarding process",
+      };
+    }
+
+    let currentStep = "company_name";
+    let stepDescription = "Fill in your company name";
+
+    if (!onboardingData.companyName || !onboardingData.companyWebsite) {
+      currentStep = "company_name";
+      stepDescription = "Fill in your company name";
+    } else if (!onboardingData.corporateChat) {
+      currentStep = "corporate_chat";
+      stepDescription = "Set your corporate chat";
+    }
+
+    return {
+      completed: false,
+      currentStep,
+      stepDescription,
+    };
+  }),
 } satisfies TRPCRouterRecord;
