@@ -9,10 +9,11 @@ catalog:
   "@trpc/react-query": ^11.0.0-rc.571
   "@trpc/server": ^11.0.0-rc.571
   "@types/node": ^22.7.5
+  dotenv-cli: ^7.4.2
   eslint: ^9.9.0
   prettier: ^3.3.3
   tailwindcss: ^3.4.13
-  typescript: ^5.6.2
+  typescript: ^5.6.3
   zod: ^3.23.8
 catalogs:
   react18:

@@ -1,0 +1,32 @@
+{
+  "name": "@mott/slack",
+  "version": "1.0.0",
+  "description": "A Slack bot to help with the MOTT project",
+  "repository": {
+    "url": ""
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsup",
+    "oauth": "dotenv -- tsup --watch --onSuccess \"node dist/app-oauth.js\"",
+    "dev": "dotenv -- tsup --watch --onSuccess \"node dist/app.js\"",
+    "index": "dotenv -- tsup --watch --onSuccess \"node dist/app.js\"",
+    "start": "node dist/index.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/bolt": "3.22.0",
+    "@slack/logger": "^4.0.0",
+    "@slack/web-api": "^7.6.0",
+    "axios": "1.7.7",
+    "dotenv": "16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "22.7.5",
+    "dotenv-cli": "catalog:",
+    "tsup": "8.3.0",
+    "typescript": "catalog:"
+  }
+}

@@ -34,7 +34,7 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "@vercel/postgres": "^0.10.0",
     "add": "^2.0.6",
-    "drizzle-orm": "^0.35.0",
+    "drizzle-orm": "^0.35.1",
     "drizzle-zod": "^0.5.1",
     "pg": "^8.13.0",
     "zod": "catalog:"
@@ -43,8 +43,8 @@
     "@mott/eslint-config": "workspace:*",
     "@mott/prettier-config": "workspace:*",
     "@mott/tsconfig": "workspace:*",
-    "dotenv-cli": "^7.4.2",
-    "drizzle-kit": "^0.26.1",
+    "dotenv-cli": "catalog:",
+    "drizzle-kit": "^0.26.2",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
