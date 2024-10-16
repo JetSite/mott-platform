@@ -3,7 +3,7 @@
 import type { CompanyForm } from "@mott/validators";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@mott/ui/button";
+import { Button } from "@mott/ui/custom/button";
 import {
   Form,
   FormControl,
@@ -14,20 +14,22 @@ import {
   useForm,
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
+import { toast } from "@mott/ui/toast";
 import { companySchema } from "@mott/validators";
 
-import { useLoginFormContext } from "~/components/forms/login-form-context";
+import { useBoolean } from "~/hooks/use-boolean";
 import { paths } from "~/routes/paths";
+import { api } from "~/trpc/react";
 
 export default function CompanySetupPage() {
   const router = useRouter();
-
+  const loading = useBoolean();
+  const { mutateAsync: saveCompanyInfo } =
+    api.auth.saveCompanyInfo.useMutation();
   const form = useForm({
     schema: companySchema,
     mode: "onSubmit",
   });
-
-  const { updateFormValues } = useLoginFormContext();
 
   const onSubmit = async (data: CompanyForm) => {
     const isStepValid = await form.trigger();
@@ -36,7 +38,17 @@ export default function CompanySetupPage() {
       return;
     }
 
-    updateFormValues(data);
+    try {
+      loading.onTrue();
+      await saveCompanyInfo({
+        companyName: data.companyName,
+        companyWebsite: data.companyWebsite,
+      });
+    } catch (error) {
+      loading.onFalse();
+      console.error("Error saving company info:", error);
+      toast.error("Error saving company info");
+    }
     router.push(paths.onboarding.corporateChat);
   };
 
@@ -97,8 +109,9 @@ export default function CompanySetupPage() {
             variant="primary"
             aria-label="Continue"
             className="mt-16"
+            loading={loading.value}
           >
-            Continue
+            {loading.value ? "Saving..." : "Continue"}
           </Button>
         </form>
       </Form>

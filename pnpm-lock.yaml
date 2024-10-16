@@ -120,6 +120,9 @@ importers:
       superjson:
         specifier: 2.2.1
         version: 2.2.1
+      ts-pattern:
+        specifier: ^5.5.0
+        version: 5.5.0
       zod:
         specifier: 'catalog:'
         version: 3.23.8
@@ -199,10 +202,10 @@ importers:
         version: 4.0.1
       eslint-import-resolver-webpack:
         specifier: ^0.13.9
-        version: 0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0)
+        version: 0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0(esbuild@0.23.1))
       eslint-loader:
         specifier: ^4.0.2
-        version: 4.0.2(eslint@9.12.0(jiti@2.3.3))(webpack@5.95.0)
+        version: 4.0.2(eslint@9.12.0(jiti@2.3.3))(webpack@5.95.0(esbuild@0.23.1))
       eslint-plugin-import:
         specifier: ^2.31.0
         version: 2.31.0(eslint-import-resolver-webpack@0.13.9)(eslint@9.12.0(jiti@2.3.3))
@@ -585,7 +588,7 @@ importers:
         version: 7.37.1(eslint@9.9.0(jiti@2.3.3))
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-83825814-20241015(eslint@9.9.0(jiti@2.3.3))
+        version: 5.1.0-rc-77b637d6-20241016(eslint@9.9.0(jiti@2.3.3))
       eslint-plugin-turbo:
         specifier: ^2.1.3
         version: 2.1.3(eslint@9.9.0(jiti@2.3.3))
@@ -3819,8 +3822,8 @@ packages:
     peerDependencies:
       eslint: '>=5.16.0'
 
-  eslint-plugin-react-hooks@5.1.0-rc-83825814-20241015:
-    resolution: {integrity: sha512-lOSSyz+7A2yG93dFXY09QwCDFaCf4/oniscyMcS22DHT+BBrCH7SNKJt2bD6pG1ovnPYzGWYcXYM2GVV8eIckg==}
+  eslint-plugin-react-hooks@5.1.0-rc-77b637d6-20241016:
+    resolution: {integrity: sha512-lGKra+7UDOdruymKEJu/60zfzp8TvtdcxIAkwkhw/5NfSllWsW/pIoO5SIOy8W8gddtTZp/Uw9UYpTFeOiebIw==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -6064,6 +6067,9 @@ packages:
         optional: true
       '@swc/wasm':
         optional: true
+
+  ts-pattern@5.5.0:
+    resolution: {integrity: sha512-jqbIpTsa/KKTJYWgPNsFNbLVpwCgzXfFJ1ukNn4I8hMwyQzHMJnk/BqWzggB0xpkILuKzaO/aMYhS0SkaJyKXg==}
 
   tsafe@1.7.5:
     resolution: {integrity: sha512-tbNyyBSbwfbilFfiuXkSOj82a6++ovgANwcoqBAcO9/REPoZMEQoE8kWPeO0dy5A2D/2Lajr8Ohue5T0ifIvLQ==}
@@ -9583,7 +9589,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-webpack@0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0):
+  eslint-import-resolver-webpack@0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0(esbuild@0.23.1)):
     dependencies:
       debug: 3.2.7
       enhanced-resolve: 0.9.1
@@ -9596,11 +9602,11 @@ snapshots:
       lodash: 4.17.21
       resolve: 2.0.0-next.5
       semver: 5.7.2
-      webpack: 5.95.0
+      webpack: 5.95.0(esbuild@0.23.1)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-loader@4.0.2(eslint@9.12.0(jiti@2.3.3))(webpack@5.95.0):
+  eslint-loader@4.0.2(eslint@9.12.0(jiti@2.3.3))(webpack@5.95.0(esbuild@0.23.1)):
     dependencies:
       eslint: 9.12.0(jiti@2.3.3)
       find-cache-dir: 3.3.2
@@ -9608,7 +9614,7 @@ snapshots:
       loader-utils: 2.0.4
       object-hash: 2.2.0
       schema-utils: 2.7.1
-      webpack: 5.95.0
+      webpack: 5.95.0(esbuild@0.23.1)
 
   eslint-module-utils@2.12.0(@typescript-eslint/parser@8.8.1(eslint@9.9.0(jiti@2.3.3))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint@9.9.0(jiti@2.3.3)):
     dependencies:
@@ -9626,7 +9632,7 @@ snapshots:
     optionalDependencies:
       eslint: 9.12.0(jiti@2.3.3)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-webpack: 0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0)
+      eslint-import-resolver-webpack: 0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0(esbuild@0.23.1))
     transitivePeerDependencies:
       - supports-color
 
@@ -9722,7 +9728,7 @@ snapshots:
       resolve: 1.22.8
       semver: 6.3.1
 
-  eslint-plugin-react-hooks@5.1.0-rc-83825814-20241015(eslint@9.9.0(jiti@2.3.3)):
+  eslint-plugin-react-hooks@5.1.0-rc-77b637d6-20241016(eslint@9.9.0(jiti@2.3.3)):
     dependencies:
       eslint: 9.9.0(jiti@2.3.3)
 
@@ -12133,14 +12139,16 @@ snapshots:
       ansi-escapes: 5.0.0
       supports-hyperlinks: 2.3.0
 
-  terser-webpack-plugin@5.3.10(webpack@5.95.0):
+  terser-webpack-plugin@5.3.10(esbuild@0.23.1)(webpack@5.95.0(esbuild@0.23.1)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.34.1
-      webpack: 5.95.0
+      webpack: 5.95.0(esbuild@0.23.1)
+    optionalDependencies:
+      esbuild: 0.23.1
 
   terser@5.34.1:
     dependencies:
@@ -12223,6 +12231,8 @@ snapshots:
       typescript: 5.6.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
+
+  ts-pattern@5.5.0: {}
 
   tsafe@1.7.5: {}
 
@@ -12449,7 +12459,7 @@ snapshots:
 
   webpack-sources@3.2.3: {}
 
-  webpack@5.95.0:
+  webpack@5.95.0(esbuild@0.23.1):
     dependencies:
       '@types/estree': 1.0.6
       '@webassemblyjs/ast': 1.12.1
@@ -12471,7 +12481,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(webpack@5.95.0)
+      terser-webpack-plugin: 5.3.10(esbuild@0.23.1)(webpack@5.95.0(esbuild@0.23.1))
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     transitivePeerDependencies:
