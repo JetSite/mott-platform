@@ -1,6 +1,7 @@
-import { type KnownBlock } from "@slack/web-api";
+import type { KnownBlock } from "@slack/web-api";
+
+import type { Result } from "../utils/result-builder";
 import { Action } from "../types";
-import { Result } from "../utils/result-builder";
 
 export function getQuestionBlock(question: string): KnownBlock {
   return {
@@ -29,14 +30,14 @@ export function getErrorBlock(err: string): KnownBlock {
     type: "section",
     text: {
       type: "mrkdwn",
-      text: "*Error:* " + "```" + err + "```",
+      text: `*Error:* \`\`\`${err}\`\`\``,
     },
   };
 }
 
 export function getResultBlocks(
   result: Result,
-  isQueryEdited: boolean
+  isQueryEdited: boolean,
 ): KnownBlock[] {
   const resultBlocks: KnownBlock[] = [
     {
@@ -73,7 +74,7 @@ export function getResultBlocks(
 export function getAssumptionBlocks(
   assumptions: string,
   isQueryEdited: boolean,
-  isEditing: boolean
+  isEditing: boolean,
 ): KnownBlock[] {
   if (isQueryEdited) {
     // Hide assumptions if query's updated
@@ -131,7 +132,7 @@ export function getAssumptionBlocks(
       type: "section",
       text: {
         type: "mrkdwn",
-        text: "```" + assumptions + "```",
+        text: `\`\`\`${assumptions}\`\`\``,
       },
     },
     {
@@ -155,7 +156,7 @@ export function getAssumptionBlocks(
 export function getQueryBlocks(
   query: string,
   isQueryEdited: boolean,
-  isEditing: boolean
+  isEditing: boolean,
 ): KnownBlock[] {
   if (isEditing) {
     return [
@@ -212,7 +213,7 @@ export function getQueryBlocks(
       type: "section",
       text: {
         type: "mrkdwn",
-        text: "```" + query + "```",
+        text: `\`\`\`${query}\`\`\``,
       },
     },
     {

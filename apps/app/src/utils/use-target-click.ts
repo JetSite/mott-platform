@@ -15,7 +15,7 @@ export const useTargetClick = (callback: () => void) => {
     return () => {
       document.removeEventListener("click", handleClick, true);
     };
-  }, [ref, callback]);
+  }, [callback]);
 
   return ref;
 };

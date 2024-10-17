@@ -11,8 +11,7 @@ interface SelectItems {
 interface SettingsRadioGroupProps {
   nameField: string;
   label: string;
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  control: Control<any>;
+  control: Control<Record<string, unknown>>;
   items: SelectItems[];
 }
 

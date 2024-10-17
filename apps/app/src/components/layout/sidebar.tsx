@@ -25,16 +25,13 @@ const Section = ({ title, items }: SectionProps) => (
       {title}
     </h2>
     <div className="mt-5 flex w-full flex-col gap-3 font-medium leading-4 text-black">
-      {items.map((item, index) => (
+      {items.map((item) => (
         <Link
           className="text-lg font-semibold text-black"
-          key={index}
+          key={item.title}
           href={item.path ?? "/home"}
         >
-          <div
-            key={index}
-            className="relative z-0 flex w-full flex-col leading-4"
-          >
+          <div className="relative z-0 flex w-full flex-col leading-4">
             <div className="z-10 flex items-center gap-2.5 pl-2.5">
               {item.icon}
               <div className="my-auto self-stretch text-sm">{item.title}</div>
@@ -53,7 +50,7 @@ const OtherSection = () => (
     </h2>
     <div className="mt-5 flex w-full flex-col pl-7 text-sm leading-loose text-zinc-800">
       {otherMenuItems.map((item, index) => (
-        <div key={index} className={index > 0 ? "mt-2.5" : ""}>
+        <div key={item} className={index > 0 ? "mt-2.5" : ""}>
           {item}
         </div>
       ))}

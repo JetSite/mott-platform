@@ -1,4 +1,4 @@
-import {
+import type {
   AllMiddlewareArgs,
   BlockAction,
   SlackActionMiddlewareArgs,
@@ -12,8 +12,8 @@ const sampleActionCallback = async ({
   try {
     await ack();
     await client.views.update({
-      view_id: body.view!.id,
-      hash: body.view!.hash,
+      view_id: body.view?.id,
+      hash: body.view?.hash,
       view: {
         type: "modal",
         callback_id: "sample_view_id",

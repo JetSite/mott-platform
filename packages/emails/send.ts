@@ -1,7 +1,7 @@
+import type Mail from "nodemailer/lib/mailer";
 import type React from "react";
 import { render } from "@react-email/components";
 import nodemailer from "nodemailer";
-import Mail from "nodemailer/lib/mailer";
 import { Resend } from "resend";
 
 import { env } from "./env";

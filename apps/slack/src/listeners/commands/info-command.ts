@@ -1,6 +1,10 @@
-import { AllMiddlewareArgs, SlackCommandMiddlewareArgs } from "@slack/bolt";
-import { logger } from "../../utils/logger";
+import type {
+  AllMiddlewareArgs,
+  SlackCommandMiddlewareArgs,
+} from "@slack/bolt";
+
 import { getDatabaseInfo, getTableSchema } from "../../lib/strapi";
+import { logger } from "../../utils/logger";
 import ResultBuilder from "../../utils/result-builder";
 
 const infoCommandCallback = async ({
@@ -62,11 +66,11 @@ const infoCommandCallback = async ({
       logger.info("tables command");
       const tables = await getDatabaseInfo();
       await respond({
-        text:
-          "```" +
-          "Your Tables: \n--------------------\n" +
-          tables.join("\n") +
-          "```",
+        text: `\`\`\`
+        Your Tables: 
+        --------------------
+        ${tables.join("\n")}
+        \`\`\``,
       });
     } else if (command.text.startsWith("schema")) {
       const table = command.text.split(" ")[1];
@@ -78,27 +82,25 @@ const infoCommandCallback = async ({
             text: `Table ${table} not found or there is no schema for it`,
           });
           return;
-        } else {
-          const result = ResultBuilder.buildFromRows(schema);
-          await respond({
-            text:
-              `Table ${table} schema:\n` +
-              "```" +
-              result.slackTableContent +
-              "```",
-          });
         }
-      } catch (e: any) {
-        logger.error(e);
+        const result = ResultBuilder.buildFromRows(schema);
         await respond({
-          text: `Error while getting schema for ${table}, ${e.message}}`,
+          text:
+            `Table ${table} schema:\n` +
+            `\`\`\`${result.slackTableContent}\`\`\``,
+        });
+      } catch (err: unknown) {
+        logger.error(err);
+        await respond({
+          text: `Error while getting schema for ${table}, ${err instanceof Error ? err.message : "unknown error"}`,
         });
       }
     }
     await ack();
-  } catch (error: any) {
+  } catch (err: unknown) {
+    logger.error(err);
     await respond({
-      text: `Error while executing command, ${error.message}}`,
+      text: `Error while executing command, ${err instanceof Error ? err.message : "unknown error"}`,
     });
   }
 };

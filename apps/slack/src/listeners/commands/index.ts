@@ -1,4 +1,5 @@
-import { App } from "@slack/bolt";
+import type { App } from "@slack/bolt";
+
 import infoCommandCallback from "./info-command";
 
 const register = (app: App) => {

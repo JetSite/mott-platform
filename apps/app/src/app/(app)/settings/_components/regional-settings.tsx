@@ -66,6 +66,7 @@ const measurementSystems = [
 
 interface RegionalSettingsProps {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   control: Control<any>;
 }
 

@@ -1,4 +1,4 @@
-import {
+import type {
   AllMiddlewareArgs,
   Block,
   BlockAction,
@@ -6,6 +6,7 @@ import {
   RichTextText,
   SlackActionMiddlewareArgs,
 } from "@slack/bolt";
+
 import { improveDocumentation } from "../../lib/strapi";
 
 const enhanceTextActionCallback = async ({
@@ -15,16 +16,15 @@ const enhanceTextActionCallback = async ({
 }: AllMiddlewareArgs & SlackActionMiddlewareArgs<BlockAction>) => {
   try {
     await ack();
-    const textBlock = body.view?.state?.values["content_input_id"][
-      "content-input"
-    ].rich_text_value?.elements[0].elements[0] as RichTextText;
+    const textBlock = body.view?.state?.values.content_input_id["content-input"]
+      .rich_text_value?.elements[0].elements[0] as RichTextText;
     const contentInput = textBlock.text;
     if (contentInput) {
       let improvedContent = "";
       let errorMessage = "";
       try {
         improvedContent = await improveDocumentation(contentInput);
-      } catch (error) {
+      } catch (_) {
         errorMessage = "Failed to enhance the text. Please try again later.";
       }
 
@@ -114,8 +114,8 @@ const enhanceTextActionCallback = async ({
       }
 
       await client.views.update({
-        view_id: body.view!.id,
-        hash: body.view!.hash,
+        view_id: body.view?.id,
+        hash: body.view?.hash,
         view: {
           callback_id: "train_view_id",
           type: "modal",

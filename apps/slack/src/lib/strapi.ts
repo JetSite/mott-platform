@@ -1,7 +1,8 @@
 import axios from "axios";
+
 import { logger } from "../utils/logger";
 
-export async function addSlackInstallation(id: string, installation: any) {
+export async function addSlackInstallation(id: string, installation: unknown) {
   await axios.post(
     `${process.env.BACKEND_URL}/api/slack-installations`,
     {
@@ -14,7 +15,7 @@ export async function addSlackInstallation(id: string, installation: any) {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
-    }
+    },
   );
 }
 
@@ -25,7 +26,7 @@ export async function getSlackInstallation(id: string) {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
-    }
+    },
   );
   if (!response.data?.data?.[0]) {
     throw new Error(`Installation not found: ${id}`);
@@ -41,7 +42,7 @@ export async function deleteSlackInstallation(id: string) {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
-    }
+    },
   );
 
   return true;
@@ -54,7 +55,7 @@ export async function getDatabaseInfo() {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
-    }
+    },
   );
   return response.data;
 }
@@ -66,7 +67,7 @@ export async function getTableSchema(tableName: string) {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
-    }
+    },
   );
   return response.data;
 }
@@ -81,7 +82,7 @@ export async function improveDocumentation(content: string) {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
-    }
+    },
   );
   return response.data;
 }
@@ -100,6 +101,6 @@ export async function addDocumentation(content: string) {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
-    }
+    },
   );
 }

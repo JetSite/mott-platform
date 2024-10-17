@@ -1,10 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.6.2/schema.json",
   "files": {
-    "ignore": [
-      "packages/ui/src/components/*.tsx",
-      "packages/ui/src/components/*.ts",
-    ],
+    "ignore": ["packages/ui/src/**/*.tsx", "packages/ui/src/**/*.ts"],
   },
   "linter": {
     "enabled": true,
