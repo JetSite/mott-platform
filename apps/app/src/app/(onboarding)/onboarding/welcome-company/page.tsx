@@ -1,25 +1,18 @@
-"use client";
+import Link from "next/link";
 
-import { useRouter } from "next/navigation";
-
+import { auth } from "@mott/auth";
 import { Button } from "@mott/ui/button";
 
-import { useLoginFormContext } from "~/components/forms/login-form-context";
 import { paths } from "~/routes/paths";
 
-export default function WelcomeCompanyPage() {
-  const router = useRouter();
-  const { formValues } = useLoginFormContext();
-
-  const handleNext = () => {
-    router.push(paths.onboarding.companySetup);
-  };
+export default async function WelcomeCompanyPage() {
+  const session = await auth();
 
   return (
     <>
       <div className="mb-[92px]">
         <h1 className="mb-[20px] text-3xl font-bold tracking-tight">
-          Welcome, {formValues.fullName}!
+          Welcome, {session?.user.name}!
         </h1>
         <h2 className="mb-[50px] text-2xl font-bold tracking-tight text-neutral-400">
           Let`s set up your corporate account and workspace now.
@@ -34,9 +27,9 @@ export default function WelcomeCompanyPage() {
         variant="primary"
         aria-label="Get Started"
         className="w-full"
-        onClick={handleNext}
+        asChild
       >
-        Get Started
+        <Link href={paths.onboarding.companySetup}>Get Started</Link>
       </Button>
     </>
   );

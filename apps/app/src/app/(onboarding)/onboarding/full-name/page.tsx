@@ -3,7 +3,7 @@
 import type { FullNameForm } from "@mott/validators";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@mott/ui/button";
+import { Button } from "@mott/ui/custom/button";
 import {
   Form,
   FormControl,
@@ -14,19 +14,21 @@ import {
   useForm,
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
+import { toast } from "@mott/ui/toast";
 import { fullNameSchema } from "@mott/validators";
 
-import { useLoginFormContext } from "~/components/forms/login-form-context";
+import { useBoolean } from "~/hooks/use-boolean";
 import { paths } from "~/routes/paths";
+import { api } from "~/trpc/react";
 
 export default function FullNamePage() {
   const router = useRouter();
+  const loading = useBoolean();
+  const { mutateAsync: setUserName } = api.auth.setUserName.useMutation();
   const form = useForm({
     schema: fullNameSchema,
     mode: "onSubmit",
   });
-
-  const { updateFormValues } = useLoginFormContext();
 
   const onSubmit = async (data: FullNameForm) => {
     const isStepValid = await form.trigger();
@@ -34,8 +36,15 @@ export default function FullNamePage() {
     if (!isStepValid) {
       return;
     }
+    try {
+      loading.onTrue();
+      await setUserName({ name: data.fullName });
+    } catch (error) {
+      loading.onFalse();
+      console.error("Error setting user name:", error);
+      toast.error("Error setting user name");
+    }
 
-    updateFormValues(data);
     router.push(paths.onboarding.welcome);
   };
 
@@ -78,8 +87,9 @@ export default function FullNamePage() {
             variant="primary"
             aria-label="Continue"
             className="mt-14"
+            loading={loading.value}
           >
-            Continue
+            {loading.value ? "Saving..." : "Continue"}
           </Button>
         </form>
       </Form>

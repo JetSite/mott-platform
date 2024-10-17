@@ -16,14 +16,22 @@ export const onboardingStepEnum = pgEnum("onboarding_step", [
   "chat_selection",
   "completed",
 ]);
-export const corporateChatEnum = pgEnum("corporate_chat", [
-  "discord",
-  "slack",
-  "teams",
-  "google_chat",
-  "whatsapp",
-  "imessage",
-]);
+
+export const CorporateChat = {
+  DISCORD: "discord",
+  SLACK: "slack",
+  TEAMS: "teams",
+  GOOGLE_CHAT: "google_chat",
+  WHATSAPP: "whatsapp",
+  IMESSAGE: "imessage",
+};
+
+export type CorporateChat = (typeof CorporateChat)[keyof typeof CorporateChat];
+
+export const corporateChatEnum = pgEnum(
+  "corporate_chat",
+  Object.values(CorporateChat) as [string, ...string[]],
+);
 export const User = pgTable("user", {
   id: text("id")
     .$defaultFn(() => createId())

@@ -5,6 +5,7 @@ import type { UseFormReturn } from "react-hook-form";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { match } from "ts-pattern";
 
 import { Button } from "@mott/ui/custom/button";
 import { useForm } from "@mott/ui/form";
@@ -142,13 +143,13 @@ export default function OtpSignIn() {
 
       toast.success("Login successful");
       const onboardingStatus = await checkOnboardingStatus();
-      if (onboardingStatus.completed) {
-        router.push(paths.dashboard.root);
-      } else {
-        router.push(paths.onboarding.welcome);
-      }
+      match(onboardingStatus)
+        .with({ completed: true }, () => router.push(paths.dashboard.root))
+        .with({ currentStep: "full_name" }, () =>
+          router.push(paths.onboarding.fullName),
+        )
+        .otherwise(() => router.push(paths.onboarding.companySetup));
     } catch (error) {
-      console.error("Error during OTP submission:", error);
       toast.error(error instanceof Error ? error.message : "An error occurred");
     } finally {
       otpLoading.onFalse();
