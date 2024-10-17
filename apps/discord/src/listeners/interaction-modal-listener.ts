@@ -1,31 +1,34 @@
+import type { Interaction } from "discord.js";
 import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  Interaction,
 } from "discord.js";
+
+import type { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 import { TrainCommand } from "../commands/train-command";
-import { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 
 const globalChatInputCommandMap = new Map<string, DiscordChatInputCommand>();
 
 function registerGlobalChatInputCommand(
-  discordChatInputCommand: DiscordChatInputCommand
+  discordChatInputCommand: DiscordChatInputCommand,
 ): void {
   globalChatInputCommandMap.set(
     discordChatInputCommand.commandConfiguration.name,
-    discordChatInputCommand
+    discordChatInputCommand,
   );
 }
 registerGlobalChatInputCommand(new TrainCommand());
 
 export async function interactionModalListener(
-  interaction: Interaction
+  interaction: Interaction,
 ): Promise<void> {
   // Handle commands
 
-  if (!interaction.isModalSubmit()) return;
+  if (!interaction.isModalSubmit()) {
+    return;
+  }
 
   if (interaction.customId === "train") {
     const content = interaction.fields.getTextInputValue("content");
@@ -38,7 +41,7 @@ export async function interactionModalListener(
       new ButtonBuilder()
         .setCustomId("send_to_server")
         .setLabel("Add")
-        .setStyle(ButtonStyle.Secondary)
+        .setStyle(ButtonStyle.Secondary),
     );
 
     const embed = new EmbedBuilder()

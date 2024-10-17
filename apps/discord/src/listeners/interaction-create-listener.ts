@@ -1,25 +1,28 @@
-import { Interaction } from "discord.js";
+import type { Interaction } from "discord.js";
+
+import type { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 import { TrainCommand } from "../commands/train-command";
-import { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 
 const globalChatInputCommandMap = new Map<string, DiscordChatInputCommand>();
 
 function registerGlobalChatInputCommand(
-  discordChatInputCommand: DiscordChatInputCommand
+  discordChatInputCommand: DiscordChatInputCommand,
 ): void {
   globalChatInputCommandMap.set(
     discordChatInputCommand.commandConfiguration.name,
-    discordChatInputCommand
+    discordChatInputCommand,
   );
 }
 registerGlobalChatInputCommand(new TrainCommand());
 
 export async function interactionCreateListener(
-  interaction: Interaction
+  interaction: Interaction,
 ): Promise<void> {
   // Handle commands
   if (interaction.isChatInputCommand()) {
-    let discordCommand = globalChatInputCommandMap.get(interaction.commandName);
+    const discordCommand = globalChatInputCommandMap.get(
+      interaction.commandName,
+    );
     if (!discordCommand) {
       return;
     }
@@ -28,7 +31,7 @@ export async function interactionCreateListener(
     } catch (e) {
       console.error(
         `The command ${discordCommand.commandConfiguration.name} encountered an error while running.`,
-        e
+        e,
       );
     }
     return;

@@ -1,20 +1,25 @@
-import {
+import type {
   AllMiddlewareArgs,
   GenericMessageEvent,
   SlackEventMiddlewareArgs,
 } from "@slack/bolt";
-import { logger } from "../../utils/logger";
 import axios from "axios";
 
+import { logger } from "../../utils/logger";
+
 export async function messageCallback(
-  args: AllMiddlewareArgs & SlackEventMiddlewareArgs<"message">
+  args: AllMiddlewareArgs & SlackEventMiddlewareArgs<"message">,
 ): Promise<void> {
   const event = args.event as GenericMessageEvent;
   const { client } = args;
 
-  if (event.text?.includes("<@")) return;
+  if (event.text?.includes("<@")) {
+    return;
+  }
   // Ignore the event if the message contains a user mention
-  if (event.channel_type !== "im" && !event.thread_ts) return;
+  if (event.channel_type !== "im" && !event.thread_ts) {
+    return;
+  }
 
   logger.info("message", event);
   const loadingMsg = await client.chat.postMessage({
@@ -42,19 +47,19 @@ export async function messageCallback(
         headers: {
           Authorization: `Bearer ${process.env.API_TOKEN}`,
         },
-      }
+      },
     );
     await client.chat.update({
       channel: event.channel,
       text: response.data,
-      ts: loadingMsgTs!,
+      ts: loadingMsgTs ?? "",
     });
-  } catch (err: any) {
+  } catch (err) {
     logger.error(err);
     await client.chat.update({
       channel: event.channel,
       text: "Sorry, I am unable to answer your question. Please try again later.",
-      ts: loadingMsgTs!,
+      ts: loadingMsgTs ?? "",
     });
   }
 }

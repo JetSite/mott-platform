@@ -13,6 +13,7 @@ export const hasAccessToBot = (userId: string): boolean => {
   return allowedUsers.includes(userId);
 };
 interface IObjectAny {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   [key: string]: any;
 }
 export async function ignoreMention({
@@ -24,9 +25,7 @@ export async function ignoreMention({
   const disallowedSubtypes = ["channel_topic", "message_changed"];
   const ignoreSubtypeEvent = disallowedSubtypes.indexOf(event.subtype) > -1;
   const ignoreSubtypeMessage =
-    message &&
-    message.subtype &&
-    disallowedSubtypes.indexOf(message.subtype) > -1;
+    message?.subtype && disallowedSubtypes.indexOf(message.subtype) > -1;
   const ignoreEdited = !!event.edited;
   // If mention should be ignored, return
   if (ignoreSubtypeEvent || ignoreSubtypeMessage || ignoreEdited) {

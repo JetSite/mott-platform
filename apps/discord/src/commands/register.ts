@@ -1,8 +1,8 @@
-import {
-  ApplicationCommandType,
+import type {
   Client,
   RESTPostAPIApplicationCommandsJSONBody,
 } from "discord.js";
+import { ApplicationCommandType } from "discord.js";
 
 export async function generateRegisterCommandsBody(): Promise<
   RESTPostAPIApplicationCommandsJSONBody[]
@@ -11,7 +11,7 @@ export async function generateRegisterCommandsBody(): Promise<
 
   globalCommands.push({
     name: "train",
-    description: `Train description`,
+    description: "Train description",
     type: ApplicationCommandType.ChatInput,
   });
 

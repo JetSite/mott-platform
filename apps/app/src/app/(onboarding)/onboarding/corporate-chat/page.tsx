@@ -86,36 +86,34 @@ export default function CorporateChatPage() {
           className="mt-[100px] flex w-full max-w-2xl flex-col gap-2"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <>
-            {platforms.map((platform) => (
-              <FormField
-                key={platform.name}
-                control={form.control}
-                name="corporateChat"
-                render={() => (
-                  <FormItem
-                    className="cursor-pointer rounded-lg border p-2 pl-28"
-                    onClick={() => handleSelectPlatform(platform.code)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <FormControl>
-                        <Image
-                          src={platform.img}
-                          width={26}
-                          height={26}
-                          alt={platform.name}
-                          unoptimized
-                        />
-                      </FormControl>
-                      <FormLabel className="text-sm font-medium text-gray-600">
-                        {platform.name}
-                      </FormLabel>
-                    </div>
-                  </FormItem>
-                )}
-              />
-            ))}
-          </>
+          {platforms.map((platform) => (
+            <FormField
+              key={platform.name}
+              control={form.control}
+              name="corporateChat"
+              render={() => (
+                <FormItem
+                  className="cursor-pointer rounded-lg border p-2 pl-28"
+                  onClick={() => handleSelectPlatform(platform.code)}
+                >
+                  <div className="flex items-center gap-3">
+                    <FormControl>
+                      <Image
+                        src={platform.img}
+                        width={26}
+                        height={26}
+                        alt={platform.name}
+                        unoptimized
+                      />
+                    </FormControl>
+                    <FormLabel className="text-sm font-medium text-gray-600">
+                      {platform.name}
+                    </FormLabel>
+                  </div>
+                </FormItem>
+              )}
+            />
+          ))}
         </form>
       </Form>
       <Button

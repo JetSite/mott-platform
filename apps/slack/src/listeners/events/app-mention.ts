@@ -1,6 +1,7 @@
+import type { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
 import axios from "axios";
+
 import { logger } from "../../utils/logger";
-import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
 
 export async function appMentionCallback({
   event,
@@ -30,19 +31,19 @@ export async function appMentionCallback({
         headers: {
           Authorization: `Bearer ${process.env.API_TOKEN}`,
         },
-      }
+      },
     );
     await client.chat.update({
       channel: event.channel,
       text: response.data,
-      ts: loadingMsgTs!,
+      ts: loadingMsgTs ?? "",
     });
-  } catch (err: any) {
+  } catch (err) {
     logger.error(err);
     await client.chat.update({
       channel: event.channel,
       text: "Sorry, I am unable to answer your question. Please try again later.",
-      ts: loadingMsgTs!,
+      ts: loadingMsgTs ?? "",
     });
   }
 }

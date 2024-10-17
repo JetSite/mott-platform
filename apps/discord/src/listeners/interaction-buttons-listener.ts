@@ -1,35 +1,38 @@
+import type { Interaction } from "discord.js";
 import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  Interaction,
 } from "discord.js";
+
+import type { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 import { TrainCommand } from "../commands/train-command";
-import { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 import { addDocumentation, improveDocumentation } from "../lib/strapi";
 
 const globalChatInputCommandMap = new Map<string, DiscordChatInputCommand>();
 
 function registerGlobalChatInputCommand(
-  discordChatInputCommand: DiscordChatInputCommand
+  discordChatInputCommand: DiscordChatInputCommand,
 ): void {
   globalChatInputCommandMap.set(
     discordChatInputCommand.commandConfiguration.name,
-    discordChatInputCommand
+    discordChatInputCommand,
   );
 }
 registerGlobalChatInputCommand(new TrainCommand());
 
 export async function interactionButtonsListener(
-  interaction: Interaction
+  interaction: Interaction,
 ): Promise<void> {
-  if (!interaction.isButton()) return;
+  if (!interaction.isButton()) {
+    return;
+  }
 
   if (interaction.customId === "improve_doc") {
     await interaction.deferReply({ ephemeral: true });
     const improvedDoc = await improveDocumentation(
-      interaction.message.embeds[0].description ?? ""
+      interaction.message.embeds[0].description ?? "",
     );
 
     const improvedEmbed = new EmbedBuilder()
@@ -37,15 +40,15 @@ export async function interactionButtonsListener(
       .setTitle("Improved Documentation")
       .setDescription(
         improvedDoc.length > 4096
-          ? improvedDoc.slice(0, 4093) + "..."
-          : improvedDoc
+          ? `${improvedDoc.slice(0, 4093)}...`
+          : improvedDoc,
       );
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("send_to_server")
         .setLabel("Add")
-        .setStyle(ButtonStyle.Primary)
+        .setStyle(ButtonStyle.Primary),
     );
     await interaction.editReply({
       embeds: [improvedEmbed],

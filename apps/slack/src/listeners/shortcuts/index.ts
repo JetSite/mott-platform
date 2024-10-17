@@ -1,4 +1,5 @@
-import { App } from "@slack/bolt";
+import type { App } from "@slack/bolt";
+
 import sampleShortcutCallback from "./sample-shortcut";
 import trainShortcutCallback from "./train-shortcut";
 

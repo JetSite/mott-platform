@@ -1,6 +1,6 @@
+import type { Message, TextChannel } from "discord.js";
 import { waitUntil } from "@vercel/functions";
 import axios from "axios";
-import { Message, TextChannel } from "discord.js";
 
 import { discordClient } from "..";
 
@@ -82,11 +82,16 @@ async function assistantThreadMessage(message: Message, prompt: string) {
 }
 
 export async function messageCreateListener(message: Message) {
-  if (message.author.bot) return;
+  if (message.author.bot) {
+    return;
+  }
 
-  if (!message.guild || message.mentions.has(discordClient.user!.id)) {
+  if (
+    !message.guild ||
+    message.mentions.has(discordClient.user?.id ?? "unknown-id")
+  ) {
     const prompt = message.content
-      .replace(`<@${discordClient.user!.id}>`, "")
+      .replace(`<@${discordClient.user?.id ?? "unknown-id"}>`, "")
       .trim();
 
     waitUntil(assistantThreadMessage(message, prompt));

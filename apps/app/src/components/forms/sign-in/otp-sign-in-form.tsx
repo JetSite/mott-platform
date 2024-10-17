@@ -50,16 +50,17 @@ export default function OtpSignInForm({
                     onComplete={handleComplete}
                     {...field}
                   >
-                    <>
-                      {Array.from({ length: COUNT_NUMBER_CODE }, (_, index) => (
-                        <InputOTPGroup key={index}>
+                    {Array.from(
+                      { length: COUNT_NUMBER_CODE },
+                      (item: number, index: number) => (
+                        <InputOTPGroup key={`otp-slot-${item}`}>
                           <InputOTPSlot
                             className={`h-10 w-[45px] ${errorMessage && "border border-red-600"}`}
                             index={index}
                           />
                         </InputOTPGroup>
-                      ))}
-                    </>
+                      ),
+                    )}
                   </InputOTP>
                 </FormControl>
               </FormItem>

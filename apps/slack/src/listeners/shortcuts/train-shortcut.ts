@@ -1,4 +1,7 @@
-import { AllMiddlewareArgs, SlackShortcutMiddlewareArgs } from "@slack/bolt";
+import type {
+  AllMiddlewareArgs,
+  SlackShortcutMiddlewareArgs,
+} from "@slack/bolt";
 
 const trainShortcutCallback = async ({
   ack,
@@ -74,9 +77,9 @@ const trainShortcutCallback = async ({
         ],
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     await respond({
-      text: `Error while executing command, ${error.message}}`,
+      text: `Error while executing command, ${error instanceof Error ? error.message : "Unknown error"}`,
     });
   }
 };

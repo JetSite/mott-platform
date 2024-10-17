@@ -1,12 +1,11 @@
+import type { ChatInputCommandInteraction } from "discord.js";
 import {
   ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  ChatInputCommandInteraction,
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
+
 import { DiscordChatInputCommand } from "../types/DiscordChatInputCommand.js";
 
 export class TrainCommand extends DiscordChatInputCommand {

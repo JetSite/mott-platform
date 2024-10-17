@@ -1,4 +1,4 @@
-import {
+import type {
   AllMiddlewareArgs,
   Block,
   InputBlock,
@@ -7,11 +7,12 @@ import {
   RichTextText,
   SlackViewMiddlewareArgs,
 } from "@slack/bolt";
+
 import { addDocumentation } from "../../lib/strapi";
 
 function extractInitialValue(
   blocks: (KnownBlock | Block)[],
-  blockId: string
+  blockId: string,
 ): string {
   for (const block of blocks) {
     if (block.type === "input" && block.block_id === blockId) {
@@ -49,7 +50,7 @@ const trainViewCallback = async ({
     if (!enhancedContent) {
       enhancedContent = extractInitialValue(
         view.blocks,
-        "enhanced_content_input_id"
+        "enhanced_content_input_id",
       );
     }
     if (enhancedContent) {
