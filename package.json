@@ -6,6 +6,7 @@
   },
   "packageManager": "pnpm@9.12.1",
   "scripts": {
+    "biome:lint": "biome lint .",
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
@@ -23,6 +24,7 @@
     "ui-add": "turbo run ui-add"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.3",
     "@mott/prettier-config": "workspace:*",
     "@turbo/gen": "^2.1.3",
     "prettier": "catalog:",

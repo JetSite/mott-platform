@@ -1,0 +1,7 @@
+{
+  "extends": "@mott/tsconfig/base.json",
+  "include": ["src", "*.ts", "**/*.ts"],
+  "compilerOptions": {
+    "types": ["bun-types"]
+  }
+}

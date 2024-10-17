@@ -1,0 +1,4 @@
+{
+  "extends": "@mott/tsconfig/base.json",
+  "include": ["src", "*.ts"]
+}

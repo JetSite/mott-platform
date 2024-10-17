@@ -1,0 +1,35 @@
+import { sentry } from "@hono/sentry";
+import { extendZodWithOpenApi } from "@hono/zod-openapi";
+import { Hono } from "hono";
+import { showRoutes } from "hono/dev";
+import { logger } from "hono/logger";
+import { z } from "zod";
+
+import { handleError } from "./libs/errors";
+
+extendZodWithOpenApi(z);
+
+const app = new Hono({ strict: false });
+app.use("*", sentry({ dsn: process.env.SENTRY_DSN }));
+app.onError(handleError);
+
+/**
+ * Public Routes
+ */
+
+/**
+ * Ping Pong
+ */
+app.use("/ping", logger());
+app.get("/ping", (c) => c.json({ ping: "pong" }, 200));
+
+const isDev = process.env.NODE_ENV === "development";
+const port = 8000;
+
+if (isDev) showRoutes(app, { verbose: true, colorize: true });
+
+console.log(`Starting server on port ${port}`);
+
+const server = { port, fetch: app.fetch };
+
+export default server;
