@@ -1,8 +1,8 @@
-import { BaseLanguageModelInterface } from "@langchain/core/language_models/base";
+import type { BaseLanguageModelInterface } from "@langchain/core/language_models/base";
+import type { SqlDatabase } from "langchain/sql_db";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { Tool } from "@langchain/core/tools";
-import { SqlDatabase } from "langchain/sql_db";
 
 interface SqlTool {
   db: SqlDatabase;

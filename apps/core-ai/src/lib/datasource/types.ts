@@ -42,7 +42,7 @@ export class TableSchema {
     public readonly dataSource: string,
     public readonly rawSchemaDefinition: string,
     public readonly isSuffixPartitionTable: boolean = false,
-    public readonly suffixes: string[] = []
+    public readonly suffixes: string[] = [],
   ) {}
 
   public getUniqueID(): string {
@@ -68,7 +68,7 @@ export class TableSchema {
     }
 
     return this.fields.flatMap((field) =>
-      TableSchema.getNestedColumnNameWithTypes(field)
+      TableSchema.getNestedColumnNameWithTypes(field),
     );
   }
 
@@ -87,7 +87,7 @@ export class TableSchema {
     return field;
   }
 
-  public getTopSuffixes(n: number = 2): string[] {
+  public getTopSuffixes(n = 2): string[] {
     if (n > this.suffixes.length) {
       return this.suffixes;
     }
@@ -117,7 +117,7 @@ export class TableSchema {
 
   private static getNestedColumnNameWithTypes(
     field: FieldDefinition,
-    parentFields: string[] = []
+    parentFields: string[] = [],
   ): ColumnNameWithType[] {
     if (!field.nestedFields) {
       if (parentFields.length > 0) {
@@ -137,10 +137,10 @@ export class TableSchema {
     }
 
     return field.nestedFields.flatMap((nestedField) =>
-      this.getNestedColumnNameWithTypes(
+      TableSchema.getNestedColumnNameWithTypes(
         nestedField,
-        parentFields.concat([field.name])
-      )
+        parentFields.concat([field.name]),
+      ),
     );
   }
 }

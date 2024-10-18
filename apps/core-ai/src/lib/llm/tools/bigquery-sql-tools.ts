@@ -1,10 +1,10 @@
-import { BaseLanguageModelInterface } from "@langchain/core/language_models/base";
+import type { BaseLanguageModelInterface } from "@langchain/core/language_models/base";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { Tool } from "@langchain/core/tools";
 
-import BigQuerySource from "../../datasource/bigquery";
-import { Answer } from "../../datasource/types";
+import type BigQuerySource from "../../datasource/bigquery";
+import type { Answer } from "../../datasource/types";
 
 interface SqlTool {
   db: BigQuerySource;
@@ -74,11 +74,11 @@ export class SchemaSqlTool extends Tool {
     );
     return JSON.stringify(
       schemas.reduce(
-        (acc, schema, index) => {
+        (acc: Record<string, unknown>, schema: unknown, index: number) => {
           acc[tables[index] ?? ""] = schema;
           return acc;
         },
-        {} as Record<string, any>,
+        {} as Record<string, unknown>,
       ),
     );
   }
@@ -136,7 +136,7 @@ export class QuerySqlTool extends Tool implements SqlTool {
   db: BigQuerySource;
 
   constructor(db: BigQuerySource) {
-    super(...arguments);
+    super();
     this.db = db;
   }
 
@@ -173,7 +173,10 @@ export class ListTablesSqlTool extends Tool implements SqlTool {
     try {
       const tables = this.db.getTables();
       const result = tables
-        .map((table) => `${table.database}.${table.name}`)
+        .map(
+          (table: { database: string; name: string }) =>
+            `${table.database}.${table.name}`,
+        )
         .join(",");
       return result;
     } catch (error) {
@@ -181,5 +184,6 @@ export class ListTablesSqlTool extends Tool implements SqlTool {
     }
   }
 
-  description = `Input is an empty string, output is a comma-separated list of tables in the database.`;
+  description =
+    "Input is an empty string, output is a comma-separated list of tables in the database.";
 }

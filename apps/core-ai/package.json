@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "tsx:dev": "pnpm with-env tsx watch src/index.ts",
+    "develop": "pnpm with-env tsx watch src/index.ts",
     "tsup:build": "tsup",
     "dev": "pnpm with-env bun run --hot src/index.ts",
     "build": "bun build src/index.ts --outdir dist",
@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@mott/tsconfig": "workspace:*",
+    "@types/node": "22.7.6",
     "@types/validator": "13.12.2",
     "bun-types": "1.1.31",
     "dotenv": "16.4.5",

@@ -12,6 +12,7 @@ RUN \
     --mount=type=bind,target=tooling/typescript/package.json,source=tooling/typescript/package.json \
     --mount=type=cache,target=/root/.bun/install/cache,sharing=locked \
     bun install --production --ignore-scripts --frozen-lockfile
+RUN ls -la /app/
 
 # build
 FROM oven/bun:1 AS build
