@@ -27,6 +27,6 @@
     "@types/node": "22.7.5",
     "dotenv-cli": "catalog:",
     "tsup": "8.3.0",
-    "typescript": "catalog:"
+    "typescript": "5.6.3"
   }
 }

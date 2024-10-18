@@ -31,7 +31,7 @@
     "react-dom": "catalog:react18",
     "superjson": "2.2.1",
     "ts-pattern": "^5.5.0",
-    "zod": "catalog:"
+    "zod": "3.23.8"
   },
   "devDependencies": {
     "@mott/eslint-config": "workspace:*",
@@ -39,14 +39,14 @@
     "@mott/tailwind-config": "workspace:*",
     "@mott/tsconfig": "workspace:*",
     "@types/node": "catalog:",
-    "@types/react": "catalog:react18",
-    "@types/react-dom": "catalog:react18",
+    "@types/react": "18.3.11",
+    "@types/react-dom": "18.3.1",
     "dotenv-cli": "catalog:",
     "eslint": "catalog:",
     "jiti": "2.3.3",
-    "prettier": "catalog:",
+    "prettier": "3.3.3",
     "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "5.6.3"
   },
   "prettier": "@mott/prettier-config"
 }

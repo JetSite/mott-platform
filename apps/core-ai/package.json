@@ -22,6 +22,7 @@
     "@mixedbread-ai/sdk": "^2.2.11",
     "@mott/error": "workspace:*",
     "@qdrant/js-client-rest": "^1.12.0",
+    "@scalar/hono-api-reference": "^0.5.155",
     "@t3-oss/env-core": "0.11.1",
     "hono": "4.6.5",
     "langchain": "^0.3.2",

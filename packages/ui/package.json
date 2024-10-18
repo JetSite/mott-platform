@@ -50,14 +50,14 @@
     "@mott/tsconfig": "workspace:*",
     "@types/react": "catalog:react18",
     "eslint": "catalog:",
-    "prettier": "catalog:",
+    "prettier": "3.3.3",
     "react": "catalog:react18",
-    "typescript": "catalog:",
-    "zod": "catalog:"
+    "typescript": "5.6.3",
+    "zod": "3.23.8"
   },
   "peerDependencies": {
     "react": "catalog:react18",
-    "zod": "catalog:"
+    "zod": "3.23.8"
   },
   "prettier": "@mott/prettier-config"
 }

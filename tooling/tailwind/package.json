@@ -24,8 +24,8 @@
     "@mott/prettier-config": "workspace:*",
     "@mott/tsconfig": "workspace:*",
     "eslint": "catalog:",
-    "prettier": "catalog:",
-    "typescript": "catalog:"
+    "prettier": "3.3.3",
+    "typescript": "5.6.3"
   },
   "prettier": "@mott/prettier-config"
 }

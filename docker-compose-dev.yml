@@ -1,5 +1,12 @@
-version: "3"
 services:
+  core_ai:
+    build:
+      dockerfile: ./apps/core-ai/Dockerfile
+    container_name: core_ai
+    restart: always
+    ports:
+      - "8000:8000"
+
   mott_discord_bot:
     build:
       dockerfile: ./apps/discord/Dockerfile
