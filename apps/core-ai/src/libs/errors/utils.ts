@@ -12,7 +12,7 @@ export function handleError(err: Error, c: Context): Response {
       {
         code: "BAD_REQUEST",
         message: error.message,
-        docs: "https://docs.openstatus.dev/api-references/errors/code/BAD_REQUEST",
+        docs: "https://docs.mott.ai/api-references/errors/code/BAD_REQUEST",
       },
       { status: 400 },
     );
@@ -23,7 +23,7 @@ export function handleError(err: Error, c: Context): Response {
       {
         code: code,
         message: err.message,
-        docs: `https://docs.openstatus.dev/api-references/errors/code/${code}`,
+        docs: `https://docs.mott.ai/api-references/errors/code/${code}`,
       },
       { status: err.status },
     );
@@ -32,7 +32,7 @@ export function handleError(err: Error, c: Context): Response {
     {
       code: "INTERNAL_SERVER_ERROR",
       message: err.message ?? "Something went wrong",
-      docs: "https://docs.openstatus.dev/api-references/errors/code/INTERNAL_SERVER_ERROR",
+      docs: "https://docs.mott.ai/api-references/errors/code/INTERNAL_SERVER_ERROR",
     },
 
     { status: 500 },
@@ -56,7 +56,7 @@ export function handleZodError(
     return c.json<z.infer<ReturnType<typeof createErrorSchema>>>(
       {
         code: "BAD_REQUEST",
-        docs: "https://docs.openstatus.dev/api-references/errors/code/BAD_REQUEST",
+        docs: "https://docs.mott.ai/api-references/errors/code/BAD_REQUEST",
         message: error.message,
       },
       { status: 400 },
@@ -77,7 +77,7 @@ export function createErrorSchema(code: ErrorCode) {
     }),
     docs: z.string().openapi({
       description: "A link to the documentation for the error.",
-      example: `https://docs.openstatus.dev/api-references/errors/code/${code}`,
+      example: `https://docs.mott.ai/api-references/errors/code/${code}`,
     }),
   });
 }

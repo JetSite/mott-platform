@@ -21,7 +21,7 @@ app.onError(handleError);
  */
 app.use("/ping", logger());
 app.get("/ping", (c) => c.json({ ping: "pong" }, 200));
-app.route("/api", api);
+app.route("/", api);
 
 const isDev = env.NODE_ENV === "development";
 const port = 8000;

@@ -11,7 +11,7 @@ RUN \
     --mount=type=bind,target=tooling/prettier/package.json,source=tooling/prettier/package.json \
     --mount=type=bind,target=tooling/typescript/package.json,source=tooling/typescript/package.json \
     --mount=type=cache,target=/root/.bun/install/cache,sharing=locked \
-    bun install --production --ignore-scripts --frozen-lockfile --verbose
+    bun install --production --ignore-scripts --frozen-lockfile
 
 # build
 FROM oven/bun:1 AS build
