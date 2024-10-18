@@ -1,6 +1,5 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { apiReference } from "@scalar/hono-api-reference";
-import { basicAuth } from "hono/basic-auth";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 
@@ -23,13 +22,7 @@ api.doc("/openapi", {
     title: "Mott API",
   },
 });
-api.use(
-  "/ui/*",
-  basicAuth({
-    username: "admin",
-    password: "admin",
-  }),
-);
+
 api.get(
   "/ui",
   apiReference({
