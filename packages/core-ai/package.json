@@ -6,25 +6,37 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
+    "build": "bun build src/index.ts --outdir dist",
     "start": "NODE_ENV=production bun run src/index.ts",
     "test": "bun test"
   },
   "dependencies": {
+    "@google-cloud/bigquery": "^7.9.1",
     "@hono/sentry": "1.2.0",
     "@hono/zod-openapi": "0.16.4",
     "@hono/zod-validator": "0.4.1",
+    "@langchain/community": "^0.3.6",
+    "@langchain/core": "^0.3.13",
+    "@langchain/mixedbread-ai": "^0.2.0",
+    "@langchain/qdrant": "^0.1.0",
+    "@mixedbread-ai/sdk": "^2.2.11",
     "@mott/error": "workspace:*",
+    "@qdrant/js-client-rest": "^1.12.0",
     "@t3-oss/env-core": "0.11.1",
     "hono": "4.6.5",
+    "langchain": "^0.3.2",
+    "langfuse": "^3.27.0",
+    "langfuse-langchain": "^3.27.0",
     "nanoid": "5.0.7",
     "percentile": "1.6.0",
+    "typeorm": "^0.3.20",
     "validator": "13.12.0",
     "zod": "3.23.8"
   },
   "devDependencies": {
     "@mott/tsconfig": "workspace:*",
     "@types/validator": "13.12.2",
-    "bun-types": "1.1.30",
+    "bun-types": "1.1.31",
     "dotenv": "16.4.5"
   }
 }

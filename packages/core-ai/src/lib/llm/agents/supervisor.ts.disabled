@@ -1,0 +1,81 @@
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from "@langchain/core/prompts";
+import { END } from "@langchain/langgraph";
+import { createLLM } from "../../clients/llm";
+import { JsonOutputToolsParser } from "@langchain/core/output_parsers/openai_tools";
+
+export async function createSupervisorChain() {
+  const members = ["user_context_agent", "agent_greeting", "sql_expert"];
+
+  const systemPrompt = `You are a supervisor directly examining the response messages of Mott chatbot assistant.
+  You are tasked with managing a conversation between the
+  following workers: {members}.   
+  here's a description of the roles of those agents:
+
+  "user_context_agent": This agent is responsible for understanding and capturing the context and intent behind the user's request. 
+  It analyzes the user's input to identify the key information, such as the topic, the user's goal, and any relevant background or context. This agent helps ensure that the other agents have a clear understanding of what the user is asking for.
+
+  "agent_greeting": This agent is responsible for providing information about the capabilities of the bot.
+
+  "sql_expert": As the name suggests, this agent is the primary expert in handling SQL-related queries and tasks. 
+  It has in-depth knowledge of SQL syntax, database structure, and query optimization. 
+  When the user's request involves working with databases, querying data, or performing SQL operations, 
+  the sql_expert agent takes the lead in formulating the appropriate SQL statements and executing them against the relevant databases.
+  It is the main agent responsible for carrying out SQL-related tasks.
+
+  Given the following user request, respond with the worker to act next. The sql_expert agent will be the primary agent to handle the request, with the other agents assisting as needed.
+  
+  When the task is completed, respond with FINISH.`;
+  const options = [END, ...members];
+
+  // Define the routing function
+  const functionDef = {
+    name: "route",
+    description: "Select the next role.",
+    parameters: {
+      title: "routeSchema",
+      type: "object",
+      properties: {
+        next: {
+          title: "Next",
+          anyOf: [{ enum: options }],
+        },
+      },
+      required: ["next"],
+    },
+  };
+
+  const toolDef = {
+    type: "function",
+    function: functionDef,
+  } as const;
+
+  const prompt = ChatPromptTemplate.fromMessages([
+    ["system", systemPrompt],
+    new MessagesPlaceholder("messages"),
+    [
+      "system",
+      "Given the conversation above, who should act next?" +
+        " Or should we FINISH? Select one of: {options}",
+    ],
+  ]);
+
+  const formattedPrompt = await prompt.partial({
+    options: options.join(", "),
+    members: members.join(", "),
+  });
+
+  return (
+    formattedPrompt
+      .pipe(
+        createLLM().bindTools([toolDef], {
+          tool_choice: { type: "function", function: { name: "route" } },
+        }) as unknown
+      )
+      .pipe(new JsonOutputToolsParser())
+      // select the first one
+      .pipe((x) => x[0].args)
+  );
+}

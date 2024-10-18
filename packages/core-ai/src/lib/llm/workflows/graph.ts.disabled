@@ -1,0 +1,108 @@
+import { BaseMessage, HumanMessage } from "@langchain/core/messages";
+import {
+  END,
+  MemorySaver,
+  START,
+  StateGraph,
+  StateGraphArgs,
+} from "@langchain/langgraph";
+import { createSqlAgent } from "../agents/sql-agent";
+import { createSupervisorChain } from "../agents/supervisor";
+import { createAgentGreeting } from "../agents/agent-greeting";
+import { createUserContextAgent } from "../agents/user-context-agent";
+import { extractJsonFromOutput } from "../../ai/parsers";
+import { RunnableConfig } from "@langchain/core/runnables";
+
+const members = ["user_context_agent", "agent_greeting", "sql_expert"];
+
+interface AgentStateChannels {
+  messages: BaseMessage[];
+  // The agent node that last performed work
+  next: string;
+}
+
+// This defines the object that is passed between each node
+// in the graph. We will create different nodes for each agent and tool
+const agentStateChannels: StateGraphArgs<AgentStateChannels>["channels"] = {
+  messages: {
+    value: (x?: BaseMessage[], y?: BaseMessage[]) => (x ?? []).concat(y ?? []),
+    default: () => [],
+  },
+  next: {
+    value: (x?: string, y?: string) => y ?? x ?? END,
+    default: () => END,
+  },
+};
+export async function createGraph(sessionId: string, question: string) {
+  const userContextAgent = await createUserContextAgent(sessionId);
+  const userContextAgentNode = async (
+    state: AgentStateChannels,
+    config?: RunnableConfig
+  ) => {
+    const result = await userContextAgent.invoke(state, config);
+    return {
+      messages: [
+        new HumanMessage({ content: result.output, name: "UserContextAgent" }),
+      ],
+    };
+  };
+
+  const agentGreeting = await createAgentGreeting();
+  const agentGreetingNode = async (
+    state: AgentStateChannels,
+    config?: RunnableConfig
+  ) => {
+    const result = await agentGreeting.invoke(state, config);
+    return {
+      messages: [
+        new HumanMessage({ content: result.output, name: "AgentGreeting" }),
+      ],
+    };
+  };
+
+  const sqlExpertAgent = await createSqlAgent(question, sessionId);
+  const sqlExpertNode = async (
+    state: AgentStateChannels,
+    config?: RunnableConfig
+  ) => {
+    const result = await sqlExpertAgent.invoke(state, config);
+    let output = result.output;
+    if (result.output.includes("```json")) {
+      const jsonData = extractJsonFromOutput(result.output);
+      if (jsonData.results && jsonData.results.length > 0) {
+        output = "";
+        for (const result of jsonData.results) {
+          if (result.sql) {
+            output += "\n```sql\n" + result.sql + "\n```";
+            output += result.summary;
+          }
+        }
+      }
+    }
+
+    return {
+      messages: [new HumanMessage({ content: output, name: "SQLExpert" })],
+    };
+  };
+
+  // 1. Create the graph
+  const supervisorChain = await createSupervisorChain();
+  const workflow = new StateGraph<AgentStateChannels, unknown, string>({
+    channels: agentStateChannels,
+  }) // 2. Add the nodes; these will do the work
+    .addNode("user_context_agent", userContextAgentNode)
+    .addNode("agent_greeting", agentGreetingNode)
+    .addNode("sql_expert", sqlExpertNode)
+    .addNode("supervisor", supervisorChain);
+  // 3. Define the edges. We will define both regular and conditional ones
+  // After a worker completes, report to supervisor
+  members.forEach((member) => {
+    workflow.addEdge(member, "supervisor");
+  });
+
+  workflow.addConditionalEdges("supervisor", (x: AgentStateChannels) => x.next);
+  workflow.addEdge(START, "supervisor");
+  const memoryH = new MemorySaver();
+
+  return workflow.compile({ checkpointer: memoryH });
+}

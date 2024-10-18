@@ -4,6 +4,26 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     NODE_ENV: z.string().default("development"),
+    CLIENT_BIGQUERY_CREDENTIALS: z.string(),
+    QDRANT_URL: z.string(),
+    QDRANT_API_KEY: z.string(),
+    MXBAI_API_KEY: z.string(),
+    LANGFUSE_SECRET_KEY: z.string(),
+    LANGFUSE_PUBLIC_KEY: z.string(),
+    LANGFUSE_BASEURL: z.string(),
+    CLIENT_POSTGRES_HOST: z.string(),
+    CLIENT_POSTGRES_PORT: z.string(),
+    CLIENT_POSTGRES_USER: z.string(),
+    CLIENT_POSTGRES_PASSWORD: z.string(),
+    CLIENT_POSTGRES_DB: z.string(),
+    CHAT_HISTORY_DB_HOST: z.string(),
+    CHAT_HISTORY_DB_PORT: z.number(),
+    CHAT_HISTORY_DB_USER: z.string(),
+    CHAT_HISTORY_DB_PASSWORD: z.string(),
+    CHAT_HISTORY_DB_NAME: z.string(),
+    AGENT_TYPE: z.string(),
+    OPENAI_API_KEY: z.string(),
+    DISCORD_BOT_TOKEN: z.string(),
   },
 
   /**
