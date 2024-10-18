@@ -14,9 +14,12 @@ export default class BigQuerySource extends DataSource {
     allowedTables: string[],
   ) {
     super("BigQuery", bqKey, allowedDatabases, allowedTables);
+    this.initializationPromise = this.init(bqKey).then(() =>
+      this.loadSchemas(),
+    );
   }
 
-  protected init(key: string): void {
+  protected async init(key: string): Promise<void> {
     const credentials = JSON.parse(key);
 
     this.bigquery = new BigQuery({
@@ -40,7 +43,7 @@ export default class BigQuerySource extends DataSource {
   }
 
   protected async loadTableNames(database: string): Promise<string[]> {
-    console.log("loadTableNames", this.bigquery);
+    await this.initializationPromise;
     if (this.bigquery == null) {
       throw new Error("BigQuery client not initialized");
     }
