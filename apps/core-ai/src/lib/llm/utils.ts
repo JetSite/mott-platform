@@ -1,8 +1,12 @@
+import type { BaseLanguageModel } from "@langchain/core/language_models/base";
+import type { BaseChatModel } from "@langchain/core/language_models/chat_models";
+import type { ChatPromptTemplate } from "@langchain/core/prompts";
+import type { Tool } from "@langchain/core/tools";
+import type { InputValues } from "@langchain/core/utils/types";
 import { PostgresChatMessageHistory } from "@langchain/community/stores/message/postgres";
 import { HumanMessage } from "@langchain/core/messages";
 import { StringOutputParser } from "@langchain/core/output_parsers";
-import { ChatPromptTemplate, PromptTemplate } from "@langchain/core/prompts";
-import { InputValues } from "@langchain/core/utils/types";
+import { PromptTemplate } from "@langchain/core/prompts";
 import { AgentExecutor, createOpenAIToolsAgent } from "langchain/agents";
 import pg from "pg";
 
@@ -32,8 +36,8 @@ export async function runChatWithPrompt(
 }
 
 export async function createAgent(
-  llm: any,
-  tools: any[],
+  llm: BaseChatModel,
+  tools: Tool[],
   prompt: ChatPromptTemplate,
 ) {
   const agent = await createOpenAIToolsAgent({ llm, tools, prompt });
@@ -109,8 +113,7 @@ export async function runChatWithSqlAgent(question: string, userId: string) {
   const lastExecutedSqlQuery = getLastQuerySqlInput(agentResponse);
   let formattedOutput = agentResponse.output;
   if (lastExecutedSqlQuery) {
-    formattedOutput =
-      "```sql\n " + lastExecutedSqlQuery + "\n```\n " + formattedOutput;
+    formattedOutput = `\`\`\`sql\n${lastExecutedSqlQuery}\n\`\`\`\n${formattedOutput}`;
   }
   chatHistory.addAIMessage(formattedOutput);
   return formattedOutput || "No answer from AI.";

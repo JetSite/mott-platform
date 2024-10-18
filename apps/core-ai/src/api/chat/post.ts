@@ -1,6 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 
 import type { chatApi } from "./index";
+import { runChatWithSqlAgent } from "~/lib/llm/utils";
 import { openApiErrorResponses } from "~/libs/errors/openapi-error-responses";
 
 const postRoute = createRoute({
@@ -38,7 +39,7 @@ const postRoute = createRoute({
 export function registerChatPost(api: typeof chatApi) {
   return api.openapi(postRoute, async (c) => {
     const { message } = await c.req.json();
-    const response = `This is a mock response to: ${message}`;
+    const response = await runChatWithSqlAgent(message, "");
     return c.json({ response }, 200);
   });
 }

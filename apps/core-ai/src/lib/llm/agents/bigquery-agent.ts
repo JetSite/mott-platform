@@ -1,4 +1,4 @@
-import { BaseLanguageModel } from "@langchain/core/language_models/base";
+import type { BaseLanguageModel } from "@langchain/core/language_models/base";
 import {
   ChatPromptTemplate,
   MessagesPlaceholder,
@@ -24,6 +24,7 @@ export default async function createBigQueryAgent(
   question: string,
   sessionId: string,
 ) {
+  console.log("Creating bigquery agent", sessionId);
   const db = new BigQuerySource(
     env.CLIENT_BIGQUERY_CREDENTIALS,
     ["CRM", "META"],
@@ -56,7 +57,7 @@ export default async function createBigQueryAgent(
     "question_translator",
   );
 
-  let promptTranslator = promptTranslatorTemplate.getLangchainPrompt();
+  const promptTranslator = promptTranslatorTemplate.getLangchainPrompt();
   const processedQuestion = await runChatWithPrompt(promptTranslator, {
     question,
   });
@@ -84,7 +85,7 @@ export default async function createBigQueryAgent(
     new QuerySqlTool(db),
     new ListTablesSqlTool(db),
   ];
-  let partialData: Record<string, string> = {
+  const partialData: Record<string, string> = {
     dialect: "BigQuery SQL",
     top_k: "200",
     current_time: new Date().toISOString(),

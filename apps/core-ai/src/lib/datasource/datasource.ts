@@ -1,7 +1,7 @@
-import {
+import type {
   Answer,
-  DataSourceType,
   DatabaseSchema,
+  DataSourceType,
   Row,
   TableInfo,
   TableSchema,
@@ -17,7 +17,7 @@ export abstract class DataSource {
     public name: string,
     key: string,
     allowedDatabases: string[],
-    allowedTables: string[]
+    allowedTables: string[],
   ) {
     this.init(key);
     this.initializationPromise = this.loadSchemas();
@@ -31,7 +31,7 @@ export abstract class DataSource {
 
   public getTable(uniqueId: string): TableSchema | undefined {
     return this.getTables().find(
-      (tableSchema) => tableSchema.getUniqueID() === uniqueId
+      (tableSchema) => tableSchema.getUniqueID() === uniqueId,
     );
   }
 
@@ -51,16 +51,18 @@ export abstract class DataSource {
     const databases = (await this.loadDatabaseNames()).filter(
       (database: string) =>
         this.allowedDatabases.length === 0 ||
-        this.allowedDatabases.includes(database)
+        this.allowedDatabases.includes(database),
     );
 
-    this.databases = await Promise.all(
-      databases.map(async (database) => await this.loadDatabase(database))
-    );
+    this.databases = [];
+    for (const database of databases) {
+      const loadedDatabase = await this.loadDatabase(database);
+      this.databases.push(loadedDatabase);
+    }
 
     if (this.databases.flatMap((database) => database.schemas).length === 0) {
       throw new Error(
-        "No table loaded, please double check your data source and whitelist tables."
+        "No table loaded, please double check your data source and whitelist tables.",
       );
     }
   }
@@ -77,23 +79,22 @@ export abstract class DataSource {
     const fullTableName = `${database}.${table}`;
     const matchRegex =
       this.allowedTables.find((allowedTable) => {
-        const regexStr =
-          "^" +
-          allowedTable
-            .split("*")
-            .map((str: string) =>
-              str.replace(/([.*+?^=!:${}()|\\[\\]\/\\])/g, "\\$1")
-            )
-            .join(".*") +
-          "$";
+        const regexStr = `^${allowedTable
+          .split("*")
+          .map((str: string) =>
+            str.replace(/([.*+?^=!:${}()|\\[\\]\/\\])/g, "\\$1"),
+          )
+          .join(".*")}$`;
         return new RegExp(regexStr).test(fullTableName);
       }) != null;
     return matchRegex || this.allowedTables.includes(fullTableName);
   }
 
-  protected async loadDatabase(database: string): Promise<DatabaseSchema> {
+  protected loadDatabase = async (
+    database: string,
+  ): Promise<DatabaseSchema> => {
     const tables = (await this.loadTableNames(database)).filter((table) =>
-      this.isTableAllowed(table, database)
+      this.isTableAllowed(table, database),
     );
 
     const extractTables = new Map<string, TableInfo>();
@@ -110,7 +111,7 @@ export abstract class DataSource {
 
       const [tableName, partitionSuffix] = extracted;
       if (extractTables.has(tableName)) {
-        extractTables.get(tableName)?.suffixes!.push(partitionSuffix);
+        extractTables.get(tableName)?.suffixes?.push(partitionSuffix);
         continue;
       }
       extractTables.set(tableName, {
@@ -120,18 +121,16 @@ export abstract class DataSource {
       });
     }
 
-    return await Promise.all(
-      Array.from(extractTables.values()).map(
-        async (table) =>
-          await this.loadTableSchema(database, table).then((schema) => {
-            return schema;
-          })
-      )
-    ).then((schemas) => ({
+    const schemas = [];
+    for (const table of extractTables.values()) {
+      const schema = await this.loadTableSchema(database, table);
+      schemas.push(schema);
+    }
+    return {
       name: database,
       schemas,
-    }));
-  }
+    };
+  };
 
   protected includeDatabaseNameInQuery(): boolean {
     return true;
@@ -147,7 +146,7 @@ export abstract class DataSource {
   protected abstract loadTableNames(database: string): Promise<string[]>;
   protected abstract loadTableSchema(
     database: string,
-    table: TableInfo
+    table: TableInfo,
   ): Promise<TableSchema>;
   protected async enrichTableSchema(): Promise<void> {}
 

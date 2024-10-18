@@ -5,10 +5,13 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
+    "tsx:dev": "pnpm with-env tsx watch src/index.ts",
+    "tsup:build": "tsup",
+    "dev": "pnpm with-env bun run --hot src/index.ts",
     "build": "bun build src/index.ts --outdir dist",
     "start": "NODE_ENV=production bun run src/index.ts",
-    "test": "bun test"
+    "test": "bun test",
+    "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^7.9.1",
@@ -38,6 +41,8 @@
     "@mott/tsconfig": "workspace:*",
     "@types/validator": "13.12.2",
     "bun-types": "1.1.31",
-    "dotenv": "16.4.5"
+    "dotenv": "16.4.5",
+    "tsup": "8.3.0",
+    "tsx": "^4.19.1"
   }
 }

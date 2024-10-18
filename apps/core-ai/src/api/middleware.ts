@@ -3,11 +3,14 @@ import { HTTPException } from "hono/http-exception";
 
 import { env } from "../env";
 
-function verifyKey(key: string): {
+function verifyKey(key: string): Promise<{
   result: { valid: boolean; ownerId: string };
   error: Error | null;
-} {
-  return { result: { valid: true, ownerId: "1" }, error: null };
+}> {
+  return Promise.resolve({
+    result: { valid: true, ownerId: "1" },
+    error: null,
+  });
 }
 
 export async function middleware(c: Context, next: Next) {
