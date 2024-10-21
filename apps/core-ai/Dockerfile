@@ -1,30 +1,32 @@
-# install
-FROM oven/bun:1 AS install
-WORKDIR /app/
-RUN \
-    --mount=type=bind,target=package.json,source=package.json \
-    --mount=type=bind,target=apps/core-ai/package.json,source=apps/core-ai/package.json \
-    --mount=type=bind,target=packages/db/package.json,source=packages/db/package.json \
-    --mount=type=bind,target=packages/emails/package.json,source=packages/emails/package.json \
-    --mount=type=bind,target=packages/error/package.json,source=packages/error/package.json \
-    --mount=type=bind,target=tooling/eslint/package.json,source=tooling/eslint/package.json \
-    --mount=type=bind,target=tooling/prettier/package.json,source=tooling/prettier/package.json \
-    --mount=type=bind,target=tooling/typescript/package.json,source=tooling/typescript/package.json \
-    --mount=type=cache,target=/root/.bun/install/cache,sharing=locked \
-    bun install --production --ignore-scripts --frozen-lockfile
-RUN ls -la /app/
+FROM node:20-alpine AS base
 
-# build
-FROM oven/bun:1 AS build
-ENV NODE_ENV="production"
-WORKDIR /app/apps/core-ai
-COPY --link . /app/
-COPY --from=install --link /app/node_modules /app/node_modules
-RUN bun build --compile --sourcemap src/index.ts --outfile=app
+# The web Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
+# Make sure you update this Dockerfile, the Dockerfile in the web workspace and copy that over to Dockerfile in the docs.
 
-# runtime
-FROM oven/bun:1-slim AS runtime
-COPY --from=build --chown=1000:1000 --chmod=555 --link /app/apps/core-ai/app /bin/
-USER bun
-EXPOSE 8000
-ENTRYPOINT ["/bin/app"]
+FROM base AS builder
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk update
+RUN apk add --no-cache libc6-compat
+# Set working directory
+WORKDIR /app
+RUN npm install -g pnpm turbo
+COPY . .
+RUN turbo prune @mott/core-ai --docker
+
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
+RUN apk update
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+# First install dependencies (as they change less often)
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN npm install -g pnpm
+RUN pnpm install
+
+# Build the project and its dependencies
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+
