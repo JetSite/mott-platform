@@ -22,7 +22,7 @@
     "@mott/auth": "workspace:*",
     "@mott/db": "workspace:*",
     "@mott/validators": "workspace:*",
-    "@trpc/server": "^11.0.0-rc.586",
+    "@trpc/server": "^11.0.0-rc.593",
     "superjson": "2.2.1",
     "zod": "3.23.8"
   },
@@ -30,7 +30,7 @@
     "@mott/eslint-config": "workspace:*",
     "@mott/prettier-config": "workspace:*",
     "@mott/tsconfig": "workspace:*",
-    "eslint": "9.12.0",
+    "eslint": "9.13.0",
     "prettier": "3.3.3",
     "typescript": "5.6.3"
   },

@@ -14,19 +14,19 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@eslint/compat": "^1.2.0",
+    "@eslint/compat": "^1.2.1",
     "@next/eslint-plugin-next": "14.2.15",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-jsx-a11y": "^6.10.1",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "5.0.0",
-    "eslint-plugin-turbo": "2.2.0",
+    "eslint-plugin-turbo": "2.2.1",
     "typescript-eslint": "^8.10.0"
   },
   "devDependencies": {
     "@mott/prettier-config": "workspace:*",
     "@mott/tsconfig": "workspace:*",
-    "eslint": "9.12.0",
+    "eslint": "9.13.0",
     "prettier": "3.3.3",
     "typescript": "5.6.3"
   },
