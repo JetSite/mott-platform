@@ -1,12 +1,12 @@
+import { PostgresChatMessageHistory } from "@langchain/community/stores/message/postgres";
 import type { BaseLanguageModel } from "@langchain/core/language_models/base";
 import type { BaseChatModel } from "@langchain/core/language_models/chat_models";
-import type { ChatPromptTemplate } from "@langchain/core/prompts";
-import type { Tool } from "@langchain/core/tools";
-import type { InputValues } from "@langchain/core/utils/types";
-import { PostgresChatMessageHistory } from "@langchain/community/stores/message/postgres";
 import { HumanMessage } from "@langchain/core/messages";
 import { StringOutputParser } from "@langchain/core/output_parsers";
+import type { ChatPromptTemplate } from "@langchain/core/prompts";
 import { PromptTemplate } from "@langchain/core/prompts";
+import type { Tool } from "@langchain/core/tools";
+import type { InputValues } from "@langchain/core/utils/types";
 import { AgentExecutor, createOpenAIToolsAgent } from "langchain/agents";
 import pg from "pg";
 

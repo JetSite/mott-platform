@@ -1,10 +1,10 @@
 import type { CallbackManagerForToolRun } from "@langchain/core/callbacks/manager";
 import type { BaseRetrieverInterface } from "@langchain/core/retrievers";
 import type { DynamicStructuredToolInput } from "@langchain/core/tools";
-import type { Tool } from "langchain/tools";
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { QdrantVectorStore } from "@langchain/qdrant";
+import type { Tool } from "langchain/tools";
 import { z } from "zod";
 
 import { env } from "~/env";

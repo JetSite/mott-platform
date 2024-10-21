@@ -1,6 +1,6 @@
 import type { EmailForm } from "@mott/validators";
-import type { UseFormReturn } from "react-hook-form";
 import { signIn } from "next-auth/react";
+import type { UseFormReturn } from "react-hook-form";
 
 import { Button } from "@mott/ui/custom/button";
 import {

@@ -1,6 +1,6 @@
-import type { ILogObj } from "tslog";
 import { Client, Events, GatewayIntentBits, Partials } from "discord.js";
 import * as dotenv from "dotenv";
+import type { ILogObj } from "tslog";
 import { Logger } from "tslog";
 
 import { interactionButtonsListener } from "./listeners/interaction-buttons-listener";

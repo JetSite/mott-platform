@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Body,
   Container,
@@ -9,6 +8,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import React from "react";
 
 import { emailTailwindConfig } from "../tailwind";
 

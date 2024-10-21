@@ -1,4 +1,4 @@
-import { BaseLanguageModel } from "@langchain/core/language_models/base";
+import type { BaseLanguageModel } from "@langchain/core/language_models/base";
 import {
   ChatPromptTemplate,
   MessagesPlaceholder,
@@ -47,7 +47,7 @@ export async function createSqlAgent(question: string, sessionId: string) {
     "question_translator",
   );
 
-  let promptTranslator = promptTranslatorTemplate.getLangchainPrompt();
+  const promptTranslator = promptTranslatorTemplate.getLangchainPrompt();
   const processedQuestion = await runChatWithPrompt(promptTranslator, {
     question,
   });
@@ -90,7 +90,7 @@ export async function createSqlAgent(question: string, sessionId: string) {
     new SchemaSqlTool(db),
     new SqlQueryCheckerTool(createLLM() as unknown as BaseLanguageModel),
   ];
-  let partialData: Record<string, string> = {
+  const partialData: Record<string, string> = {
     dialect: "PostgreSQL",
     top_k: "50",
     current_time: new Date().toISOString(),

@@ -3,15 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "workspaces": [
-    ".react-email"
-  ],
+  "workspaces": [".react-email"],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "files": ["dist/**"],
   "scripts": {
     "dev": "pnpm with-env email dev -p 3002",
     "build": "tsup",

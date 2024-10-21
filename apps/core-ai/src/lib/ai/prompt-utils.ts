@@ -3,7 +3,7 @@ import { strToApproxTokenCount } from "./tokens";
 export function addDocumentationToPrompt(
   initialPrompt: string,
   documentationList: string[],
-  maxTokens: number = 14000
+  maxTokens = 14000,
 ): string {
   if (documentationList.length > 0) {
     initialPrompt += "\n\n=== Additional Context === \n\n";
@@ -24,7 +24,7 @@ export function addDocumentationToPrompt(
 export function addInstructionsToPrompt(
   initialPrompt: string,
   documentationList: string[],
-  maxTokens: number = 14000
+  maxTokens = 14000,
 ): string {
   if (documentationList.length > 0) {
     initialPrompt += "\n\n=== Additional Instructions === \n\n";
@@ -46,7 +46,7 @@ export function addInstructionsToPrompt(
 export function addDDLToPrompt(
   initialPrompt: string,
   ddlList: string[],
-  maxTokens: number = 14000
+  maxTokens = 14000,
 ): string {
   if (ddlList.length > 0) {
     initialPrompt += "\n===Tables \n";
@@ -66,7 +66,7 @@ export function addDDLToPrompt(
 export function addSQLToPrompt(
   initialPrompt: string,
   sqlList: { sql: string; question: string }[],
-  maxTokens: number = 14000
+  maxTokens = 14000,
 ): string {
   if (sqlList.length > 0) {
     initialPrompt += "\n===Question-SQL Pairs\n\n";

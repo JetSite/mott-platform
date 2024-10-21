@@ -6,9 +6,9 @@ import {
   EmbedBuilder,
 } from "discord.js";
 
-import type { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 import { TrainCommand } from "../commands/train-command";
 import { addDocumentation, improveDocumentation } from "../lib/strapi";
+import type { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 
 const globalChatInputCommandMap = new Map<string, DiscordChatInputCommand>();
 

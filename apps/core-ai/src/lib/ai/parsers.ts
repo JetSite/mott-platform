@@ -1,4 +1,4 @@
-import { ChainValues } from "@langchain/core/utils/types";
+import type { ChainValues } from "@langchain/core/utils/types";
 
 export function extractJsonFromOutput(text: string) {
   // Define the regular expression pattern to match JSON blocks

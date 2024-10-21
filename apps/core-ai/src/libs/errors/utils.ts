@@ -1,7 +1,7 @@
 import type { ErrorCode } from "@mott/error";
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
-import { z, ZodError } from "zod";
+import { ZodError, z } from "zod";
 
 import { ErrorCodeEnum, SchemaError, statusToCode } from "@mott/error";
 

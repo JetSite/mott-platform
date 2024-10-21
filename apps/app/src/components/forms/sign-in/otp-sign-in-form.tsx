@@ -1,6 +1,6 @@
 import type { OtpForm } from "@mott/validators";
-import type { UseFormReturn } from "react-hook-form";
 import { CheckCircle, Loader2 } from "lucide-react";
+import type { UseFormReturn } from "react-hook-form";
 
 import { Button } from "@mott/ui/custom/button";
 import { Form, FormControl, FormField, FormItem } from "@mott/ui/form";

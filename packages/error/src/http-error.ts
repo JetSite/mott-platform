@@ -1,5 +1,5 @@
-import type { ErrorCode } from "./error-code";
 import { BaseError } from "./base-error";
+import type { ErrorCode } from "./error-code";
 import { statusToCode } from "./utils";
 
 type Context = {

@@ -5,7 +5,7 @@ const marketingQuerySchema = z.object({
   percentageOfConfidence: z
     .string()
     .describe(
-      "The parameter contains the percentage of confidence that the request is related to marketing or analytical information."
+      "The parameter contains the percentage of confidence that the request is related to marketing or analytical information.",
     ),
 });
 export const marketingQueryTool = new DynamicStructuredTool({

@@ -1,7 +1,7 @@
 import type { Interaction } from "discord.js";
 
-import type { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 import { TrainCommand } from "../commands/train-command";
+import type { DiscordChatInputCommand } from "../types/DiscordChatInputCommand";
 
 const globalChatInputCommandMap = new Map<string, DiscordChatInputCommand>();
 

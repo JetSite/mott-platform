@@ -14,8 +14,8 @@ import {
 import { Input } from "@mott/ui/input";
 import { Textarea } from "@mott/ui/textarea";
 
-import type { CustomInstructionsForm, ProfileForm } from "./types";
 import { FileItem } from "./_components/file-item";
+import type { CustomInstructionsForm, ProfileForm } from "./types";
 import { customInstructionsSchema, profileSchema } from "./types";
 
 export default function ProfilePage() {

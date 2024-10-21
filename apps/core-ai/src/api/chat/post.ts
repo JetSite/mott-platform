@@ -1,8 +1,8 @@
 import { createRoute, z } from "@hono/zod-openapi";
 
-import type { chatApi } from "./index";
 import { runChatWithSqlAgent } from "~/lib/llm/utils";
 import { openApiErrorResponses } from "~/libs/errors/openapi-error-responses";
+import type { chatApi } from "./index";
 
 const postRoute = createRoute({
   method: "post",

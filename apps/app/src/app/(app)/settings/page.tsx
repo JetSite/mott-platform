@@ -10,9 +10,9 @@ import {
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
 
-import type { SettingsForm } from "./types";
 import { ImageInput } from "./_components/image-input";
 import { RegionalSettings } from "./_components/regional-settings";
+import type { SettingsForm } from "./types";
 import { settingsSchema } from "./types";
 
 const DEFAULT_LOGO = "/assets/hims.png";

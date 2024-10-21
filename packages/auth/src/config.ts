@@ -1,9 +1,9 @@
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import type {
   DefaultSession,
   NextAuthConfig,
   Session as NextAuthSession,
 } from "next-auth";
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Google from "next-auth/providers/google";
 import Resend from "next-auth/providers/resend";
 

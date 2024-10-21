@@ -1,6 +1,6 @@
-import type { Message, TextChannel } from "discord.js";
 import { waitUntil } from "@vercel/functions";
 import axios from "axios";
+import type { Message, TextChannel } from "discord.js";
 
 import { discordClient } from "..";
 

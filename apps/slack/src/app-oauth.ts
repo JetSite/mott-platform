@@ -1,12 +1,12 @@
 import { App } from "@slack/bolt";
 import { config } from "dotenv";
-import registerListeners from "./listeners";
-import { logLevel, logger } from "./utils/logger";
 import {
   addSlackInstallation,
   deleteSlackInstallation,
   getSlackInstallation,
 } from "./lib/strapi";
+import registerListeners from "./listeners";
+import { logLevel, logger } from "./utils/logger";
 
 config();
 

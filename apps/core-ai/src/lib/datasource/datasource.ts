@@ -1,7 +1,7 @@
 import type {
   Answer,
-  DatabaseSchema,
   DataSourceType,
+  DatabaseSchema,
   Row,
   TableInfo,
   TableSchema,

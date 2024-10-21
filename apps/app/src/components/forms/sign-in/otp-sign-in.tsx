@@ -1,10 +1,10 @@
 "use client";
 
 import type { EmailForm, OtpForm } from "@mott/validators";
-import type { UseFormReturn } from "react-hook-form";
-import React, { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
+import type { UseFormReturn } from "react-hook-form";
 import { match } from "ts-pattern";
 
 import { Button } from "@mott/ui/custom/button";

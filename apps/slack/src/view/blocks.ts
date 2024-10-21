@@ -1,7 +1,7 @@
 import type { KnownBlock } from "@slack/web-api";
 
-import type { Result } from "../utils/result-builder";
 import { Action } from "../types";
+import type { Result } from "../utils/result-builder";
 
 export function getQuestionBlock(question: string): KnownBlock {
   return {

@@ -1,8 +1,8 @@
 import type { FormattedMetadata, TableField } from "@google-cloud/bigquery";
 import { BigQuery } from "@google-cloud/bigquery";
 
-import type { Answer, FieldDefinition, Row, TableInfo } from "./types";
 import { DataSource } from "./datasource";
+import type { Answer, FieldDefinition, Row, TableInfo } from "./types";
 import { DataSourceType, TableSchema } from "./types";
 
 export default class BigQuerySource extends DataSource {

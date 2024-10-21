@@ -14,7 +14,7 @@ export async function addDocumentation(content: string) {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
-    }
+    },
   );
 }
 
@@ -28,7 +28,7 @@ export async function improveDocumentation(content: string) {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
-    }
+    },
   );
   return response.data;
 }

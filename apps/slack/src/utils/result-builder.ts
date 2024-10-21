@@ -12,7 +12,7 @@ export class Result {
   constructor(
     public readonly slackTableContent: string,
     public readonly numRowsTruncated: number,
-    public readonly fullCsvContent: string
+    public readonly fullCsvContent: string,
   ) {}
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -45,7 +45,7 @@ function fillDash(length: number): string {
 function getLines(columns: Column[]): string {
   return fillDash(
     columns.reduce((sum, col) => (col.width ?? 10) + sum, 0) +
-      2 * (columns.length - 1)
+      2 * (columns.length - 1),
   );
 }
 
@@ -72,7 +72,7 @@ function buildCSVContent(columns: Column[], rows: Row[]): string {
   const content = rows.map((row) =>
     Object.values(row)
       .map((value) => `${value}`)
-      .join(",")
+      .join(","),
   );
 
   return [header, ...content].join("\n");
@@ -110,7 +110,7 @@ function buildFromRows(rows: Row[]): Result {
       title: columnName,
       dataIndex: columnName,
     })),
-    rows
+    rows,
   );
 }
 
@@ -133,7 +133,7 @@ function build(columns: Column[], rows: Row[]): Result {
   return new Result(
     result.join("\n"),
     rows.length - numIncludedRows,
-    buildCSVContent(columns, rows)
+    buildCSVContent(columns, rows),
   );
 }
 

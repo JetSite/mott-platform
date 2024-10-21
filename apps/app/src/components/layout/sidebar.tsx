@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
+import React from "react";
 
 import type { MenuItem } from "./menu-items";
 import { getProfileSettingsItems, getWorkSpaceItems } from "./menu-items";

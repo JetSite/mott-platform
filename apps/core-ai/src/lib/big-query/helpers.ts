@@ -7,7 +7,7 @@ interface TableField {
 export async function getTableColumnNames(
   secretKey: object,
   datasetName: string,
-  tableName: string
+  tableName: string,
 ): Promise<string[]> {
   const bigquery = new BigQuery({ credentials: secretKey });
   const [tableMetadata] = await bigquery
@@ -16,7 +16,7 @@ export async function getTableColumnNames(
     .getMetadata();
 
   const columnNames: string[] = tableMetadata.schema.fields.map(
-    (field: TableField) => field.name
+    (field: TableField) => field.name,
   );
 
   return columnNames;
