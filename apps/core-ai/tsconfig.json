@@ -6,6 +6,6 @@
     "paths": {
       "~/*": ["./src/*"]
     },
-    "types": ["bun-types", "node"]
+    "types": ["bun-types"]
   }
 }
