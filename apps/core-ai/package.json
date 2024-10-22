@@ -7,8 +7,8 @@
   "scripts": {
     "develop": "pnpm with-env tsx watch src/index.ts",
     "build": "tsup",
-    "dev": "pnpm with-env bun run --hot src/index.ts",
-    "bun:build": "bun build src/index.ts --outdir dist",
+    "dev": "pnpm with-env bun run --watch src/index.ts",
+    "bun:build": "bun build src/index.ts --outdir dist --external=@mott/error --target=node",
     "start": "NODE_ENV=production bun run src/index.ts",
     "test": "bun test",
     "with-env": "dotenv -e ../../.env --"
@@ -27,8 +27,8 @@
     "@qdrant/js-client-rest": "^1.12.0",
     "@scalar/hono-api-reference": "^0.5.156",
     "@t3-oss/env-core": "0.11.1",
-    "hono": "4.6.5",
-    "langchain": "^0.3.2",
+    "hono": "4.6.6",
+    "langchain": "^0.3.3",
     "langfuse": "^3.27.0",
     "langfuse-langchain": "^3.27.0",
     "nanoid": "5.0.7",
@@ -39,9 +39,9 @@
   },
   "devDependencies": {
     "@mott/tsconfig": "workspace:*",
-    "@types/node": "22.7.7",
+    "@types/node": "22.7.8",
     "@types/validator": "13.12.2",
-    "bun-types": "1.1.31",
+    "bun-types": "1.1.32",
     "dotenv": "16.4.5",
     "tsup": "8.3.0",
     "tsx": "^4.19.1"
