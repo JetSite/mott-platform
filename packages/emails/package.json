@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "workspaces": [".react-email"],
+  "workspaces": [
+    ".react-email"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist/**"],
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
     "dev": "pnpm with-env email dev -p 3002",
     "build": "tsup",
@@ -29,9 +33,9 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@types/node": "22.7.8",
+    "@types/node": "22.7.9",
     "@types/nodemailer": "^6.4.16",
-    "@types/react": "18.3.11",
+    "@types/react": "18.3.12",
     "dotenv-cli": "7.4.2",
     "react": "18.3.1",
     "tsup": "8.3.0",
