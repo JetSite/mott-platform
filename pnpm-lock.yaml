@@ -515,6 +515,9 @@ importers:
       '@mott/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      tsup:
+        specifier: 8.3.0
+        version: 8.3.0(jiti@2.3.3)(postcss@8.4.47)(tsx@4.19.1)(typescript@5.6.3)(yaml@2.5.0)
       typescript:
         specifier: 5.6.3
         version: 5.6.3
