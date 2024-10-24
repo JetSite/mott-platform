@@ -3,30 +3,28 @@
 # See https://github.com/lenra-io/dofigen
 
 # install
-FROM oven/bun@sha256:eb409bed239c3adff079a6b71283f151e802d66b99f643ba7a71e1be7d3da513 AS install
+FROM oven/bun:1 AS install
 WORKDIR /app/
-RUN \
-    --mount=type=bind,target=package.json,source=package.json \
-    --mount=type=bind,target=apps/core-ai/package.json,source=apps/core-ai/package.json \
-    --mount=type=bind,target=packages/db/package.json,source=packages/db/package.json \
-    --mount=type=bind,target=packages/emails/package.json,source=packages/emails/package.json \
-    --mount=type=bind,target=packages/error/package.json,source=packages/error/package.json \
-    --mount=type=bind,target=tooling/typescript/package.json,source=tooling/typescript/package.json \
-    --mount=type=bind,target=tooling/eslint/package.json,source=tooling/eslint/package.json \
-    --mount=type=bind,target=tooling/prettier/package.json,source=tooling/prettier/package.json \
-    --mount=type=cache,target=/root/.bun/install/cache,sharing=locked \
-    bun install --production --ignore-scripts --frozen-lockfile --verbose
+COPY package.json ./
+COPY bun.lockb ./
+COPY turbo.json ./
+COPY apps/core-ai/package.json ./apps/core-ai/package.json
+COPY packages/db/package.json packages/db/package.json
+COPY packages/emails/package.json packages/emails/package.json
+COPY packages/error/package.json packages/error/package.json
+COPY tooling/typescript/package.json tooling/typescript/package.json
+COPY tooling/eslint/package.json tooling/eslint/package.json
+COPY tooling/prettier/package.json tooling/prettier/package.json
+RUN bun install
 
 # build
-FROM oven/bun@sha256:eb409bed239c3adff079a6b71283f151e802d66b99f643ba7a71e1be7d3da513 AS build
+FROM oven/bun:1 AS build
 ENV NODE_ENV="production"
 WORKDIR /app/apps/core-ai
 COPY \
-    --link \
     "." "/app/"
 COPY \
     --from=install \
-    --link \
     "/app/node_modules" "/app/node_modules"
 RUN bun build --compile --sourcemap src/index.ts --outfile=app
 

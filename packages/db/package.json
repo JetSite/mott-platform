@@ -36,7 +36,7 @@
     "add": "^2.0.6",
     "drizzle-orm": "^0.35.3",
     "drizzle-zod": "^0.5.1",
-    "pg": "^8.13.0",
+    "pg": "^8.13.1",
     "zod": "3.23.8"
   },
   "devDependencies": {

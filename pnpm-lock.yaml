@@ -140,16 +140,16 @@ importers:
         version: 0.4.1(hono@4.6.6)(zod@3.23.8)
       '@langchain/community':
         specifier: ^0.3.8
-        version: 0.3.8(@ibm-cloud/watsonx-ai@1.1.1)(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(@neondatabase/serverless@0.10.1)(@planetscale/database@1.19.0)(@qdrant/js-client-rest@1.12.0(typescript@5.6.3))(axios@1.7.4)(discord.js@14.16.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))(google-auth-library@9.14.2)(handlebars@4.7.8)(html-to-text@9.0.5)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.11.0)(openai@4.68.0(zod@3.23.8))(pg@8.13.0)(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        version: 0.3.8(@ibm-cloud/watsonx-ai@1.1.1)(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(@neondatabase/serverless@0.10.1)(@planetscale/database@1.19.0)(@qdrant/js-client-rest@1.12.0(typescript@5.6.3))(axios@1.7.4)(discord.js@14.16.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))(google-auth-library@9.14.2)(handlebars@4.7.8)(html-to-text@9.0.5)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.11.0)(openai@4.68.0(zod@3.23.8))(pg@8.13.1)(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@langchain/core':
-        specifier: ^0.3.13
-        version: 0.3.13(openai@4.68.0(zod@3.23.8))
+        specifier: ^0.3.14
+        version: 0.3.14(openai@4.68.0(zod@3.23.8))
       '@langchain/mixedbread-ai':
         specifier: ^0.2.0
-        version: 0.2.0(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))
+        version: 0.2.0(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))
       '@langchain/qdrant':
         specifier: ^0.1.0
-        version: 0.1.0(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(typescript@5.6.3)
+        version: 0.1.0(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(typescript@5.6.3)
       '@mixedbread-ai/sdk':
         specifier: ^2.2.11
         version: 2.2.11
@@ -170,13 +170,13 @@ importers:
         version: 4.6.6
       langchain:
         specifier: ^0.3.3
-        version: 0.3.3(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))
+        version: 0.3.3(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))
       langfuse:
         specifier: ^3.27.2
         version: 3.27.2
       langfuse-langchain:
         specifier: ^3.27.2
-        version: 3.27.2(langchain@0.3.3(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))))
+        version: 3.27.2(langchain@0.3.3(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))))
       nanoid:
         specifier: 5.0.7
         version: 5.0.7
@@ -184,11 +184,11 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       pg:
-        specifier: ^8.13.0
-        version: 8.13.0
+        specifier: ^8.13.1
+        version: 8.13.1
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))
+        version: 0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))
       validator:
         specifier: 13.12.0
         version: 13.12.0
@@ -206,8 +206,8 @@ importers:
         specifier: 13.12.2
         version: 13.12.2
       bun-types:
-        specifier: 1.1.32
-        version: 1.1.32
+        specifier: 1.1.33
+        version: 1.1.33
       dotenv:
         specifier: 16.4.5
         version: 16.4.5
@@ -247,7 +247,7 @@ importers:
         version: 9.13.0(jiti@2.3.3)
       eslint-config-airbnb-base:
         specifier: ^15.0.0
-        version: 15.0.0(eslint-plugin-import@2.31.0(eslint-import-resolver-webpack@0.13.9)(eslint@9.13.0(jiti@2.3.3)))(eslint@9.13.0(jiti@2.3.3))
+        version: 15.0.0(eslint-plugin-import@2.31.0)(eslint@9.13.0(jiti@2.3.3))
       eslint-friendly-formatter:
         specifier: ^4.0.1
         version: 4.0.1
@@ -412,13 +412,13 @@ importers:
         version: 2.0.6
       drizzle-orm:
         specifier: ^0.35.3
-        version: 0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.32)(mysql2@3.11.0)(pg@8.13.0)(postgres@3.4.4)(react@18.3.1)
+        version: 0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.33)(mysql2@3.11.0)(pg@8.13.1)(postgres@3.4.4)(react@18.3.1)
       drizzle-zod:
         specifier: ^0.5.1
-        version: 0.5.1(drizzle-orm@0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.32)(mysql2@3.11.0)(pg@8.13.0)(postgres@3.4.4)(react@18.3.1))(zod@3.23.8)
+        version: 0.5.1(drizzle-orm@0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.33)(mysql2@3.11.0)(pg@8.13.1)(postgres@3.4.4)(react@18.3.1))(zod@3.23.8)
       pg:
-        specifier: ^8.13.0
-        version: 8.13.0
+        specifier: ^8.13.1
+        version: 8.13.1
       zod:
         specifier: 3.23.8
         version: 3.23.8
@@ -2161,8 +2161,8 @@ packages:
       youtubei.js:
         optional: true
 
-  '@langchain/core@0.3.13':
-    resolution: {integrity: sha512-sHDlwyHhgeaYC+wfORrWO7sXxD6/GDtZZ5mqjY48YMwB58cVv8hTs8goR/9EwXapYt8fQi2uXTGUV87bHzvdZQ==}
+  '@langchain/core@0.3.14':
+    resolution: {integrity: sha512-RFeE89ZzFG77MymVxaaJmYMdKPjhZbSH8pPKskNkUnqvC1gH1IyxmMIIvnm67vUGYQVZCxeLaRXZH6IzbYj3Ow==}
     engines: {node: '>=18'}
 
   '@langchain/mixedbread-ai@0.2.0':
@@ -3769,8 +3769,8 @@ packages:
     resolution: {integrity: sha512-4T53u4PdgsXqKaIctwF8ifXlRTTmEPJ8iEPWFdGZvcf7sbwYo6FKFEX9eNNAnzFZ7EzJAQ3CJeOtCRA4rDp7Pw==}
     engines: {node: '>=6.14.2'}
 
-  bun-types@1.1.32:
-    resolution: {integrity: sha512-Lxgux4InO/WRjSAEy3iyDscsnDXR8+3rgNDeZYjPAizFYjUraoNuMl9PuRd9XMgFZgdyQwaUX7/QHmOw5KGFQw==}
+  bun-types@1.1.33:
+    resolution: {integrity: sha512-SOMt3HeI34EyXoAsMxs5qY+e8cjQOn9v1BQl/ZUy1BsOYYuSPBSRVBYE5DjauqY1bOAWGFAjVu9G9pSmCe1bVw==}
 
   bundle-require@5.0.0:
     resolution: {integrity: sha512-GuziW3fSSmopcx4KRymQEJVbZUfqlCqcq7dvs6TYwKRZiegK/2buMxQTPs6MGlNv50wms1699qYO54R8XfRX4w==}
@@ -6084,8 +6084,8 @@ packages:
     resolution: {integrity: sha512-cRL3JpS3lKMGsKaWndugWQoLOCoP+Cic8oseVcbr0qhPzYD5DWXK+RZ9LY9wxRf7RQia4SCwQlXk0q6FCPrVng==}
     engines: {node: '>=10'}
 
-  pg@8.13.0:
-    resolution: {integrity: sha512-34wkUTh3SxTClfoHB3pQ7bIMvw9dpFU1audQQeZG837fmHfHpr14n/AELVDoOYVDW2h5RDWU78tFjkD+erSBsw==}
+  pg@8.13.1:
+    resolution: {integrity: sha512-OUir1A0rPNZlX//c7ksiu7crsGZTKSOXJPgtNiHGIlC9H0lO+NC6ZDYksSgBYY/thSWhnSRBv8w1lieNNGATNQ==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       pg-native: '>=3.0.1'
@@ -8365,17 +8365,17 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
-  '@langchain/community@0.3.8(@ibm-cloud/watsonx-ai@1.1.1)(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(@neondatabase/serverless@0.10.1)(@planetscale/database@1.19.0)(@qdrant/js-client-rest@1.12.0(typescript@5.6.3))(axios@1.7.4)(discord.js@14.16.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))(google-auth-library@9.14.2)(handlebars@4.7.8)(html-to-text@9.0.5)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.11.0)(openai@4.68.0(zod@3.23.8))(pg@8.13.0)(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@langchain/community@0.3.8(@ibm-cloud/watsonx-ai@1.1.1)(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(@neondatabase/serverless@0.10.1)(@planetscale/database@1.19.0)(@qdrant/js-client-rest@1.12.0(typescript@5.6.3))(axios@1.7.4)(discord.js@14.16.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))(google-auth-library@9.14.2)(handlebars@4.7.8)(html-to-text@9.0.5)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.11.0)(openai@4.68.0(zod@3.23.8))(pg@8.13.1)(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@ibm-cloud/watsonx-ai': 1.1.1
-      '@langchain/core': 0.3.13(openai@4.68.0(zod@3.23.8))
-      '@langchain/openai': 0.3.10(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))
+      '@langchain/core': 0.3.14(openai@4.68.0(zod@3.23.8))
+      '@langchain/openai': 0.3.10(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))
       binary-extensions: 2.3.0
       expr-eval: 2.0.2
       flat: 5.0.2
       ibm-cloud-sdk-core: 5.1.0
       js-yaml: 4.1.0
-      langchain: 0.3.3(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))
+      langchain: 0.3.3(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))
       langsmith: 0.1.66(openai@4.68.0(zod@3.23.8))
       uuid: 10.0.0
       zod: 3.23.8
@@ -8391,8 +8391,8 @@ snapshots:
       jsonwebtoken: 9.0.2
       lodash: 4.17.21
       mysql2: 3.11.0
-      pg: 8.13.0
-      typeorm: 0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))
+      pg: 8.13.1
+      typeorm: 0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))
       ws: 8.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)
     transitivePeerDependencies:
       - '@langchain/anthropic'
@@ -8409,7 +8409,7 @@ snapshots:
       - openai
       - peggy
 
-  '@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8))':
+  '@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8))':
     dependencies:
       ansi-styles: 5.2.0
       camelcase: 6.3.0
@@ -8425,16 +8425,16 @@ snapshots:
     transitivePeerDependencies:
       - openai
 
-  '@langchain/mixedbread-ai@0.2.0(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))':
+  '@langchain/mixedbread-ai@0.2.0(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))':
     dependencies:
-      '@langchain/core': 0.3.13(openai@4.68.0(zod@3.23.8))
+      '@langchain/core': 0.3.14(openai@4.68.0(zod@3.23.8))
       '@mixedbread-ai/sdk': 2.2.11
     transitivePeerDependencies:
       - encoding
 
-  '@langchain/openai@0.3.10(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))':
+  '@langchain/openai@0.3.10(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))':
     dependencies:
-      '@langchain/core': 0.3.13(openai@4.68.0(zod@3.23.8))
+      '@langchain/core': 0.3.14(openai@4.68.0(zod@3.23.8))
       js-tiktoken: 1.0.15
       openai: 4.68.0(zod@3.23.8)
       zod: 3.23.8
@@ -8442,17 +8442,17 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@langchain/qdrant@0.1.0(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(typescript@5.6.3)':
+  '@langchain/qdrant@0.1.0(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(typescript@5.6.3)':
     dependencies:
-      '@langchain/core': 0.3.13(openai@4.68.0(zod@3.23.8))
+      '@langchain/core': 0.3.14(openai@4.68.0(zod@3.23.8))
       '@qdrant/js-client-rest': 1.12.0(typescript@5.6.3)
       uuid: 10.0.0
     transitivePeerDependencies:
       - typescript
 
-  '@langchain/textsplitters@0.1.0(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))':
+  '@langchain/textsplitters@0.1.0(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))':
     dependencies:
-      '@langchain/core': 0.3.13(openai@4.68.0(zod@3.23.8))
+      '@langchain/core': 0.3.14(openai@4.68.0(zod@3.23.8))
       js-tiktoken: 1.0.15
 
   '@libsql/client-wasm@0.14.0':
@@ -10155,7 +10155,7 @@ snapshots:
     dependencies:
       node-gyp-build: 4.8.1
 
-  bun-types@1.1.32:
+  bun-types@1.1.33:
     dependencies:
       '@types/node': 20.12.14
       '@types/ws': 8.5.12
@@ -10567,7 +10567,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.32)(mysql2@3.11.0)(pg@8.13.0)(postgres@3.4.4)(react@18.3.1):
+  drizzle-orm@0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.33)(mysql2@3.11.0)(pg@8.13.1)(postgres@3.4.4)(react@18.3.1):
     dependencies:
       '@libsql/client-wasm': 0.14.0
     optionalDependencies:
@@ -10577,15 +10577,15 @@ snapshots:
       '@types/pg': 8.11.6
       '@types/react': 18.3.12
       '@vercel/postgres': 0.10.0(utf-8-validate@6.0.4)
-      bun-types: 1.1.32
+      bun-types: 1.1.33
       mysql2: 3.11.0
-      pg: 8.13.0
+      pg: 8.13.1
       postgres: 3.4.4
       react: 18.3.1
 
-  drizzle-zod@0.5.1(drizzle-orm@0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.32)(mysql2@3.11.0)(pg@8.13.0)(postgres@3.4.4)(react@18.3.1))(zod@3.23.8):
+  drizzle-zod@0.5.1(drizzle-orm@0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.33)(mysql2@3.11.0)(pg@8.13.1)(postgres@3.4.4)(react@18.3.1))(zod@3.23.8):
     dependencies:
-      drizzle-orm: 0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.32)(mysql2@3.11.0)(pg@8.13.0)(postgres@3.4.4)(react@18.3.1)
+      drizzle-orm: 0.35.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.6)(@types/react@18.3.12)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(bun-types@1.1.33)(mysql2@3.11.0)(pg@8.13.1)(postgres@3.4.4)(react@18.3.1)
       zod: 3.23.8
 
   duplexify@4.1.3:
@@ -10908,7 +10908,7 @@ snapshots:
     optionalDependencies:
       source-map: 0.6.1
 
-  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.31.0(eslint-import-resolver-webpack@0.13.9)(eslint@9.13.0(jiti@2.3.3)))(eslint@9.13.0(jiti@2.3.3)):
+  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.31.0)(eslint@9.13.0(jiti@2.3.3)):
     dependencies:
       confusing-browser-globals: 1.0.11
       eslint: 9.13.0(jiti@2.3.3)
@@ -10971,7 +10971,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-webpack@0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0))(eslint@9.13.0(jiti@2.3.3)):
+  eslint-module-utils@2.12.0(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-webpack@0.13.9)(eslint@9.13.0(jiti@2.3.3)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -11027,7 +11027,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.13.0(jiti@2.3.3)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-webpack@0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0))(eslint@9.13.0(jiti@2.3.3))
+      eslint-module-utils: 2.12.0(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-webpack@0.13.9)(eslint@9.13.0(jiti@2.3.3))
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -11714,7 +11714,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.2
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.7.4(debug@4.3.6))
+      retry-axios: 2.6.0(axios@1.7.4)
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -12103,11 +12103,11 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  langchain@0.3.3(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))):
+  langchain@0.3.3(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))):
     dependencies:
-      '@langchain/core': 0.3.13(openai@4.68.0(zod@3.23.8))
-      '@langchain/openai': 0.3.10(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))
-      '@langchain/textsplitters': 0.1.0(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))
+      '@langchain/core': 0.3.14(openai@4.68.0(zod@3.23.8))
+      '@langchain/openai': 0.3.10(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))
+      '@langchain/textsplitters': 0.1.0(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))
       js-tiktoken: 1.0.15
       js-yaml: 4.1.0
       jsonpointer: 5.0.1
@@ -12121,7 +12121,7 @@ snapshots:
     optionalDependencies:
       axios: 1.7.4(debug@4.3.6)
       handlebars: 4.7.8
-      typeorm: 0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))
+      typeorm: 0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3))
     transitivePeerDependencies:
       - encoding
       - openai
@@ -12130,9 +12130,9 @@ snapshots:
     dependencies:
       mustache: 4.2.0
 
-  langfuse-langchain@3.27.2(langchain@0.3.3(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))):
+  langfuse-langchain@3.27.2(langchain@0.3.3(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))):
     dependencies:
-      langchain: 0.3.3(@langchain/core@0.3.13(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))
+      langchain: 0.3.3(@langchain/core@0.3.14(openai@4.68.0(zod@3.23.8)))(axios@1.7.4)(handlebars@4.7.8)(openai@4.68.0(zod@3.23.8))(typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)))
       langfuse: 3.27.2
       langfuse-core: 3.27.2
 
@@ -12747,9 +12747,9 @@ snapshots:
 
   pg-numeric@1.0.2: {}
 
-  pg-pool@3.7.0(pg@8.13.0):
+  pg-pool@3.7.0(pg@8.13.1):
     dependencies:
-      pg: 8.13.0
+      pg: 8.13.1
 
   pg-protocol@1.7.0: {}
 
@@ -12771,10 +12771,10 @@ snapshots:
       postgres-interval: 3.0.0
       postgres-range: 1.1.4
 
-  pg@8.13.0:
+  pg@8.13.1:
     dependencies:
       pg-connection-string: 2.7.0
-      pg-pool: 3.7.0(pg@8.13.0)
+      pg-pool: 3.7.0(pg@8.13.1)
       pg-protocol: 1.7.0
       pg-types: 2.2.0
       pgpass: 1.0.5
@@ -13161,7 +13161,7 @@ snapshots:
       onetime: 5.1.2
       signal-exit: 3.0.7
 
-  retry-axios@2.6.0(axios@1.7.4(debug@4.3.6)):
+  retry-axios@2.6.0(axios@1.7.4):
     dependencies:
       axios: 1.7.4(debug@4.3.6)
 
@@ -13927,7 +13927,7 @@ snapshots:
       is-typed-array: 1.1.13
       possible-typed-array-names: 1.0.0
 
-  typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.0)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)):
+  typeorm@0.3.20(mysql2@3.11.0)(pg@8.13.1)(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3)):
     dependencies:
       '@sqltools/formatter': 1.2.5
       app-root-path: 3.1.0
@@ -13946,7 +13946,7 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       mysql2: 3.11.0
-      pg: 8.13.0
+      pg: 8.13.1
       ts-node: 10.9.2(@types/node@22.7.9)(typescript@5.6.3)
     transitivePeerDependencies:
       - supports-color
