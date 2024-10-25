@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@mott/tsconfig": "workspace:*",
-    "tsup": "8.3.0",
+    "tsup": "8.3.4",
     "typescript": "5.6.3"
   },
   "keywords": [],
