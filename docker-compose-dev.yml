@@ -1,8 +1,17 @@
 services:
-  core_ai:
+  core-ai:
     build:
       dockerfile: ./apps/core-ai/Dockerfile
-    container_name: core_ai
+    container_name: core-ai
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+  server:
+    build:
+      dockerfile: ./apps/server/Dockerfile
+    container_name: server
     restart: always
     ports:
       - "8000:8000"
