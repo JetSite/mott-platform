@@ -23,8 +23,8 @@ COPY /tooling/typescript ./tooling/typescript
 COPY /tooling/eslint ./tooling/eslint
 COPY /tooling/prettier ./tooling/prettier
 
-RUN chmod +x /app/link_packages.sh
-RUN /app/link_packages.sh
+RUN chmod +x /app/link-packages.sh
+RUN /app/link-packages.sh
 
 ENV NODE_ENV=production
 
