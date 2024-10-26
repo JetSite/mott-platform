@@ -13,7 +13,7 @@ COPY /tooling/typescript/package.json ./tooling/typescript/package.json
 COPY /tooling/eslint/package.json ./tooling/eslint/package.json
 COPY /tooling/prettier/package.json ./tooling/prettier/package.json
 
-RUN bun install
+RUN bun install --no-symlinks
 
 COPY /apps/core-ai ./apps/core-ai
 COPY /packages/db ./packages/db
@@ -24,13 +24,7 @@ COPY /tooling/prettier ./tooling/prettier
 
 ENV NODE_ENV=production
 
-RUN bun build \
-	--compile \
-	--minify-whitespace \
-	--minify-syntax \
-	--target bun \
-	--outfile server \
-	./apps/core-ai/src/index.ts
+RUN bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./apps/core-ai/src/index.ts
 
 FROM gcr.io/distroless/base
 
