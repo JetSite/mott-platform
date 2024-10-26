@@ -5,7 +5,7 @@ WORKDIR /app
 # Cache packages
 COPY package.json package.json
 COPY bun.lockb bun.lockb
-COPY link_packages.sh link_packages.sh
+COPY link-packages.sh link-packages.sh
 
 COPY /apps/core-ai/package.json ./apps/core-ai/package.json
 COPY /packages/db/package.json ./packages/db/package.json
