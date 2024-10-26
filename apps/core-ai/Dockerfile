@@ -5,7 +5,6 @@ WORKDIR /app
 # Cache packages
 COPY package.json package.json
 COPY bun.lockb bun.lockb
-COPY link-packages.sh link-packages.sh
 
 COPY /apps/core-ai/package.json ./apps/core-ai/package.json
 COPY /packages/db/package.json ./packages/db/package.json
@@ -23,8 +22,13 @@ COPY /tooling/typescript ./tooling/typescript
 COPY /tooling/eslint ./tooling/eslint
 COPY /tooling/prettier ./tooling/prettier
 
-RUN chmod +x /app/link-packages.sh
-RUN /app/link-packages.sh
+RUN cd /app/packages/db && bun link && \
+    cd /app/packages/error && bun link && \
+    cd /app/tooling/typescript && bun link && \
+    cd /app/tooling/eslint && bun link && \
+    cd /app/tooling/prettier && bun link && \
+    cd /app/apps/core-ai && \
+    bun link db error typescript eslint prettier
 
 ENV NODE_ENV=production
 
