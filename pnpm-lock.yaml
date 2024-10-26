@@ -253,10 +253,10 @@ importers:
         version: 4.0.1
       eslint-import-resolver-webpack:
         specifier: ^0.13.9
-        version: 0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0(esbuild@0.24.0))
+        version: 0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0)
       eslint-loader:
         specifier: ^4.0.2
-        version: 4.0.2(eslint@9.13.0(jiti@2.3.3))(webpack@5.95.0(esbuild@0.24.0))
+        version: 4.0.2(eslint@9.13.0(jiti@2.3.3))(webpack@5.95.0)
       eslint-plugin-import:
         specifier: ^2.31.0
         version: 2.31.0(eslint-import-resolver-webpack@0.13.9)(eslint@9.13.0(jiti@2.3.3))
@@ -272,6 +272,25 @@ importers:
       typescript:
         specifier: 5.6.3
         version: 5.6.3
+
+  apps/server:
+    dependencies:
+      '@hono/zod-openapi':
+        specifier: ^0.16.4
+        version: 0.16.4(hono@4.6.7)(zod@3.23.8)
+      '@mott/error':
+        specifier: workspace:*
+        version: link:../../packages/error
+      '@scalar/hono-api-reference':
+        specifier: ^0.5.156
+        version: 0.5.156(hono@4.6.7)
+      hono:
+        specifier: ^4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@types/bun':
+        specifier: latest
+        version: 1.1.12
 
   apps/slack:
     dependencies:
@@ -3389,6 +3408,9 @@ packages:
   '@types/body-parser@1.19.5':
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
 
+  '@types/bun@1.1.12':
+    resolution: {integrity: sha512-UkewJesRDP3+AW30Gc8hvxuIt+vHgYZXmVOKaXV8xnwAnMXTAs3XZDsa/jW+LSdAYhHslokSm72lq63FYYjZqA==}
+
   '@types/caseless@0.12.5':
     resolution: {integrity: sha512-hWtVTC2q7hc7xZ/RLbxapMvDMgUnDvKvMOpKal4DrMyfGBUfB1oKaZlIRr6mJL+If3bAP6sV/QneGzF6tJjZDg==}
 
@@ -3912,6 +3934,9 @@ packages:
   bufferutil@4.0.8:
     resolution: {integrity: sha512-4T53u4PdgsXqKaIctwF8ifXlRTTmEPJ8iEPWFdGZvcf7sbwYo6FKFEX9eNNAnzFZ7EzJAQ3CJeOtCRA4rDp7Pw==}
     engines: {node: '>=6.14.2'}
+
+  bun-types@1.1.32:
+    resolution: {integrity: sha512-Lxgux4InO/WRjSAEy3iyDscsnDXR8+3rgNDeZYjPAizFYjUraoNuMl9PuRd9XMgFZgdyQwaUX7/QHmOw5KGFQw==}
 
   bun-types@1.1.33:
     resolution: {integrity: sha512-SOMt3HeI34EyXoAsMxs5qY+e8cjQOn9v1BQl/ZUy1BsOYYuSPBSRVBYE5DjauqY1bOAWGFAjVu9G9pSmCe1bVw==}
@@ -9774,6 +9799,10 @@ snapshots:
       '@types/connect': 3.4.38
       '@types/node': 22.8.1
 
+  '@types/bun@1.1.12':
+    dependencies:
+      bun-types: 1.1.32
+
   '@types/caseless@0.12.5': {}
 
   '@types/connect@3.4.38':
@@ -10398,6 +10427,11 @@ snapshots:
   bufferutil@4.0.8:
     dependencies:
       node-gyp-build: 4.8.1
+
+  bun-types@1.1.32:
+    dependencies:
+      '@types/node': 20.12.14
+      '@types/ws': 8.5.12
 
   bun-types@1.1.33:
     dependencies:
@@ -11213,7 +11247,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-webpack@0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0(esbuild@0.24.0)):
+  eslint-import-resolver-webpack@0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0):
     dependencies:
       debug: 3.2.7
       enhanced-resolve: 0.9.1
@@ -11226,11 +11260,11 @@ snapshots:
       lodash: 4.17.21
       resolve: 2.0.0-next.5
       semver: 5.7.2
-      webpack: 5.95.0(esbuild@0.24.0)
+      webpack: 5.95.0
     transitivePeerDependencies:
       - supports-color
 
-  eslint-loader@4.0.2(eslint@9.13.0(jiti@2.3.3))(webpack@5.95.0(esbuild@0.24.0)):
+  eslint-loader@4.0.2(eslint@9.13.0(jiti@2.3.3))(webpack@5.95.0):
     dependencies:
       eslint: 9.13.0(jiti@2.3.3)
       find-cache-dir: 3.3.2
@@ -11238,7 +11272,7 @@ snapshots:
       loader-utils: 2.0.4
       object-hash: 2.2.0
       schema-utils: 2.7.1
-      webpack: 5.95.0(esbuild@0.24.0)
+      webpack: 5.95.0
 
   eslint-module-utils@2.12.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0(jiti@2.3.3))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint@9.13.0(jiti@2.3.3)):
     dependencies:
@@ -11256,7 +11290,7 @@ snapshots:
     optionalDependencies:
       eslint: 9.13.0(jiti@2.3.3)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-webpack: 0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0(esbuild@0.24.0))
+      eslint-import-resolver-webpack: 0.13.9(eslint-plugin-import@2.31.0)(webpack@5.95.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -13964,16 +13998,14 @@ snapshots:
       ansi-escapes: 5.0.0
       supports-hyperlinks: 2.3.0
 
-  terser-webpack-plugin@5.3.10(esbuild@0.24.0)(webpack@5.95.0(esbuild@0.24.0)):
+  terser-webpack-plugin@5.3.10(webpack@5.95.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.34.1
-      webpack: 5.95.0(esbuild@0.24.0)
-    optionalDependencies:
-      esbuild: 0.24.0
+      webpack: 5.95.0
 
   terser@5.34.1:
     dependencies:
@@ -14366,7 +14398,7 @@ snapshots:
 
   webpack-sources@3.2.3: {}
 
-  webpack@5.95.0(esbuild@0.24.0):
+  webpack@5.95.0:
     dependencies:
       '@types/estree': 1.0.6
       '@webassemblyjs/ast': 1.12.1
@@ -14388,7 +14420,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.24.0)(webpack@5.95.0(esbuild@0.24.0))
+      terser-webpack-plugin: 5.3.10(webpack@5.95.0)
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     transitivePeerDependencies:

@@ -1,44 +1,24 @@
 {
   "name": "@mott/root",
   "private": true,
-  "engines": {
-    "node": ">=20.16.0"
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "turbo": "^2.2.3",
+    "typescript": "5.6.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.1.33",
   "workspaces": [
     "apps/*",
     "packages/*",
     "tooling/*"
-  ],
-  "packageManager": "pnpm@9.12.2",
-  "scripts": {
-    "biome:lint": "biome lint .",
-    "biome:format": "pnpm biome format . --write && pnpm biome check . --write ",
-    "build": "turbo build",
-    "clean": "git clean -xdf node_modules",
-    "clean:workspaces": "turbo run clean",
-    "db:push": "turbo -F @mott/db push",
-    "db:studio": "turbo -F @mott/db studio",
-    "dev": "turbo watch dev --continue",
-    "dev:next": "turbo watch dev -F @mott/app...",
-    "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
-    "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
-    "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
-    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
-    "lint:ws": "pnpm dlx sherif@latest",
-    "typecheck": "turbo run typecheck",
-    "ui-add": "turbo run ui-add"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@mott/prettier-config": "workspace:*",
-    "@turbo/gen": "^2.2.3",
-    "prettier": "3.3.3",
-    "turbo": "^2.2.3",
-    "typescript": "5.6.3"
-  },
-  "prettier": "@mott/prettier-config",
-  "installConfig": {
-    "hoisted": true,
-    "symlink": false
-  }
+  ]
 }
