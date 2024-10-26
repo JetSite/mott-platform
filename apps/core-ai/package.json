@@ -6,7 +6,6 @@
   "main": "src/index.ts",
   "scripts": {
     "develop": "pnpm with-env tsx watch src/index.ts",
-    "build": "tsup",
     "dev": "pnpm with-env bun run --watch src/index.ts",
     "bun:build": "bun build --compile --sourcemap src/index.ts --outfile=app --platform=node",
     "start": "pnpm with-env bun run src/index.ts",
