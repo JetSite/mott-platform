@@ -5,23 +5,24 @@ WORKDIR /app
 # Cache packages
 COPY package.json package.json
 COPY bun.lockb bun.lockb
-
-COPY /apps/server/package.json ./apps/server/package.json
+COPY turbo.json turbo.json
+COPY /apps/core-ai/package.json ./apps/core-ai/package.json
 COPY /packages/error/package.json ./packages/error/package.json
 COPY /tooling/typescript/package.json ./tooling/typescript/package.json
 COPY /tooling/eslint/package.json ./tooling/eslint/package.json
 COPY /tooling/prettier/package.json ./tooling/prettier/package.json
 RUN bun install
 
-COPY /apps/server ./apps/server
+COPY /apps/core-ai ./apps/core-ai
 COPY /packages/error ./packages/error
 COPY /tooling/typescript ./tooling/typescript
 COPY /tooling/eslint ./tooling/eslint
 COPY /tooling/prettier ./tooling/prettier
 
 ENV NODE_ENV=production
+RUN bun run build
 
-RUN bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./apps/server/src/index.ts
+RUN bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./apps/core-ai/src/index.ts
 
 FROM gcr.io/distroless/base
 
