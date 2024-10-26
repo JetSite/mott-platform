@@ -28,8 +28,7 @@ RUN cd /app/packages/db && bun link && \
     cd /app/tooling/eslint && bun link && \
     cd /app/tooling/prettier && bun link && \
     cd /app/apps/core-ai && \
-	bun link @mott/tsconfig && \
-	bun link @mott/error
+	bun link @mott/tsconfig @mott/error
 
 
 ENV NODE_ENV=production
