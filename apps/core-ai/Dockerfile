@@ -5,6 +5,7 @@ WORKDIR /app
 # Cache packages
 COPY package.json package.json
 COPY bun.lockb bun.lockb
+COPY link_packages.sh link_packages.sh
 
 COPY /apps/core-ai/package.json ./apps/core-ai/package.json
 COPY /packages/db/package.json ./packages/db/package.json
@@ -22,7 +23,6 @@ COPY /tooling/typescript ./tooling/typescript
 COPY /tooling/eslint ./tooling/eslint
 COPY /tooling/prettier ./tooling/prettier
 
-COPY link_packages.sh /app/link_packages.sh
 RUN chmod +x /app/link_packages.sh
 RUN /app/link_packages.sh
 
