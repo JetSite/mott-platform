@@ -22,7 +22,12 @@ COPY /tooling/typescript ./tooling/typescript
 COPY /tooling/eslint ./tooling/eslint
 COPY /tooling/prettier ./tooling/prettier
 
+COPY link_packages.sh /app/link_packages.sh
+RUN chmod +x /app/link_packages.sh
+RUN /app/link_packages.sh
+
 ENV NODE_ENV=production
+
 
 RUN bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./apps/core-ai/src/index.ts
 
