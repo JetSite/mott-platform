@@ -3,7 +3,7 @@ import axios from 'axios';
 import type { Message, TextChannel } from 'discord.js';
 
 import { discordClient } from '..';
-
+import { env } from '../env';
 async function assistantThreadMessage(message: Message, prompt: string) {
   const processingMessage = await message.reply(
     'Please hold on, your request is being diligently processed by Mott...'
@@ -24,24 +24,9 @@ async function assistantThreadMessage(message: Message, prompt: string) {
   ];
 
   try {
-    const responsePromise = axios.post(
-      `${process.env.STRAPI_URL}/api/mott-ai`,
-      {
-        message: prompt,
-        authorId: message.author.id,
-        discordId: message.author.id,
-        discordName: message.author.tag,
-        discordLogin: `${message.author.username}#${message.author.discriminator}`,
-        messageId: message.id,
-        channelId: message.channelId,
-        type: 'discord',
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-        },
-      }
-    );
+    const responsePromise = axios.post(`${env.CORE_AI_URL}/api/chat`, {
+      message: prompt,
+    });
 
     updateInterval = setInterval(async () => {
       if (updateCount < updateMessages.length) {

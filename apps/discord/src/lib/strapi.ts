@@ -1,34 +1,36 @@
-import axios from "axios";
+import axios from 'axios';
+
+import { env } from '../env';
 
 export async function addDocumentation(content: string) {
   await axios.post(
-    `${process.env.BACKEND_URL}/api/training-datas`,
+    `${env.STRAPI_URL}/api/training-datas`,
     {
       data: {
-        type: "documentation",
+        type: 'documentation',
 
         content,
       },
     },
     {
       headers: {
-        Authorization: `Bearer ${process.env.API_TOKEN}`,
+        Authorization: `Bearer ${env.STRAPI_TOKEN}`,
       },
-    },
+    }
   );
 }
 
 export async function improveDocumentation(content: string) {
   const response = await axios.post(
-    `${process.env.BACKEND_URL}/api/mott-ai/improve-documentation`,
+    `${env.STRAPI_URL}/api/mott-ai/improve-documentation`,
     {
       content,
     },
     {
       headers: {
-        Authorization: `Bearer ${process.env.API_TOKEN}`,
+        Authorization: `Bearer ${env.STRAPI_TOKEN}`,
       },
-    },
+    }
   );
   return response.data;
 }
