@@ -1,10 +1,10 @@
-import type { BaseLanguageModelInterface } from "@langchain/core/language_models/base";
-import { StringOutputParser } from "@langchain/core/output_parsers";
-import { PromptTemplate } from "@langchain/core/prompts";
-import { Tool } from "@langchain/core/tools";
+import type { BaseLanguageModelInterface } from '@langchain/core/language_models/base';
+import { StringOutputParser } from '@langchain/core/output_parsers';
+import { PromptTemplate } from '@langchain/core/prompts';
+import { Tool } from '@langchain/core/tools';
 
-import type BigQuerySource from "../../datasource/bigquery";
-import type { Answer } from "../../datasource/types";
+import type BigQuerySource from '../../datasource/bigquery';
+import type { Answer } from '../../datasource/types';
 
 interface SqlTool {
   db: BigQuerySource;
@@ -12,13 +12,13 @@ interface SqlTool {
 
 export class ColumnValuesTool extends Tool implements SqlTool {
   static lc_name() {
-    return "ColumnValuesSqlTool";
+    return 'ColumnValuesSqlTool';
   }
   db: BigQuerySource;
-  name = "column-values-sql";
+  name = 'column-values-sql';
   description =
-    "Use this tool to get unique values from a column in a SQL table. " +
-    "You must provide correct SQL query. Always limit your query to at most 50 results";
+    'Use this tool to get unique values from a column in a SQL table. ' +
+    'You must provide correct SQL query. Always limit your query to at most 50 results';
 
   constructor(db: BigQuerySource) {
     super();
@@ -32,13 +32,13 @@ export class ColumnValuesTool extends Tool implements SqlTool {
 
 export class EntityNameSqlTool extends Tool implements SqlTool {
   static lc_name() {
-    return "EntityNameSqlTool";
+    return 'EntityNameSqlTool';
   }
   db: BigQuerySource;
-  name = "entity-name-sql";
+  name = 'entity-name-sql';
   description =
-    "Use this tool to find the name of an entity given its ID." +
-    " You must provide correct SQL query. Always limit your query to at most 100 results";
+    'Use this tool to find the name of an entity given its ID.' +
+    ' You must provide correct SQL query. Always limit your query to at most 100 results';
 
   constructor(db: BigQuerySource) {
     super();
@@ -52,10 +52,10 @@ export class EntityNameSqlTool extends Tool implements SqlTool {
 
 export class SchemaSqlTool extends Tool {
   static lc_name() {
-    return "SchemaSqlTool";
+    return 'SchemaSqlTool';
   }
   db: BigQuerySource;
-  name = "schema-sql";
+  name = 'schema-sql';
   description = `Input to this tool is a comma-separated list of tables, output is the schema.
      Be sure that the tables actually exist by calling list-tables-sql first! 
      Example Input: "database.table1, database.table2, database.table3."`;
@@ -65,30 +65,30 @@ export class SchemaSqlTool extends Tool {
   }
 
   async _call(tablesToInclude?: string): Promise<string> {
-    const tables = tablesToInclude ? tablesToInclude.split(",") : [];
+    const tables = tablesToInclude ? tablesToInclude.split(',') : [];
     const schemas = await Promise.all(
       tables.map((table) => {
-        const [database, tableName] = table.trim().split(".");
-        return this.db.getRawSchema(database ?? "", tableName ?? "");
-      }),
+        const [database, tableName] = table.trim().split('.');
+        return this.db.getRawSchema(database ?? '', tableName ?? '');
+      })
     );
     return JSON.stringify(
       schemas.reduce(
         (acc: Record<string, unknown>, schema: unknown, index: number) => {
-          acc[tables[index] ?? ""] = schema;
+          acc[tables[index] ?? ''] = schema;
           return acc;
         },
-        {} as Record<string, unknown>,
-      ),
+        {} as Record<string, unknown>
+      )
     );
   }
 }
 export class SqlQueryCheckerTool extends Tool {
   static lc_name() {
-    return "SqlQueryCheckerTool";
+    return 'SqlQueryCheckerTool';
   }
 
-  name = "sql-query-checker";
+  name = 'sql-query-checker';
 
   template = `
     {query}
@@ -128,10 +128,10 @@ If there are no mistakes, just reproduce the original query.`;
 
 export class QuerySqlTool extends Tool implements SqlTool {
   static lc_name() {
-    return "QuerySqlTool";
+    return 'QuerySqlTool';
   }
 
-  name = "query-sql";
+  name = 'query-sql';
 
   db: BigQuerySource;
 
@@ -157,10 +157,10 @@ export class QuerySqlTool extends Tool implements SqlTool {
 
 export class ListTablesSqlTool extends Tool implements SqlTool {
   static lc_name() {
-    return "ListTablesSqlTool";
+    return 'ListTablesSqlTool';
   }
 
-  name = "list-tables-sql";
+  name = 'list-tables-sql';
 
   db: BigQuerySource;
 
@@ -171,19 +171,18 @@ export class ListTablesSqlTool extends Tool implements SqlTool {
 
   async _call(_: string) {
     try {
-      const tables = this.db.getTables();
-      const result = tables
+      const tables = await this.db.getTables();
+      return tables
         .map(
           (table: { database: string; name: string }) =>
-            `${table.database}.${table.name}`,
+            `${table.database}.${table.name}`
         )
-        .join(",");
-      return result;
+        .join(',');
     } catch (error) {
       return `${error}`;
     }
   }
 
   description =
-    "Input is an empty string, output is a comma-separated list of tables in the database.";
+    'Input is an empty string, output is a comma-separated list of tables in the database.';
 }

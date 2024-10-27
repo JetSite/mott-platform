@@ -5,7 +5,7 @@ import type {
   Row,
   TableInfo,
   TableSchema,
-} from "./types";
+} from './types';
 
 export abstract class DataSource {
   protected readonly allowedDatabases: string[];
@@ -17,7 +17,7 @@ export abstract class DataSource {
     public name: string,
     key: string,
     allowedDatabases: string[],
-    allowedTables: string[],
+    allowedTables: string[]
   ) {
     this.init(key);
     this.initializationPromise = this.loadSchemas();
@@ -25,14 +25,15 @@ export abstract class DataSource {
     this.allowedTables = allowedTables;
   }
 
-  public getTables(): TableSchema[] {
+  public async getTables(): Promise<TableSchema[]> {
+    await this.getInitializationPromise();
+
     return this.databases.flatMap((databaseSchema) => databaseSchema.schemas);
   }
 
-  public getTable(uniqueId: string): TableSchema | undefined {
-    return this.getTables().find(
-      (tableSchema) => tableSchema.getUniqueID() === uniqueId,
-    );
+  public async getTable(uniqueId: string): Promise<TableSchema | undefined> {
+    const tables = await this.getTables();
+    return tables.find((tableSchema) => tableSchema.getUniqueID() === uniqueId);
   }
 
   public getDatabases(): DatabaseSchema[] {
@@ -51,9 +52,8 @@ export abstract class DataSource {
     const databases = (await this.loadDatabaseNames()).filter(
       (database: string) =>
         this.allowedDatabases.length === 0 ||
-        this.allowedDatabases.includes(database),
+        this.allowedDatabases.includes(database)
     );
-
     this.databases = [];
     for (const database of databases) {
       const loadedDatabase = await this.loadDatabase(database);
@@ -62,7 +62,7 @@ export abstract class DataSource {
 
     if (this.databases.flatMap((database) => database.schemas).length === 0) {
       throw new Error(
-        "No table loaded, please double check your data source and whitelist tables.",
+        'No table loaded, please double check your data source and whitelist tables.'
       );
     }
   }
@@ -80,28 +80,28 @@ export abstract class DataSource {
     const matchRegex =
       this.allowedTables.find((allowedTable) => {
         const regexStr = `^${allowedTable
-          .split("*")
+          .split('*')
           .map((str: string) =>
-            str.replace(/([.*+?^=!:${}()|\\[\\]\/\\])/g, "\\$1"),
+            str.replace(/([.*+?^=!:${}()|\\[\\]\/\\])/g, '\\$1')
           )
-          .join(".*")}$`;
+          .join('.*')}$`;
         return new RegExp(regexStr).test(fullTableName);
       }) != null;
     return matchRegex || this.allowedTables.includes(fullTableName);
   }
 
   protected loadDatabase = async (
-    database: string,
+    database: string
   ): Promise<DatabaseSchema> => {
     const tables = (await this.loadTableNames(database)).filter((table) =>
-      this.isTableAllowed(table, database),
+      this.isTableAllowed(table, database)
     );
 
     const extractTables = new Map<string, TableInfo>();
     for (const table of tables) {
       const extracted = this.tryExtractPartitionTable(table);
 
-      if (typeof extracted === "string") {
+      if (typeof extracted === 'string') {
         extractTables.set(table, {
           name: table,
           isSuffixPartitionTable: false,
@@ -146,7 +146,7 @@ export abstract class DataSource {
   protected abstract loadTableNames(database: string): Promise<string[]>;
   protected abstract loadTableSchema(
     database: string,
-    table: TableInfo,
+    table: TableInfo
   ): Promise<TableSchema>;
   protected async enrichTableSchema(): Promise<void> {}
 
