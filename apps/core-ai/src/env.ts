@@ -1,9 +1,9 @@
-import { createEnv } from "@t3-oss/env-core";
-import { z } from "zod";
+import { createEnv } from '@t3-oss/env-core';
+import { z } from 'zod';
 
 export const env = createEnv({
   server: {
-    NODE_ENV: z.string().default("development"),
+    NODE_ENV: z.string().default('development'),
     CLIENT_BIGQUERY_CREDENTIALS: z.string(),
     QDRANT_URL: z.string(),
     QDRANT_API_KEY: z.string(),
@@ -24,6 +24,7 @@ export const env = createEnv({
     AGENT_TYPE: z.string(),
     OPENAI_API_KEY: z.string(),
     DISCORD_BOT_TOKEN: z.string(),
+    SHOW_ROUTES: z.boolean().default(false),
   },
 
   /**
