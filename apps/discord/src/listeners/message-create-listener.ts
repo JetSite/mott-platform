@@ -63,7 +63,7 @@ async function assistantThreadMessage(message: Message, prompt: string) {
     await processingMessage.delete();
     message.reply('Oops! Something went wrong. Please try again');
 
-    console.log(err);
+    console.log('Ошибка запроса:', err instanceof Error ? err.message : err);
   } finally {
     clearInterval(typingInterval);
   }
