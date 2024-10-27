@@ -1,4 +1,4 @@
-import type { ChainValues } from "@langchain/core/utils/types";
+import type { ChainValues } from '@langchain/core/utils/types';
 
 export function extractJsonFromOutput(text: string) {
   // Define the regular expression pattern to match JSON blocks
@@ -7,10 +7,10 @@ export function extractJsonFromOutput(text: string) {
   // Find all non-overlapping matches of the pattern in the string
   const matches = pattern.exec(text);
 
-  if (matches && matches[1]) {
+  if (matches?.[1]) {
     try {
       return JSON.parse(matches[1].trim());
-    } catch (error) {
+    } catch (_error) {
       throw new Error(`Failed to parse: ${matches[1]}`);
     }
   } else {
@@ -21,7 +21,10 @@ export function extractJsonFromOutput(text: string) {
 export function getLastQuerySqlInput(data: ChainValues): string | null {
   const lastQuerySqlStep = data.intermediateSteps
     .reverse()
-    .find((step: any) => step.action.tool === "query-sql");
+    .find(
+      (step: { action: { tool: string; toolInput?: { input: string } } }) =>
+        step.action.tool === 'query-sql'
+    );
 
   if (lastQuerySqlStep) {
     return lastQuerySqlStep.action.toolInput.input;

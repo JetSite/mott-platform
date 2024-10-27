@@ -1,10 +1,10 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatOpenAI } from '@langchain/openai';
 
-import { env } from "~/env";
+import { env } from '~/env';
 
-const cache: { [key: string]: any } = {};
+const cache: { [key: string]: ChatOpenAI } = {};
 
-export function createLLM(model = "gpt-4o-2024-08-06") {
+export function createLLM(model = 'gpt-4o-2024-08-06') {
   if (cache[model]) {
     return cache[model];
   }
