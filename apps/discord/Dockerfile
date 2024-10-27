@@ -1,51 +1,33 @@
-FROM node:20-alpine AS base
+FROM oven/bun:1.1.33 AS build
 
-# The web Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
-# Make sure you update this Dockerfile, the Dockerfile in the web workspace and copy that over to Dockerfile in the docs.
-
-FROM base AS builder
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk update
-RUN apk add --no-cache libc6-compat
-# Set working directory
-WORKDIR /app
-RUN npm install -g pnpm turbo
-COPY . .
-RUN turbo prune @mott/discord --docker
-
-# Add lockfile and package.json's of isolated subworkspace
-FROM base AS installer
-RUN apk update
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# First install dependencies (as they change less often)
-COPY .gitignore .gitignore
-COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-RUN npm install -g pnpm
-RUN pnpm install
-
-# Build the project and its dependencies
-COPY --from=builder /app/out/full/ .
+# Кэширование пакетов
+COPY package.json package.json
+COPY bun.lockb bun.lockb
 COPY turbo.json turbo.json
+COPY /apps/discord/package.json ./apps/discord/package.json
+COPY /tooling/typescript/package.json ./tooling/typescript/package.json
+COPY /tooling/eslint/package.json ./tooling/eslint/package.json
+COPY /tooling/prettier/package.json ./tooling/prettier/package.json
+RUN bun install
 
-# Uncomment and use build args to enable remote caching
-# ARG TURBO_TEAM
-# ENV TURBO_TEAM=$TURBO_TEAM
+COPY /apps/discord ./apps/discord
+COPY /tooling/typescript ./tooling/typescript
+COPY /tooling/eslint ./tooling/eslint
+COPY /tooling/prettier ./tooling/prettier
 
-# ARG TURBO_TOKEN
-# ENV TURBO_TOKEN=$TURBO_TOKEN
+ENV NODE_ENV=production
+RUN bun run build
 
-RUN pnpm turbo build --filter=@mott/discord...
+RUN bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./apps/discord/src/index.ts
 
-FROM base AS runner
+FROM gcr.io/distroless/base
+
 WORKDIR /app
 
-# Don't run production as root
-RUN addgroup --system --gid 1001 expressjs
-RUN adduser --system --uid 1001 expressjs
-USER expressjs
-COPY --from=installer /app .
+COPY --from=build --chown=1000:1000 --chmod=555 /app/server /bin/
 
-CMD node apps/discord/dist/index.mjs
+ENV NODE_ENV=production
+USER 1000:1000
+ENTRYPOINT ["/bin/server"]
