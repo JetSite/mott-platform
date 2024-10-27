@@ -3,10 +3,11 @@ import { strToApproxTokenCount } from "./tokens";
 export function addDocumentationToPrompt(
   initialPrompt: string,
   documentationList: string[],
-  maxTokens = 14000,
+  maxTokens = 14000
 ): string {
+  let updatedPrompt = initialPrompt;
   if (documentationList.length > 0) {
-    initialPrompt += "\n\n=== Additional Context === \n\n";
+    updatedPrompt += "\n\n=== Additional Context === \n\n";
 
     for (const documentation of documentationList) {
       if (
@@ -14,20 +15,21 @@ export function addDocumentationToPrompt(
           strToApproxTokenCount(documentation) <
         maxTokens
       ) {
-        initialPrompt += `${documentation}\n\n`;
+        updatedPrompt += `${documentation}\n\n`;
       }
     }
   }
 
-  return initialPrompt;
+  return updatedPrompt;
 }
 export function addInstructionsToPrompt(
   initialPrompt: string,
   documentationList: string[],
-  maxTokens = 14000,
+  maxTokens = 14000
 ): string {
+  let updatedPrompt = initialPrompt;
   if (documentationList.length > 0) {
-    initialPrompt += "\n\n=== Additional Instructions === \n\n";
+    updatedPrompt += "\n\n=== Additional Instructions === \n\n";
 
     for (const documentation of documentationList) {
       if (
@@ -35,50 +37,53 @@ export function addInstructionsToPrompt(
           strToApproxTokenCount(documentation) <
         maxTokens
       ) {
-        initialPrompt += `${documentation}\n\n`;
+        updatedPrompt += `${documentation}\n\n`;
       }
     }
   }
 
-  return initialPrompt;
+  return updatedPrompt;
 }
 
 export function addDDLToPrompt(
   initialPrompt: string,
   ddlList: string[],
-  maxTokens = 14000,
+  maxTokens = 14000
 ): string {
+  let updatedPrompt = initialPrompt;
   if (ddlList.length > 0) {
-    initialPrompt += "\n===Tables \n";
+    updatedPrompt += "\n===Tables \n";
     for (const ddl of ddlList) {
       if (
         strToApproxTokenCount(initialPrompt) + strToApproxTokenCount(ddl) <
         maxTokens
       ) {
-        initialPrompt += `${ddl}\n\n`;
+        updatedPrompt += `${ddl}\n\n`;
       }
     }
   }
 
-  return initialPrompt;
+  return updatedPrompt;
 }
 
 export function addSQLToPrompt(
   initialPrompt: string,
   sqlList: { sql: string; question: string }[],
-  maxTokens = 14000,
+  maxTokens = 14000
 ): string {
+  let updatedPrompt = initialPrompt;
   if (sqlList.length > 0) {
-    initialPrompt += "\n===Question-SQL Pairs\n\n";
-    for (const sql of sqlList) {
+    updatedPrompt += "\n===Question-SQL Pairs\n\n";
+    for (const sqlItem of sqlList) {
       if (
-        strToApproxTokenCount(initialPrompt) + strToApproxTokenCount(sql.sql) <
+        strToApproxTokenCount(updatedPrompt) +
+          strToApproxTokenCount(sqlItem.sql) <
         maxTokens
       ) {
-        initialPrompt += `${sql.question}\n${sql.sql}\n\n`;
+        updatedPrompt += `${sqlItem.question}\n${sqlItem.sql}\n\n`;
       }
     }
   }
 
-  return initialPrompt;
+  return updatedPrompt;
 }

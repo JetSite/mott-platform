@@ -1,4 +1,5 @@
 import type { BaseLanguageModel } from "@langchain/core/language_models/base";
+import type { Tool } from "@langchain/core/tools";
 import {
   ChatPromptTemplate,
   MessagesPlaceholder,
@@ -29,7 +30,7 @@ import {
 import { retrieverTool } from "../tools/retriever-tools";
 import { createAgent, runChatWithPrompt } from "../utils";
 
-export async function createSqlAgent(question: string, sessionId: string) {
+export async function createSqlAgent(question: string, _sessionId: string) {
   const dataSource = new DataSource({
     type: "postgres",
     host: env.CLIENT_POSTGRES_HOST,
@@ -44,7 +45,7 @@ export async function createSqlAgent(question: string, sessionId: string) {
   });
 
   const promptTranslatorTemplate = await langfuse.getPrompt(
-    "question_translator",
+    "question_translator"
   );
 
   const promptTranslator = promptTranslatorTemplate.getLangchainPrompt();
@@ -75,7 +76,7 @@ export async function createSqlAgent(question: string, sessionId: string) {
   ]);
   const sqlToolKit = new SqlToolkit(
     db,
-    createLLM() as unknown as BaseLanguageModel,
+    createLLM() as unknown as BaseLanguageModel
   );
 
   const tools = [
@@ -83,7 +84,7 @@ export async function createSqlAgent(question: string, sessionId: string) {
       .getTools()
       .filter(
         (tool) =>
-          !(tool instanceof InfoSqlTool || tool instanceof QueryCheckerTool),
+          !(tool instanceof InfoSqlTool || tool instanceof QueryCheckerTool)
       ),
     retrieverTool,
     new EntityNameSqlTool(db),
@@ -98,5 +99,5 @@ export async function createSqlAgent(question: string, sessionId: string) {
 
   const newPrompt = await prompt.partial(partialData);
 
-  return createAgent(createLLM(), tools, newPrompt);
+  return createAgent(createLLM(), tools as Tool[], newPrompt);
 }

@@ -22,7 +22,7 @@ export async function similaritySearch(query: string, collectionName: string) {
     {
       url: env.QDRANT_URL,
       collectionName,
-    },
+    }
   );
 
   const response = await vectorStore.similaritySearch(query, 10);
@@ -40,7 +40,7 @@ export async function similaritySearch(query: string, collectionName: string) {
 export async function addDocument(
   content: string,
   type: string,
-  metadata: Record<string, any>,
+  metadata: Record<string, string>
 ) {
   const docs = [
     new Document({
