@@ -171,7 +171,7 @@ export class ListTablesSqlTool extends Tool implements SqlTool {
 
   async _call(_: string) {
     try {
-      const tables = await this.db.getTablesList();
+      const tables = await this.db.getTablesListFast();
       return tables.map((table) => `${table.database}.${table.name}`).join(',');
     } catch (error) {
       return `${error}`;

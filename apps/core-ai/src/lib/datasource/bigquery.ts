@@ -105,6 +105,36 @@ export default class BigQuerySource extends DataSource {
     return [];
   }
 
+  public async getTablesListFast(): Promise<
+    Array<{ database: string; name: string }>
+  > {
+    if (this.bigquery == null) {
+      throw new Error('BigQuery client not initialized');
+    }
+
+    const [datasets] = await this.bigquery.getDatasets();
+    const allowedDatasets = datasets.filter(
+      (dataset) =>
+        this.allowedDatabases.length === 0 ||
+        this.allowedDatabases.includes(dataset.id ?? '')
+    );
+
+    const tablesPromises = allowedDatasets.map(async (dataset) => {
+      const [tables] = await dataset.getTables();
+      return tables
+        .filter((table) =>
+          this.isTableAllowed(table.id ?? '', dataset.id ?? '')
+        )
+        .map((table) => ({
+          database: dataset.id ?? '',
+          name: table.id ?? '',
+        }));
+    });
+
+    const tablesList = await Promise.all(tablesPromises);
+    return tablesList.flat();
+  }
+
   public async runQuery(query: string): Promise<Answer> {
     if (this.bigquery == null) {
       throw new Error('BigQuery client not initialized');
