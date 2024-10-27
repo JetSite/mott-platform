@@ -24,12 +24,17 @@ async function assistantThreadMessage(message: Message, prompt: string) {
   ];
 
   try {
-    const responsePromise = axios.post(`${env.CORE_AI_URL}/chat`, {
-      message: prompt,
-      headers: {
-        'x-mott-key': 1,
+    const responsePromise = axios.post(
+      `${env.CORE_AI_URL}/chat`,
+      {
+        message: prompt,
       },
-    });
+      {
+        headers: {
+          'x-mott-key': 1,
+        },
+      }
+    );
 
     updateInterval = setInterval(async () => {
       if (updateCount < updateMessages.length) {
