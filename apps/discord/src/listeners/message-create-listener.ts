@@ -44,7 +44,7 @@ async function assistantThreadMessage(message: Message, prompt: string) {
     }, 5000) as unknown as NodeJS.Timeout;
 
     const response = await responsePromise;
-    const messageToUser = response.data;
+    const messageToUser = response.data.response;
     clearInterval(updateInterval);
     await processingMessage.delete();
 
