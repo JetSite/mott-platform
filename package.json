@@ -21,5 +21,11 @@
     "apps/*",
     "packages/*",
     "tooling/*"
+  ],
+  "dependencies": {
+    "@biomejs/biome": "^1.9.4"
+  },
+  "trustedDependencies": [
+    "@biomejs/biome"
   ]
 }
