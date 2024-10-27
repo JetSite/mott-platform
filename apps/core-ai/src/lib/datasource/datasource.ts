@@ -30,6 +30,18 @@ export abstract class DataSource {
 
     return this.databases.flatMap((databaseSchema) => databaseSchema.schemas);
   }
+  public async getTablesList(): Promise<
+    Array<{ database: string; name: string }>
+  > {
+    await this.getInitializationPromise();
+
+    return this.databases.flatMap((db) =>
+      db.schemas.map((schema) => ({
+        database: db.name,
+        name: schema.name,
+      }))
+    );
+  }
 
   public async getTable(uniqueId: string): Promise<TableSchema | undefined> {
     const tables = await this.getTables();
