@@ -1,7 +1,8 @@
 import type { OtpForm } from "@mott/validators";
-import { CheckCircle, Loader2 } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
+import { CheckCircle, Loader2 } from "lucide-react";
 
+import { cn } from "@mott/ui";
 import { Button } from "@mott/ui/custom/button";
 import { Form, FormControl, FormField, FormItem } from "@mott/ui/form";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@mott/ui/input-otp";
@@ -50,17 +51,17 @@ export default function OtpSignInForm({
                     onComplete={handleComplete}
                     {...field}
                   >
-                    {Array.from(
-                      { length: COUNT_NUMBER_CODE },
-                      (item: number, index: number) => (
-                        <InputOTPGroup key={`otp-slot-${item}`}>
-                          <InputOTPSlot
-                            className={`h-10 w-[45px] ${errorMessage && "border border-red-600"}`}
-                            index={index}
-                          />
-                        </InputOTPGroup>
-                      ),
-                    )}
+                    {[...Array(COUNT_NUMBER_CODE).keys()].map((item, index) => (
+                      <InputOTPGroup key={`otp-slot-${item}`}>
+                        <InputOTPSlot
+                          className={cn(
+                            "h-10 w-[45px]",
+                            errorMessage && "border border-red-600",
+                          )}
+                          index={index}
+                        />
+                      </InputOTPGroup>
+                    ))}
                   </InputOTP>
                 </FormControl>
               </FormItem>

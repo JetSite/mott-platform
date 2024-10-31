@@ -29,6 +29,10 @@ export default function CompanySetupPage() {
   const form = useForm({
     schema: companySchema,
     mode: "onSubmit",
+    defaultValues: {
+      companyName: "",
+      companyWebsite: "",
+    },
   });
 
   const onSubmit = async (data: CompanyForm) => {
