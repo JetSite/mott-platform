@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@t3-oss/env-core": "^0.11.1",
-    "@vercel/functions": "^1.4.2",
+    "@vercel/functions": "^1.5.0",
     "axios": "1.7.7",
     "discord.js": "14.16.3",
     "dotenv": "16.4.5",
@@ -19,7 +19,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "22.8.1",
+    "@types/node": "22.8.5",
     "babel-eslint": "10.1.0",
     "eslint": "9.13.0",
     "eslint-config-airbnb-base": "^15.0.0",
