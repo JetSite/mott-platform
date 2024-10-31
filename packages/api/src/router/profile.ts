@@ -68,6 +68,13 @@ export const profileRouter = {
         }
       });
 
-      return { success: true };
+      return {
+        success: true,
+        message: "Profile updated successfully",
+        updatedFields: {
+          name: input.name,
+          jobRole: input.jobRole,
+        },
+      };
     }),
 } satisfies TRPCRouterRecord;
