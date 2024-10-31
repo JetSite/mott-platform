@@ -47,7 +47,7 @@ export async function createPresignedUrl(
       ResponseContentType: mimeType,
     };
     const command = new GetObjectCommand(objectParams);
-    const url = await getSignedUrl(s3, command, { expiresIn: 36000 });
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
     return { key, url };
   }
   const objectParams: PutObjectCommandInput = {
@@ -56,7 +56,7 @@ export async function createPresignedUrl(
     ContentType: mimeType,
   };
   const command = new PutObjectCommand(objectParams);
-  const url = await getSignedUrl(s3, command, { expiresIn: 36000 });
+  const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
   return { key, url };
 }
 

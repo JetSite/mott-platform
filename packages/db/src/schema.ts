@@ -177,6 +177,7 @@ export const Workspace = pgTable("workspaces", {
   paidUntil: timestamp("paid_until", { mode: "date" }),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
 });
+export const storageProviderEnum = pgEnum("storage_provider", ["vercel", "s3"]);
 
 export const File = pgTable("files", {
   id: text("id")
@@ -186,10 +187,11 @@ export const File = pgTable("files", {
   mimeType: text("mime_type").notNull(),
   size: integer("size").notNull(),
   path: text("path").notNull(),
-  publicId: text("public_id").notNull(),
   width: integer("width"),
   height: integer("height"),
-  storageProvider: text("storage_provider").notNull().default("vercel"),
+  storageProvider: storageProviderEnum("storage_provider")
+    .notNull()
+    .default("s3"),
   workspaceId: text("workspace_id").references(() => Workspace.id, {
     onDelete: "cascade",
   }),
