@@ -11,6 +11,8 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
+import type { WorkspaceSettings } from "./workspace/validation";
+
 export const onboardingStepEnum = pgEnum("onboarding_step", [
   "welcome",
   "company_info",
@@ -168,9 +170,30 @@ export const Workspace = pgTable("workspaces", {
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
   plan: workspacePlanEnum("plan").notNull().default("free"),
+  settings: text("settings").$type<WorkspaceSettings>(),
   slug: text("slug").notNull().unique(),
   stripeId: text("stripe_id"),
   subscriptionId: text("subscription_id"),
   paidUntil: timestamp("paid_until", { mode: "date" }),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+});
+
+export const File = pgTable("files", {
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
+  name: text("name").notNull(),
+  mimeType: text("mime_type").notNull(),
+  size: integer("size").notNull(),
+  path: text("path").notNull(),
+  publicId: text("public_id").notNull(),
+  width: integer("width"),
+  height: integer("height"),
+  storageProvider: text("storage_provider").notNull().default("vercel"),
+  workspaceId: text("workspace_id").references(() => Workspace.id, {
+    onDelete: "cascade",
+  }),
+  uploadedBy: text("uploaded_by").references(() => User.id),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
 });
