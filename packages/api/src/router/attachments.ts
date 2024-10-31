@@ -15,10 +15,11 @@ export const attachmentsRouter = {
         const newKey = generateS3Key(key, true);
         const res = await createPresignedUrl(newKey);
         return res;
-      } catch (_e) {
+      } catch (e) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Error creating S3 presigned url",
+          message:
+            e instanceof Error ? e.message : "Error creating S3 presigned url",
         });
       }
     }),

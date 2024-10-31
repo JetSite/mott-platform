@@ -75,6 +75,9 @@ export async function getFileBuffer(key: string) {
     Key: key,
   });
   const response = await s3.send(command);
+  if (!response.Body) {
+    throw new Error("No body found");
+  }
   const stream = response.Body as Readable;
   return consumers.buffer(stream);
 }
@@ -94,6 +97,7 @@ export async function moveFile(oldKey: string, newKey: string) {
     await deleteFile(oldKey);
   } catch (e) {
     console.log(e);
+    throw e;
   }
 }
 export async function uploadFile(key: string, fileBuffer: Buffer) {
@@ -104,7 +108,7 @@ export async function uploadFile(key: string, fileBuffer: Buffer) {
         Bucket: env.STORAGE_BUCKET_NAME,
         Key: key,
         Body: fileBuffer,
-        ACL: "public-read",
+        ACL: "private",
         CacheControl: "public, max-age=31536000, immutable",
         ContentType: lookup(ext ?? "") || "application/octet-stream",
       },
@@ -127,5 +131,6 @@ export async function deleteFile(key: string) {
     await s3.send(command);
   } catch (e) {
     console.log(e);
+    throw e;
   }
 }
