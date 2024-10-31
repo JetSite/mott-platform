@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { CreatePresignedUrlSchema } from "@mott/validators";
 
-import { createPresignedUrl, generateS3Key } from "~/lib/storage/s3/utils";
+import { createPresignedUrl, generateS3Key } from "../lib/storage/s3/utils";
 import { protectedProcedure } from "../trpc";
 
 export const attachmentsRouter = {
@@ -24,8 +24,7 @@ export const attachmentsRouter = {
       const { key } = input;
       try {
         const newKey = generateS3Key(key, true);
-        const res = await createPresignedUrl(newKey);
-        return res;
+        return await createPresignedUrl(newKey);
       } catch (e) {
         throw new TRPCError({
           code: "BAD_REQUEST",

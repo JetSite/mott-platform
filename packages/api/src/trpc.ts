@@ -7,12 +7,13 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 import type { Session } from "@mott/auth";
-import { TRPCError, initTRPC } from "@trpc/server";
-import superjson from "superjson";
-import { ZodError } from "zod";
+import { initTRPC, TRPCError } from "@trpc/server";
 
 import { auth, validateToken } from "@mott/auth";
 import { db } from "@mott/db/client";
+
+import { ValidationError } from "./lib/errors/validation-error";
+import { validationErrorMiddleware } from "./middleware/validation-error";
 
 /**
  * Isomorphic Session getter for API requests
@@ -21,7 +22,9 @@ import { db } from "@mott/db/client";
  */
 const isomorphicGetSession = async (headers: Headers) => {
   const authToken = headers.get("Authorization") ?? null;
-  if (authToken) return validateToken(authToken);
+  if (authToken) {
+    return validateToken(authToken);
+  }
   return auth();
 };
 
@@ -61,21 +64,26 @@ export const createTRPCContext = async (opts: {
  * transformer
  */
 const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: superjson,
-  errorFormatter: ({ shape, error }) => ({
-    ...shape,
-    data: {
-      ...shape.data,
-      zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
-    },
-  }),
+  errorFormatter({ shape, error }) {
+    if (error.cause instanceof ValidationError) {
+      return {
+        ...shape,
+        data: {
+          ...shape.data,
+          validationErrors: error.cause.errors,
+        },
+      };
+    }
+    return shape;
+  },
 });
+const { middleware } = t;
 
 /**
  * Create a server-side caller
  * @see https://trpc.io/docs/server/server-side-calls
  */
-export const createCallerFactory = t.createCallerFactory;
+export const { createCallerFactory } = t;
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -96,7 +104,7 @@ export const createTRPCRouter = t.router;
  * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
  * network latency that would occur in production but not in local development.
  */
-const timingMiddleware = t.middleware(async ({ next, path }) => {
+const timingMiddleware = middleware(async ({ next, path }) => {
   const start = Date.now();
 
   if (t._config.isDev) {
@@ -113,6 +121,14 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
   return result;
 });
 
+const validationMiddleware = middleware(async ({ next }) => {
+  try {
+    return await next();
+  } catch (error) {
+    throw validationErrorMiddleware(error);
+  }
+});
+
 /**
  * Public (unauthed) procedure
  *
@@ -120,7 +136,9 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * tRPC API. It does not guarantee that a user querying is authorized, but you
  * can still access user session data if they are logged in
  */
-export const publicProcedure = t.procedure.use(timingMiddleware);
+export const publicProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(validationMiddleware);
 
 /**
  * Protected (authenticated) procedure
