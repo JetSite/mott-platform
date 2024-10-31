@@ -1,4 +1,5 @@
 import type { TRPCRouterRecord } from "@trpc/server";
+import { TRPCError } from "@trpc/server";
 
 import { eq } from "@mott/db";
 import { AICustomInstructions, User } from "@mott/db/schema";
@@ -18,7 +19,10 @@ export const profileRouter = {
     });
 
     if (!user) {
-      throw new Error("User not found");
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "User not found",
+      });
     }
 
     return {
