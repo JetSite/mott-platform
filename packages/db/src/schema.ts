@@ -37,6 +37,7 @@ export const User = pgTable("user", {
     .$defaultFn(() => createId())
     .primaryKey(),
   name: varchar("name", { length: 255 }),
+  role: varchar("role", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("emailVerified", {
     mode: "date",

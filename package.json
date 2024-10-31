@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "db:push": "turbo -F @mott/db push",
     "dev": "turbo dev",
     "lint": "biome lint .",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
