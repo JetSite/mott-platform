@@ -1,6 +1,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import {
+  boolean,
   integer,
   pgEnum,
   pgTable,
@@ -32,12 +33,36 @@ export const corporateChatEnum = pgEnum(
   "corporate_chat",
   Object.values(CorporateChat) as [string, ...string[]],
 );
+
+export const AICustomInstructions = pgTable("ai_custom_instructions", {
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => User.id, { onDelete: "cascade" }),
+  instructions: text("instructions").notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+});
+
+export const AICustomInstructionsRelations = relations(
+  AICustomInstructions,
+  ({ one }) => ({
+    user: one(User, {
+      fields: [AICustomInstructions.userId],
+      references: [User.id],
+    }),
+  }),
+);
+
 export const User = pgTable("user", {
   id: text("id")
     .$defaultFn(() => createId())
     .primaryKey(),
   name: varchar("name", { length: 255 }),
-  role: varchar("role", { length: 255 }),
+  jobRole: varchar("job_role", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
@@ -64,6 +89,7 @@ export const OnboardingData = pgTable("onboarding_data", {
 });
 export const UserRelations = relations(User, ({ many }) => ({
   accounts: many(Account),
+  customInstructions: many(AICustomInstructions),
 }));
 
 export const Account = pgTable(

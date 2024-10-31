@@ -30,7 +30,7 @@ export default function ProfilePage() {
     mode: "onChange",
     defaultValues: {
       name: "",
-      role: "",
+      jobRole: "",
       instructions: "",
       knowledge: "",
     },
@@ -109,7 +109,7 @@ export default function ProfilePage() {
 
             <FormField
               control={form.control}
-              name="role"
+              name="jobRole"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Role</FormLabel>

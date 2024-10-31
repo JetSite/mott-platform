@@ -1,7 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 
 import { eq } from "@mott/db";
-import { User } from "@mott/db/schema";
+import { AICustomInstructions, User } from "@mott/db/schema";
 import { ProfileUpdateSchema } from "@mott/validators";
 
 import { protectedProcedure } from "../trpc";
@@ -10,6 +10,11 @@ export const profileRouter = {
   get: protectedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.User.findFirst({
       where: eq(User.id, ctx.session.user.id),
+      with: {
+        customInstructions: {
+          where: eq(AICustomInstructions.isActive, true),
+        },
+      },
     });
 
     if (!user) {
@@ -18,21 +23,46 @@ export const profileRouter = {
 
     return {
       name: user.name ?? "",
-      role: user.role ?? "",
-      instructions: "",
+      jobRole: user.jobRole ?? "",
+      instructions: user.customInstructions[0]?.instructions ?? "",
       knowledge: "",
     };
   }),
   update: protectedProcedure
     .input(ProfileUpdateSchema)
     .mutation(async ({ ctx, input }) => {
-      await ctx.db
-        .update(User)
-        .set({
-          name: input.name,
-          role: input.role,
-        })
-        .where(eq(User.id, ctx.session.user.id));
+      await ctx.db.transaction(async (tx) => {
+        await tx
+          .update(User)
+          .set({
+            name: input.name,
+            jobRole: input.jobRole,
+          })
+          .where(eq(User.id, ctx.session.user.id));
+
+        if (input.instructions) {
+          const existingInstruction =
+            await tx.query.AICustomInstructions.findFirst({
+              where: eq(AICustomInstructions.userId, ctx.session.user.id),
+            });
+
+          if (existingInstruction) {
+            await tx
+              .update(AICustomInstructions)
+              .set({
+                instructions: input.instructions,
+                updatedAt: new Date(),
+              })
+              .where(eq(AICustomInstructions.id, existingInstruction.id));
+          } else {
+            await tx.insert(AICustomInstructions).values({
+              userId: ctx.session.user.id,
+              instructions: input.instructions,
+              isActive: true,
+            });
+          }
+        }
+      });
 
       return { success: true };
     }),
