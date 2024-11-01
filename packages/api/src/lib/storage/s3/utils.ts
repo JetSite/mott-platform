@@ -23,8 +23,8 @@ export function generateS3Key(name: string, temporary = false): string {
   const hash = generateFileName(fileName);
   const date = new Date();
   const year = date.getFullYear();
-  const month = `0${(date.getMonth() + 1).toString()}`.slice(-2);
-  const day = date.getDate();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
   return `${temporary ? "temp/" : ""}${year}/${month}/${day}/${hash + ext}`;
 }
 
@@ -66,7 +66,7 @@ export async function getFile(key: string) {
 }
 
 export async function moveFile(oldKey: string, newKey: string) {
-  const ext = oldKey.split(".").pop();
+  const ext = newKey.split(".").pop();
 
   const input = {
     Bucket: env.STORAGE_BUCKET_NAME,
