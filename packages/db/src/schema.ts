@@ -2,7 +2,9 @@ import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import {
   boolean,
+  index,
   integer,
+  jsonb,
   pgEnum,
   pgTable,
   primaryKey,
@@ -10,6 +12,8 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+
+import type { WorkspaceSettings } from "./workspace/validation";
 
 export const onboardingStepEnum = pgEnum("onboarding_step", [
   "welcome",
@@ -168,9 +172,52 @@ export const Workspace = pgTable("workspaces", {
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
   plan: workspacePlanEnum("plan").notNull().default("free"),
+  settings: jsonb("settings").$type<WorkspaceSettings>(),
   slug: text("slug").notNull().unique(),
   stripeId: text("stripe_id"),
   subscriptionId: text("subscription_id"),
   paidUntil: timestamp("paid_until", { mode: "date" }),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
 });
+
+export const File = pgTable(
+  "files",
+  {
+    id: text("id")
+      .$defaultFn(() => createId())
+      .primaryKey(),
+    name: text("name").notNull(),
+    mimeType: text("mime_type").notNull(),
+    size: integer("size").notNull(),
+    path: text("path").notNull(),
+    width: integer("width"),
+    height: integer("height"),
+    workspaceId: text("workspace_id")
+      .notNull()
+      .references(() => Workspace.id, {
+        onDelete: "cascade",
+      }),
+    uploadedBy: text("uploaded_by")
+      .notNull()
+      .references(() => User.id, {
+        onDelete: "cascade",
+      }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (file) => ({
+    workspaceIdx: index("files_workspace_id_idx").on(file.workspaceId),
+    uploadedByIdx: index("files_uploaded_by_idx").on(file.uploadedBy),
+  }),
+);
+
+export const FileRelations = relations(File, ({ one }) => ({
+  workspace: one(Workspace, {
+    fields: [File.workspaceId],
+    references: [Workspace.id],
+  }),
+  uploadedByUser: one(User, {
+    fields: [File.uploadedBy],
+    references: [User.id],
+  }),
+}));
