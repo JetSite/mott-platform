@@ -8,6 +8,7 @@
  */
 import type { Session } from "@mott/auth";
 import { initTRPC, TRPCError } from "@trpc/server";
+import SuperJSON from "superjson";
 
 import { auth, validateToken } from "@mott/auth";
 import { db } from "@mott/db/client";
@@ -64,6 +65,7 @@ export const createTRPCContext = async (opts: {
  * transformer
  */
 const t = initTRPC.context<typeof createTRPCContext>().create({
+  transformer: SuperJSON,
   errorFormatter({ shape, error }) {
     if (error.cause instanceof ValidationError) {
       return {
