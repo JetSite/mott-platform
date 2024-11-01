@@ -4,8 +4,8 @@ export interface ValidationErrorItem {
 }
 
 export class ValidationError extends Error {
-  public statusCode: number;
-  public errors: ValidationErrorItem[];
+  public readonly statusCode: number;
+  public readonly errors: ValidationErrorItem[];
 
   constructor(errors: ValidationErrorItem[]) {
     super("Validation error");

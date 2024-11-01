@@ -9,7 +9,12 @@ const brandingSchema = z.object({
 });
 const regionalSchema = z.object({
   region: z.string().optional(),
-  timezone: z.string().optional(),
+  timezone: z
+    .string()
+    .refine((tz) => Intl.supportedValuesOf("timeZone").includes(tz), {
+      message: "Invalid timezone. Use IANA Time Zone format",
+    })
+    .optional(),
   calendar: z.enum(["gregorian", "lunar"]).optional(),
   temperature: z.enum(["celsius", "fahrenheit"]).optional(),
   measurementSystem: z.enum(["metric", "imperial"]).optional(),

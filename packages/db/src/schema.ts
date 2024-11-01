@@ -4,6 +4,7 @@ import {
   boolean,
   index,
   integer,
+  jsonb,
   pgEnum,
   pgTable,
   primaryKey,
@@ -171,7 +172,7 @@ export const Workspace = pgTable("workspaces", {
     .notNull()
     .references(() => User.id, { onDelete: "cascade" }),
   plan: workspacePlanEnum("plan").notNull().default("free"),
-  settings: text("settings").$type<WorkspaceSettings>(),
+  settings: jsonb("settings").$type<WorkspaceSettings>(),
   slug: text("slug").notNull().unique(),
   stripeId: text("stripe_id"),
   subscriptionId: text("subscription_id"),
@@ -198,7 +199,9 @@ export const File = pgTable(
       }),
     uploadedBy: text("uploaded_by")
       .notNull()
-      .references(() => User.id),
+      .references(() => User.id, {
+        onDelete: "cascade",
+      }),
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
   },
