@@ -8,7 +8,7 @@ export class ValidationError extends Error {
   public errors: ValidationErrorItem[];
 
   constructor(errors: ValidationErrorItem[]) {
-    super("Ошибка валидации");
+    super("Validation error");
     this.statusCode = 400;
     this.errors = errors;
   }

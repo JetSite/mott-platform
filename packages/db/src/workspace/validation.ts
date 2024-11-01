@@ -14,11 +14,23 @@ const regionalSchema = z.object({
   temperature: z.enum(["celsius", "fahrenheit"]).optional(),
   measurementSystem: z.enum(["metric", "imperial"]).optional(),
   firstDayOfWeek: z.number().min(0).max(6).optional(),
-  dateFormat: z.string().optional(),
-  numberFormat: z.string().optional(),
+  dateFormat: z
+    .string()
+    .regex(/^(DD|MM|YYYY)[-/.](DD|MM|YYYY)[-/.](DD|MM|YYYY)$/)
+    .optional(),
+  numberFormat: z
+    .string()
+    .regex(/^[#,.]+(0+)?$/)
+    .optional(),
   currency: z.string().optional(),
-  language: z.string(),
-  additionalLanguage: z.string().optional(),
+  language: z
+    .string()
+    .regex(/^[a-z]{2}$/)
+    .default("en"),
+  additionalLanguage: z
+    .string()
+    .regex(/^[a-z]{2}$/)
+    .optional(),
 });
 
 export const workspaceSettingsSchema = z.object({

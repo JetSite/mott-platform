@@ -5,7 +5,7 @@ export const CreatePresignedUrlSchema = z.object({
     .string()
     .min(1, "Key cannot be empty")
     .max(1024, "Key cannot be longer than 1024 characters")
-    .regex(/^[a-zA-Z0-9!_.*'()-\/]+$/, "Key contains invalid characters"),
+    .regex(/^[a-zA-Z0-9!_.*'()-\\/]+$/, "Key contains invalid characters"),
 });
 
 export type CreatePresignedUrlInput = z.TypeOf<typeof CreatePresignedUrlSchema>;
