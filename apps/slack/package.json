@@ -17,14 +17,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@slack/bolt": "4.0.1",
+    "@slack/bolt": "4.1.0",
     "@slack/logger": "^4.0.0",
     "@slack/web-api": "^7.7.0",
     "axios": "1.7.7",
     "dotenv": "16.4.5"
   },
   "devDependencies": {
-    "@types/node": "22.8.5",
+    "@types/node": "22.9.0",
     "dotenv-cli": "7.4.2",
     "tsup": "8.3.5",
     "typescript": "5.6.3"
