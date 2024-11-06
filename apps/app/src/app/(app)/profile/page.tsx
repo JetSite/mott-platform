@@ -3,7 +3,7 @@
 import type { ProfileUpdateForm } from "@mott/validators";
 import { useEffect, useRef, useState } from "react";
 
-import { Button } from "@mott/ui/button";
+import { Button } from "@mott/ui/custom/button";
 import {
   Form,
   FormControl,
@@ -18,9 +18,11 @@ import { toast } from "@mott/ui/toast";
 import { ProfileUpdateSchema } from "@mott/validators";
 
 import { FileItem } from "~/components/forms/file-item";
+import { useBoolean } from "~/hooks/use-boolean";
 import { api } from "~/trpc/react";
 
 export default function ProfilePage() {
+  const loading = useBoolean();
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { mutateAsync: updateProfile } = api.profile.update.useMutation();
@@ -44,7 +46,7 @@ export default function ProfilePage() {
 
   const onSubmit = async (data: ProfileUpdateForm) => {
     const isValid = await form.trigger();
-
+    loading.onTrue();
     if (!isValid) {
       return;
     }
@@ -55,6 +57,8 @@ export default function ProfilePage() {
     } catch (error) {
       toast.error("Failed to update profile. Please try again.");
       console.error("Profile update error:", error);
+    } finally {
+      loading.onFalse();
     }
   };
 
@@ -200,8 +204,9 @@ export default function ProfilePage() {
                 size="md"
                 aria-label="Save"
                 className="w-full max-w-[143px]"
+                loading={loading.value}
               >
-                Save
+                {loading.value ? "Saving..." : "Save"}
               </Button>
             </div>
           </form>

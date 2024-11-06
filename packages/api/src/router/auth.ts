@@ -5,6 +5,7 @@ import { z } from "zod";
 import { invalidateSessionToken } from "@mott/auth";
 import { CorporateChat, OnboardingData, User } from "@mott/db/schema";
 
+import { createWorkspace } from "../lib/workspace/workspace";
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const authRouter = {
@@ -96,6 +97,7 @@ export const authRouter = {
             updatedAt: new Date(),
           },
         });
+      await createWorkspace(input.companyName, ctx.session.user.id);
 
       return { success: true };
     }),
