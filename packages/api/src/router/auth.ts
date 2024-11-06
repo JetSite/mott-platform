@@ -5,57 +5,13 @@ import { z } from "zod";
 import { invalidateSessionToken } from "@mott/auth";
 import { CorporateChat, OnboardingData, User } from "@mott/db/schema";
 
+import { getOnboardingStatus } from "../lib/onboarding/status";
 import { createWorkspace } from "../lib/workspace/workspace";
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const authRouter = {
   checkOnboardingStatus: protectedProcedure.mutation(async ({ ctx }) => {
-    const user = await ctx.db.query.User.findFirst({
-      where: eq(User.id, ctx.session.user.id),
-      columns: {
-        name: true,
-      },
-    });
-    if (!user?.name) {
-      return {
-        completed: false,
-        currentStep: "full_name",
-        stepDescription: "Fill in your full name",
-      };
-    }
-    const onboardingData = await ctx.db.query.OnboardingData.findFirst({
-      where: eq(OnboardingData.userId, ctx.session.user.id),
-      columns: {
-        companyName: true,
-        companyWebsite: true,
-        corporateChat: true,
-      },
-    });
-
-    if (!onboardingData) {
-      return {
-        completed: false,
-        currentStep: "welcome",
-        stepDescription: "Welcome to the onboarding process",
-      };
-    }
-
-    let currentStep = "company_name";
-    let stepDescription = "Fill in your company name";
-
-    if (!onboardingData.companyName || !onboardingData.companyWebsite) {
-      currentStep = "company_name";
-      stepDescription = "Fill in your company name";
-    } else if (!onboardingData.corporateChat) {
-      currentStep = "corporate_chat";
-      stepDescription = "Set your corporate chat";
-    }
-
-    return {
-      completed: false,
-      currentStep,
-      stepDescription,
-    };
+    return getOnboardingStatus(ctx.db, ctx.session.user.id);
   }),
   getSession: publicProcedure.query(({ ctx }) => {
     return ctx.session;

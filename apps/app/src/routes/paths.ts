@@ -5,6 +5,7 @@ const ROOTS = {
 export const paths = {
   login: "/login",
   onboarding: {
+    root: "/onboarding",
     fullName: "/onboarding/full-name",
     welcome: "/onboarding/welcome",
     welcomeCompany: "/onboarding/welcome-company",
