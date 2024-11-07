@@ -1,6 +1,6 @@
 import type { EmailForm } from "@mott/validators";
-import { signIn } from "next-auth/react";
 import type { UseFormReturn } from "react-hook-form";
+import { signIn } from "next-auth/react";
 
 import { Button } from "@mott/ui/custom/button";
 import {
@@ -33,7 +33,7 @@ export default function EmailSignInForm({
         size="lg"
         aria-label="Sign in with Google"
         className="mb-10 flex h-[50px] w-full gap-2"
-        onClick={() => signIn("google", { redirectTo: paths.dashboard.root })}
+        onClick={() => signIn("google", { redirectTo: paths.onboarding.root })}
       >
         <GoogleIcon />
         <p>Continue with Google</p>

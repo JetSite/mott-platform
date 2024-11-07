@@ -1,21 +1,21 @@
-import { basename, extname } from "node:path";
+import { basename, extname } from 'node:path';
 import type {
   GetObjectCommandInput,
   PutObjectCommandInput,
-} from "@aws-sdk/client-s3";
+} from '@aws-sdk/client-s3';
 import {
   CopyObjectCommand,
   DeleteObjectCommand,
   GetObjectCommand,
   PutObjectCommand,
-} from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { lookup } from "mime-types";
+} from '@aws-sdk/client-s3';
+import { Upload } from '@aws-sdk/lib-storage';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { lookup } from 'mime-types';
 
-import { env } from "../../../env";
-import { s3 } from "../s3/client";
-import { generateFileName } from "../utils";
+import { env } from '../../../env';
+import { s3 } from '../s3/client';
+import { generateFileName } from '../utils';
 
 export function generateS3Key(name: string, temporary = false): string {
   const ext = extname(name);
@@ -23,21 +23,21 @@ export function generateS3Key(name: string, temporary = false): string {
   const hash = generateFileName(fileName);
   const date = new Date();
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${temporary ? "temp/" : ""}${year}/${month}/${day}/${hash + ext}`;
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${temporary ? 'temp/' : ''}${year}/${month}/${day}/${hash + ext}`;
 }
 
 export async function createPresignedUrl(
   key: string,
-  type: "get" | "put" = "put",
-  download = false,
+  type: 'get' | 'put' = 'put',
+  download = false
 ) {
-  const ext = key.split(".").pop();
+  const ext = extname(key);
   const mimeType = download
-    ? "application/octet-stream"
-    : lookup(ext ?? "") || "application/octet-stream";
-  if (type === "get") {
+    ? 'application/octet-stream'
+    : lookup(ext) || 'application/octet-stream';
+  if (type === 'get') {
     const objectParams: GetObjectCommandInput = {
       Bucket: env.STORAGE_BUCKET_NAME,
       Key: key,
@@ -66,13 +66,13 @@ export async function getFile(key: string) {
 }
 
 export async function moveFile(oldKey: string, newKey: string) {
-  const ext = newKey.split(".").pop();
+  const ext = extname(newKey);
 
   const input = {
     Bucket: env.STORAGE_BUCKET_NAME,
     CopySource: `${env.STORAGE_BUCKET_NAME}/${oldKey}`,
     Key: newKey,
-    ContentType: lookup(ext ?? "") || "application/octet-stream",
+    ContentType: lookup(ext) || 'application/octet-stream',
   };
   const command = new CopyObjectCommand(input);
   try {
@@ -84,16 +84,16 @@ export async function moveFile(oldKey: string, newKey: string) {
   }
 }
 export async function uploadFile(key: string, fileBuffer: Buffer) {
-  const ext = key.split(".").pop();
+  const ext = key.split('.').pop();
   try {
     const upload = new Upload({
       params: {
         Bucket: env.STORAGE_BUCKET_NAME,
         Key: key,
         Body: fileBuffer,
-        ACL: "private",
-        CacheControl: "public, max-age=31536000, immutable",
-        ContentType: lookup(ext ?? "") || "application/octet-stream",
+        ACL: 'private',
+        CacheControl: 'public, max-age=31536000, immutable',
+        ContentType: lookup(ext ?? '') || 'application/octet-stream',
       },
       client: s3,
       queueSize: 1,

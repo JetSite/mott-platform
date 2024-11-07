@@ -4,7 +4,9 @@ const ROOTS = {
 
 export const paths = {
   login: "/login",
+  error: "/error",
   onboarding: {
+    root: "/onboarding",
     fullName: "/onboarding/full-name",
     welcome: "/onboarding/welcome",
     welcomeCompany: "/onboarding/welcome-company",
