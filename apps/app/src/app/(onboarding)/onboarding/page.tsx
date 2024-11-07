@@ -4,6 +4,8 @@ import { match } from "ts-pattern";
 import { paths } from "~/routes/paths";
 import { getOnboardingStatusAction } from "./actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function OnboardingPage() {
   try {
     const status = await getOnboardingStatusAction();
@@ -17,4 +19,5 @@ export default async function OnboardingPage() {
     console.error(error);
     return redirect(paths.error);
   }
+  return <div>Onboarding</div>;
 }

@@ -1,5 +1,8 @@
 "use client";
 
+import type { UpdateWorkspaceInput } from "@mott/validators";
+
+import { Button } from "@mott/ui/custom/button";
 import {
   Form,
   FormControl,
@@ -9,29 +12,52 @@ import {
   useForm,
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
+import { toast } from "@mott/ui/toast";
+import { UpdateWorkspaceSchema } from "@mott/validators";
 
+import { useBoolean } from "~/hooks/use-boolean";
+import { api } from "~/trpc/react";
 import { ImageInput } from "./_components/image-input";
 import { RegionalSettings } from "./_components/regional-settings";
-import type { SettingsForm } from "./types";
-import { settingsSchema } from "./types";
 
 const DEFAULT_LOGO = "/assets/hims.png";
 const DEFAULT_ASSISTANTS_AVATAR = "/assets/assistantsAvatar.png";
 
 export default function SettingsPage() {
   const form = useForm({
-    schema: settingsSchema,
+    schema: UpdateWorkspaceSchema,
     mode: "onChange",
+    defaultValues: {
+      name: "",
+      settings: {
+        branding: {
+          assistant: {
+            name: "",
+          },
+        },
+      },
+    },
   });
 
-  const onSubmit = async (data: SettingsForm) => {
+  const loading = useBoolean();
+  const { mutateAsync: updateWorkspace } = api.workspace.update.useMutation();
+  const onSubmit = async (data: UpdateWorkspaceInput) => {
     const isStepValid = await form.trigger();
 
     if (!isStepValid) {
       return;
     }
-
-    console.log(data);
+    loading.onTrue();
+    try {
+      await updateWorkspace(data);
+      toast.success("Settings saved");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Error saving settings",
+      );
+    } finally {
+      loading.onFalse();
+    }
   };
 
   return (
@@ -53,7 +79,7 @@ export default function SettingsPage() {
         >
           <FormField
             control={form.control}
-            name="workspaceName"
+            name="name"
             render={({ field }) => (
               <FormItem className="mb-7">
                 <FormLabel>Workspace Name</FormLabel>
@@ -65,7 +91,7 @@ export default function SettingsPage() {
           />
           <FormField
             control={form.control}
-            name="logo"
+            name="settings.branding.logoFileId"
             render={() => (
               <FormItem className="mb-7">
                 <FormLabel>Logo</FormLabel>
@@ -82,12 +108,12 @@ export default function SettingsPage() {
 
           <FormField
             control={form.control}
-            name="assistantName"
+            name="settings.branding.assistant.name"
             render={({ field }) => (
               <FormItem className="mb-7">
                 <FormLabel>Assistant`s Name</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Assistant’s Name" />
+                  <Input {...field} placeholder="Assistant's Name" />
                 </FormControl>
               </FormItem>
             )}
@@ -95,7 +121,7 @@ export default function SettingsPage() {
 
           <FormField
             control={form.control}
-            name="assistantLogo"
+            name="settings.branding.assistant.avatarFileId"
             render={() => (
               <FormItem className="mb-10">
                 <FormLabel>Assistant`s Avatar</FormLabel>
@@ -111,6 +137,10 @@ export default function SettingsPage() {
           />
 
           <RegionalSettings control={form.control} />
+
+          <Button type="submit" className="mt-6" loading={loading.value}>
+            {loading.value ? "Saving..." : "Save"}
+          </Button>
         </form>
       </Form>
     </div>
