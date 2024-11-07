@@ -1,13 +1,16 @@
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
-const brandingSchema = z.object({
+import { Workspace } from "./schema";
+
+export const brandingSchema = z.object({
   logoFileId: z.string().optional(),
   assistant: z.object({
     name: z.string().min(2).max(50).optional(),
     avatarFileId: z.string().optional(),
   }),
 });
-const regionalSchema = z.object({
+export const regionalSchema = z.object({
   region: z.string().optional(),
   timezone: z
     .string()
@@ -55,3 +58,8 @@ export const workspaceSettingsSchema = z.object({
 });
 
 export type WorkspaceSettings = z.infer<typeof workspaceSettingsSchema>;
+
+export const insertWorkspaceSchema = createInsertSchema(Workspace);
+export const selectWorkspaceSchema = createSelectSchema(Workspace);
+export type WorkspaceInsert = typeof insertWorkspaceSchema._input;
+export type WorkspaceSelect = typeof selectWorkspaceSchema._output;
