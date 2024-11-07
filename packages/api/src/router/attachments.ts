@@ -26,6 +26,13 @@ export const attachmentsRouter = {
         const newKey = generateS3Key(key, true);
         return await createPresignedUrl(newKey);
       } catch (e) {
+        console.error("Error creating presigned URL:", e);
+        if (e instanceof Error && e.name === "S3ServiceException") {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: `S3 service error: ${e.message}`,
+          });
+        }
         throw new TRPCError({
           code: "BAD_REQUEST",
           message:

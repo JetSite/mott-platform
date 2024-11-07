@@ -53,7 +53,11 @@ export const authRouter = {
             updatedAt: new Date(),
           },
         });
-      await createWorkspace(input.companyName, ctx.session.user.id);
+      try {
+        await createWorkspace(input.companyName, ctx.session.user.id);
+      } catch (error) {
+        console.error("Error creating workspace:", error);
+      }
 
       return { success: true };
     }),

@@ -33,10 +33,10 @@ export async function createPresignedUrl(
   type: "get" | "put" = "put",
   download = false,
 ) {
-  const ext = key.split(".").pop();
+  const ext = extname(key);
   const mimeType = download
     ? "application/octet-stream"
-    : lookup(ext ?? "") || "application/octet-stream";
+    : lookup(ext) || "application/octet-stream";
   if (type === "get") {
     const objectParams: GetObjectCommandInput = {
       Bucket: env.STORAGE_BUCKET_NAME,
@@ -66,13 +66,13 @@ export async function getFile(key: string) {
 }
 
 export async function moveFile(oldKey: string, newKey: string) {
-  const ext = newKey.split(".").pop();
+  const ext = extname(newKey);
 
   const input = {
     Bucket: env.STORAGE_BUCKET_NAME,
     CopySource: `${env.STORAGE_BUCKET_NAME}/${oldKey}`,
     Key: newKey,
-    ContentType: lookup(ext ?? "") || "application/octet-stream",
+    ContentType: lookup(ext) || "application/octet-stream",
   };
   const command = new CopyObjectCommand(input);
   try {

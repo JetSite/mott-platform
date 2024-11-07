@@ -11,9 +11,18 @@ const regionalSchema = z.object({
   region: z.string().optional(),
   timezone: z
     .string()
-    .refine((tz) => Intl.supportedValuesOf("timeZone").includes(tz), {
-      message: "Invalid timezone. Use IANA Time Zone format",
-    })
+    .refine(
+      (tz) => {
+        try {
+          return Intl.supportedValuesOf("timeZone").includes(tz);
+        } catch {
+          return false;
+        }
+      },
+      {
+        message: "Invalid timezone. Use IANA Time Zone format",
+      },
+    )
     .optional(),
   calendar: z.enum(["gregorian", "lunar"]).optional(),
   temperature: z.enum(["celsius", "fahrenheit"]).optional(),
@@ -21,11 +30,13 @@ const regionalSchema = z.object({
   firstDayOfWeek: z.number().min(0).max(6).optional(),
   dateFormat: z
     .string()
-    .regex(/^(DD|MM|YYYY)[-/.](DD|MM|YYYY)[-/.](DD|MM|YYYY)$/)
+    .regex(
+      /^(?!.*([DMY])\1)(?=.*DD)(?=.*MM)(?=.*YYYY)(DD|MM|YYYY)[-/.](DD|MM|YYYY)[-/.](DD|MM|YYYY)$/,
+    )
     .optional(),
   numberFormat: z
     .string()
-    .regex(/^[#,.]+(0+)?$/)
+    .regex(/^[#,]*[.][0-9]+$|^[#,]+$/)
     .optional(),
   currency: z.string().optional(),
   language: z

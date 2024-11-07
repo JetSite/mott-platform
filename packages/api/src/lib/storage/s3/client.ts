@@ -14,13 +14,31 @@ export const s3 = new S3Client({
 });
 
 async function validateS3Connection() {
+  const timeout = 5000; // 5 seconds
   try {
-    await s3.send(new HeadBucketCommand({ Bucket: env.STORAGE_BUCKET_NAME }));
+    await Promise.race([
+      s3.send(new HeadBucketCommand({ Bucket: env.STORAGE_BUCKET_NAME })),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("S3 connection timeout")), timeout),
+      ),
+    ]);
     console.log("S3 connection successful");
-  } catch (error) {
-    console.error("Failed to connect to S3:", error);
+  } catch (error: unknown) {
+    if (error instanceof Error && error.name === "NoSuchBucket") {
+      console.error(`Bucket ${env.STORAGE_BUCKET_NAME} not found`);
+    } else if (error instanceof Error && error.name === "AccessDenied") {
+      console.error("Access denied to S3 bucket");
+    } else {
+      console.error("Failed to connect to S3:", {
+        error: error instanceof Error ? error.message : "Unknown error",
+        code: error instanceof Error ? error.name : "Unknown code",
+        time: new Date().toISOString(),
+      });
+    }
     throw error;
   }
 }
-
-void validateS3Connection();
+validateS3Connection().catch((error) => {
+  console.error("Critical error when checking S3 connection:", error);
+  process.exit(1);
+});
