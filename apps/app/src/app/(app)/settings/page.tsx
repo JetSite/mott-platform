@@ -2,6 +2,7 @@
 
 import type { UpdateWorkspaceInput } from "@mott/validators";
 
+import { Button } from "@mott/ui/custom/button";
 import {
   Form,
   FormControl,
@@ -11,8 +12,11 @@ import {
   useForm,
 } from "@mott/ui/form";
 import { Input } from "@mott/ui/input";
+import { toast } from "@mott/ui/toast";
 import { UpdateWorkspaceSchema } from "@mott/validators";
 
+import { useBoolean } from "~/hooks/use-boolean";
+import { api } from "~/trpc/react";
 import { ImageInput } from "./_components/image-input";
 import { RegionalSettings } from "./_components/regional-settings";
 
@@ -35,6 +39,8 @@ export default function SettingsPage() {
     },
   });
 
+  const loading = useBoolean();
+  const { mutateAsync: updateWorkspace } = api.workspace.update.useMutation();
   const onSubmit = async (data: UpdateWorkspaceInput) => {
     const isStepValid = await form.trigger();
 
@@ -42,7 +48,17 @@ export default function SettingsPage() {
       return;
     }
 
-    console.log(data);
+    loading.onTrue();
+    try {
+      await updateWorkspace(data);
+      toast.success("Settings saved");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Error saving settings",
+      );
+    } finally {
+      loading.onFalse();
+    }
   };
 
   return (
@@ -98,7 +114,7 @@ export default function SettingsPage() {
               <FormItem className="mb-7">
                 <FormLabel>Assistant`s Name</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Assistant’s Name" />
+                  <Input {...field} placeholder="Assistant's Name" />
                 </FormControl>
               </FormItem>
             )}
@@ -122,6 +138,10 @@ export default function SettingsPage() {
           />
 
           <RegionalSettings control={form.control} />
+
+          <Button type="submit" className="mt-6" loading={loading.value}>
+            {loading.value ? "Saving..." : "Save"}
+          </Button>
         </form>
       </Form>
     </div>
