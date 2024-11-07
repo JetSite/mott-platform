@@ -26,7 +26,10 @@ export const workspaceRouter = {
           settings: input.settings
             ? {
                 branding: {
-                  assistant: input.settings.branding?.assistant ?? {},
+                  assistant: {
+                    ...workspace.settings?.branding.assistant,
+                    ...input.settings.branding?.assistant,
+                  },
                   logoFileId: input.settings.branding?.logoFileId,
                 },
                 regional: {

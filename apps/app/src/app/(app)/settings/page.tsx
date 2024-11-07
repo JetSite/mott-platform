@@ -47,7 +47,6 @@ export default function SettingsPage() {
     if (!isStepValid) {
       return;
     }
-
     loading.onTrue();
     try {
       await updateWorkspace(data);
