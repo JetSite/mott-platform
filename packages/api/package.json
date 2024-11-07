@@ -23,9 +23,9 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.685.0",
-    "@aws-sdk/lib-storage": "^3.685.0",
-    "@aws-sdk/s3-request-presigner": "^3.685.0",
+    "@aws-sdk/client-s3": "^3.686.0",
+    "@aws-sdk/lib-storage": "^3.686.0",
+    "@aws-sdk/s3-request-presigner": "^3.686.0",
     "@mott/auth": "workspace:*",
     "@mott/db": "workspace:*",
     "@mott/validators": "workspace:*",
