@@ -1,6 +1,7 @@
 "use client";
 
 import type { UpdateWorkspaceInput } from "@mott/validators";
+import { useEffect } from "react";
 
 import { Button } from "@mott/ui/custom/button";
 import {
@@ -15,15 +16,13 @@ import { Input } from "@mott/ui/input";
 import { toast } from "@mott/ui/toast";
 import { UpdateWorkspaceSchema } from "@mott/validators";
 
+import AvatarUploader from "~/components/ui/avatar-uploader";
 import { useBoolean } from "~/hooks/use-boolean";
 import { api } from "~/trpc/react";
-import { ImageInput } from "./_components/image-input";
 import { RegionalSettings } from "./_components/regional-settings";
 
-const DEFAULT_LOGO = "/assets/hims.png";
-const DEFAULT_ASSISTANTS_AVATAR = "/assets/assistantsAvatar.png";
-
 export default function SettingsPage() {
+  const { data: workspace } = api.workspace.get.useQuery();
   const form = useForm({
     schema: UpdateWorkspaceSchema,
     mode: "onChange",
@@ -38,6 +37,17 @@ export default function SettingsPage() {
       },
     },
   });
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (workspace) {
+      form.reset({
+        name: workspace.name ?? "",
+        settings: workspace.settings ?? {},
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [workspace]);
 
   const loading = useBoolean();
   const { mutateAsync: updateWorkspace } = api.workspace.update.useMutation();
@@ -89,23 +99,8 @@ export default function SettingsPage() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="settings.branding.logoFileId"
-            render={() => (
-              <FormItem className="mb-7">
-                <FormLabel>Logo</FormLabel>
-                <FormControl>
-                  <ImageInput
-                    defaultLogo={DEFAULT_LOGO}
-                    title="Upload Logo"
-                    placeholder="Logo"
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
+          <h3 className="font-semibold leading-none tracking-tight">Logo</h3>
+          <AvatarUploader name="logo" />
           <FormField
             control={form.control}
             name="settings.branding.assistant.name"
@@ -118,26 +113,12 @@ export default function SettingsPage() {
               </FormItem>
             )}
           />
-
-          <FormField
-            control={form.control}
-            name="settings.branding.assistant.avatarFileId"
-            render={() => (
-              <FormItem className="mb-10">
-                <FormLabel>Assistant`s Avatar</FormLabel>
-                <FormControl>
-                  <ImageInput
-                    defaultLogo={DEFAULT_ASSISTANTS_AVATAR}
-                    title="Upload Logo"
-                    placeholder="Assistant`s Avatar"
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+          <h3 className="font-semibold leading-none tracking-tight">
+            Assistant`s Avatar
+          </h3>
+          <AvatarUploader name="assistantAvatar" rounded />
 
           <RegionalSettings control={form.control} />
-
           <Button type="submit" className="mt-6" loading={loading.value}>
             {loading.value ? "Saving..." : "Save"}
           </Button>

@@ -8,6 +8,15 @@ import { UpdateWorkspaceSchema } from "@mott/validators";
 import { protectedProcedure } from "../trpc";
 
 export const workspaceRouter = {
+  get: protectedProcedure.query(async ({ ctx }) => {
+    const workspace = await db.query.Workspace.findFirst({
+      where: eq(Workspace.ownerId, ctx.session.user.id),
+    });
+    if (!workspace) {
+      throw new Error("Workspace not found");
+    }
+    return workspace;
+  }),
   update: protectedProcedure
     .input(UpdateWorkspaceSchema)
     .mutation(async ({ input, ctx }) => {
