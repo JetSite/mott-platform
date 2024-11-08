@@ -1,5 +1,6 @@
 import slugify from "@sindresorhus/slugify";
 
+import { eq } from "@mott/db";
 import { db } from "@mott/db/client";
 import { Workspace } from "@mott/db/schema";
 
@@ -43,4 +44,10 @@ export async function createWorkspace(name: string, ownerId: string) {
   throw new Error(
     "Failed to generate unique workspace slug after multiple attempts",
   );
+}
+
+export async function getCurrentWorkspace(ownerId: string) {
+  return await db.query.Workspace.findFirst({
+    where: eq(Workspace.ownerId, ownerId),
+  });
 }

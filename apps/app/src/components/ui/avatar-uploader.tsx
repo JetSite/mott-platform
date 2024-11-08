@@ -7,6 +7,9 @@ import { UploadCloud } from "lucide-react";
 import { cn } from "@mott/ui";
 import { toast } from "@mott/ui/toast";
 
+import { api } from "~/trpc/react";
+import type { FileInfo } from "@mott/validators";
+
 interface FileValidationResult {
   isValid: boolean;
   error?: string;
@@ -15,6 +18,7 @@ interface FileValidationResult {
 interface AvatarUploaderProps {
   rounded?: boolean;
   name?: string;
+  onUploadComplete?: (fileInfo: FileInfo) => void;
 }
 
 const MAX_FILE_SIZE_MB = 2;
@@ -23,10 +27,12 @@ const ALLOWED_FILE_TYPES = ["image/png", "image/jpeg"] as const;
 export default function AvatarUploader({
   rounded = false,
   name = "image",
+  onUploadComplete,
 }: AvatarUploaderProps) {
   const [image, setImage] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
-
+  const { mutateAsync: createPresignedUrl } =
+    api.attachments.createPresignedUrl.useMutation();
   const validateFile = useCallback((file: File): FileValidationResult => {
     if (file.size / 1024 / 1024 > MAX_FILE_SIZE_MB) {
       return {
@@ -49,37 +55,63 @@ export default function AvatarUploader({
     return { isValid: true };
   }, []);
 
-  const handleFileRead = useCallback((file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setImage(e.target?.result as string);
-    };
-    reader.readAsDataURL(file);
+  const handleFileRead = useCallback(
+    async (file: File) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
 
-    // Here you would typically upload the image to your server
-    toast.success("Image uploaded successfully");
-  }, []);
+      const { url, key } = await createPresignedUrl({
+        key: file.name,
+        temporary: false,
+      });
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        await fetch(url, {
+          method: "PUT",
+          body: formData,
+          mode: "cors",
+        });
+        toast.success("Image uploaded successfully");
+        onUploadComplete?.({
+          key,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+        });
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        toast.error("Failed to upload image");
+      }
+    },
+    [createPresignedUrl, onUploadComplete],
+  );
 
   const onChangePicture = useCallback(
-    (file: File) => {
+    async (file: File) => {
+      toast.success("Uploading image...");
       const validation = validateFile(file);
       if (!validation.isValid) {
         toast.error(validation.error);
         return;
       }
-      handleFileRead(file);
+      await handleFileRead(file);
     },
     [validateFile, handleFileRead],
   );
 
   const handleDrop = useCallback(
-    (e: React.DragEvent<HTMLDivElement>) => {
+    async (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault();
       e.stopPropagation();
       setDragActive(false);
       const file = e.dataTransfer.files[0];
       if (file) {
-        onChangePicture(file);
+        await onChangePicture(file);
       }
     },
     [onChangePicture],
@@ -148,10 +180,10 @@ export default function AvatarUploader({
         type="file"
         accept={ALLOWED_FILE_TYPES.join(",")}
         className="sr-only"
-        onChange={(e) => {
+        onChange={async (e) => {
           const file = e.target.files?.[0];
           if (file) {
-            onChangePicture(file);
+            await onChangePicture(file);
           }
         }}
       />

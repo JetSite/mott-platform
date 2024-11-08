@@ -1,10 +1,12 @@
 import type { TRPCRouterRecord } from "@trpc/server";
+import { z } from "zod";
 
 import { eq } from "@mott/db";
 import { db } from "@mott/db/client";
-import { Workspace } from "@mott/db/schema";
+import { File, Workspace } from "@mott/db/schema";
 import { UpdateWorkspaceSchema } from "@mott/validators";
 
+import { getCurrentWorkspace } from "../lib/workspace/workspace";
 import { protectedProcedure } from "../trpc";
 
 export const workspaceRouter = {
@@ -17,6 +19,47 @@ export const workspaceRouter = {
     }
     return workspace;
   }),
+  setLogo: protectedProcedure
+    .input(
+      z.object({
+        key: z.string(),
+        name: z.string(),
+        size: z.number(),
+        type: z.string(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const workspace = await getCurrentWorkspace(ctx.session.user.id);
+      if (!workspace) {
+        throw new Error("Workspace not found");
+      }
+      const file = await db
+        .insert(File)
+        .values({
+          name: input.name,
+          mimeType: input.type,
+          path: input.key,
+          size: input.size,
+          uploadedBy: ctx.session.user.id,
+          workspaceId: workspace.id,
+        })
+        .returning();
+      if (!file[0]) {
+        throw new Error("File not created");
+      }
+      return await db
+        .update(Workspace)
+        .set({
+          settings: {
+            ...workspace.settings,
+            branding: {
+              ...workspace.settings?.branding,
+              logoFileId: file[0].id,
+            },
+          },
+        })
+        .where(eq(Workspace.ownerId, ctx.session.user.id));
+    }),
   update: protectedProcedure
     .input(UpdateWorkspaceSchema)
     .mutation(async ({ input, ctx }) => {

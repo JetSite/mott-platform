@@ -1,6 +1,6 @@
 "use client";
 
-import type { UpdateWorkspaceInput } from "@mott/validators";
+import type { FileInfo, UpdateWorkspaceInput } from "@mott/validators";
 import { useEffect } from "react";
 
 import { Button } from "@mott/ui/custom/button";
@@ -23,6 +23,7 @@ import { RegionalSettings } from "./_components/regional-settings";
 
 export default function SettingsPage() {
   const { data: workspace } = api.workspace.get.useQuery();
+  const { mutateAsync: setLogo } = api.workspace.setLogo.useMutation();
   const form = useForm({
     schema: UpdateWorkspaceSchema,
     mode: "onChange",
@@ -69,7 +70,14 @@ export default function SettingsPage() {
       loading.onFalse();
     }
   };
-
+  const handleLogoUpload = async (file: FileInfo) => {
+    await setLogo({
+      key: file.key,
+      name: file.name,
+      size: file.size,
+      type: file.type,
+    });
+  };
   return (
     <div>
       <div className="mb-7">
@@ -100,7 +108,7 @@ export default function SettingsPage() {
             )}
           />
           <h3 className="font-semibold leading-none tracking-tight">Logo</h3>
-          <AvatarUploader name="logo" />
+          <AvatarUploader name="logo" onUploadComplete={handleLogoUpload} />
           <FormField
             control={form.control}
             name="settings.branding.assistant.name"
