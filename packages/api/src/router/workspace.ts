@@ -6,6 +6,7 @@ import { db } from "@mott/db/client";
 import { File, Workspace } from "@mott/db/schema";
 import { UpdateWorkspaceSchema } from "@mott/validators";
 
+import { deleteFile } from "../lib/storage/s3/utils";
 import { getCurrentWorkspace } from "../lib/workspace/workspace";
 import { protectedProcedure } from "../trpc";
 
@@ -33,6 +34,21 @@ export const workspaceRouter = {
       if (!workspace) {
         throw new Error("Workspace not found");
       }
+
+      // Delete old logo file if exists
+      if (workspace.settings?.branding.logoFileId) {
+        const oldFile = await db.query.File.findFirst({
+          where: eq(File.id, workspace.settings.branding.logoFileId),
+        });
+
+        if (oldFile) {
+          // Delete from S3
+          await deleteFile(oldFile.path);
+          // Delete from database
+          await db.delete(File).where(eq(File.id, oldFile.id));
+        }
+      }
+
       const file = await db
         .insert(File)
         .values({
@@ -44,9 +60,11 @@ export const workspaceRouter = {
           workspaceId: workspace.id,
         })
         .returning();
+
       if (!file[0]) {
         throw new Error("File not created");
       }
+
       return await db
         .update(Workspace)
         .set({
