@@ -27,7 +27,7 @@ export const workspaceRouter = {
         name: z.string(),
         size: z.number(),
         type: z.string(),
-      }),
+      })
     )
     .mutation(async ({ input, ctx }) => {
       const workspace = await getCurrentWorkspace(ctx.session.user.id);
