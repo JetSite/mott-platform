@@ -8,7 +8,7 @@ export default auth((req) => {
   try {
     console.log("Middleware started:", req.nextUrl.pathname);
 
-    const publicRoutes = ["/login", "/onboarding"];
+    const publicRoutes = ["/login"];
     const isPublicRoute = publicRoutes.some((path) =>
       req.nextUrl.pathname.startsWith(path),
     );
