@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { match } from "ts-pattern";
 
 import { paths } from "~/routes/paths";
 import { getOnboardingStatusAction } from "./actions";
@@ -7,17 +6,15 @@ import { getOnboardingStatusAction } from "./actions";
 export const dynamic = "force-dynamic";
 
 export default async function OnboardingPage() {
-  try {
-    const status = await getOnboardingStatusAction();
-    match(status)
-      .with({ completed: true }, () => redirect(paths.dashboard.root))
-      .with({ currentStep: "full_name" }, () =>
-        redirect(paths.onboarding.fullName),
-      )
-      .otherwise(() => redirect(paths.onboarding.companySetup));
-  } catch (error) {
-    console.error(error);
-    return redirect(paths.error);
+  const status = await getOnboardingStatusAction();
+
+  if (status?.completed) {
+    redirect(paths.dashboard.root);
   }
-  return <div>Onboarding</div>;
+
+  if (status?.currentStep === "full_name") {
+    redirect(paths.onboarding.fullName);
+  }
+
+  redirect(paths.onboarding.companySetup);
 }
