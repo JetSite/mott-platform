@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
 import { paths } from "~/routes/paths";
 import { getOnboardingStatusAction } from "./actions";
@@ -14,5 +14,5 @@ export default async function OnboardingPage() {
     redirect(paths.onboarding.fullName);
   }
 
-  redirect(paths.onboarding.companySetup);
+  redirect(paths.onboarding.companySetup, RedirectType.push);
 }
