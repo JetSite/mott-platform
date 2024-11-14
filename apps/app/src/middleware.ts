@@ -15,6 +15,7 @@ export default auth((req) => {
   if (!req.auth?.user) {
     return NextResponse.redirect(new URL(paths.login, req.url));
   }
+  return NextResponse.next();
 });
 
 // Read more: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
