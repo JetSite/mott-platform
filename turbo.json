@@ -39,7 +39,21 @@
       "interactive": true
     }
   },
-  "globalEnv": ["POSTGRES_URL", "AUTH_SECRET", "PORT"],
+  "globalEnv": [
+    "POSTGRES_URL",
+    "AUTH_SECRET",
+    "AUTH_GOOGLE_CLIENT_ID",
+    "AUTH_GOOGLE_CLIENT_SECRET",
+    "RESEND_API_KEY",
+    "EMAIL_SANDBOX_ENABLED",
+    "EMAIL_SANDBOX_HOST",
+    "PORT",
+    "STORAGE_ENDPOINT_URL",
+    "STORAGE_ACCESS_KEY_ID",
+    "STORAGE_SECRET_ACCESS_KEY",
+    "STORAGE_BUCKET_NAME",
+    "STORAGE_REGION"
+  ],
   "globalPassThroughEnv": [
     "NODE_ENV",
     "CI",
