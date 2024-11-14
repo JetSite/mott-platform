@@ -10,4 +10,6 @@ export const env = createEnv({
     STORAGE_REGION: z.string(),
   },
   runtimeEnv: process.env,
+  skipValidation:
+    !!process.env.CI || process.env.npm_lifecycle_event === "lint",
 });
