@@ -5,10 +5,12 @@ import { Workspace } from "./schema";
 
 export const brandingSchema = z.object({
   logoFileId: z.string().optional(),
-  assistant: z.object({
-    name: z.string().min(2).max(50).optional(),
-    avatarFileId: z.string().optional(),
-  }),
+  assistant: z
+    .object({
+      name: z.string().min(2).max(50).optional(),
+      avatarFileId: z.string().optional(),
+    })
+    .optional(),
 });
 export const regionalSchema = z.object({
   region: z.string().optional(),
@@ -54,7 +56,7 @@ export const regionalSchema = z.object({
 
 export const workspaceSettingsSchema = z.object({
   branding: brandingSchema,
-  regional: regionalSchema,
+  regional: regionalSchema.optional(),
 });
 
 export type WorkspaceSettings = z.infer<typeof workspaceSettingsSchema>;

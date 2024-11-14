@@ -15,8 +15,6 @@ export const File = pgTable(
     mimeType: text("mime_type").notNull(),
     size: integer("size").notNull(),
     path: text("path").notNull(),
-    width: integer("width"),
-    height: integer("height"),
     workspaceId: text("workspace_id")
       .notNull()
       .references(() => Workspace.id, {
