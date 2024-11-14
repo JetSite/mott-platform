@@ -23,14 +23,14 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.686.0",
-    "@aws-sdk/lib-storage": "^3.686.0",
-    "@aws-sdk/s3-request-presigner": "^3.686.0",
+    "@aws-sdk/client-s3": "^3.691.0",
+    "@aws-sdk/lib-storage": "^3.691.0",
+    "@aws-sdk/s3-request-presigner": "^3.691.0",
     "@mott/auth": "workspace:*",
     "@mott/db": "workspace:*",
     "@mott/validators": "workspace:*",
     "@sindresorhus/slugify": "^2.2.1",
-    "@trpc/server": "^11.0.0-rc.608",
+    "@trpc/server": "^11.0.0-rc.633",
     "mime-types": "^2.1.35",
     "superjson": "2.2.1",
     "zod": "3.23.8"
