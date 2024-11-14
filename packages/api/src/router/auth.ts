@@ -11,7 +11,7 @@ import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const authRouter = {
   checkOnboardingStatus: protectedProcedure.mutation(async ({ ctx }) => {
-    return getOnboardingStatus(ctx.db, ctx.session.user.id);
+    return getOnboardingStatus(ctx.session.user.id);
   }),
   getSession: publicProcedure.query(({ ctx }) => {
     return ctx.session;
