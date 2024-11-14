@@ -33,7 +33,7 @@ export const isSecureContext = env.NODE_ENV !== "development";
 
 export const authConfig = {
   adapter,
-  debug: true,
+  debug: env.NODE_ENV === "development",
   secret: env.AUTH_SECRET,
   providers: [
     Google({

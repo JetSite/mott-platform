@@ -1,6 +1,6 @@
-import type { db as dbClient } from "@mott/db/client";
 import { eq } from "drizzle-orm";
 
+import { db } from "@mott/db/client";
 import { OnboardingData, User } from "@mott/db/schema";
 
 export interface OnboardingStatus {
@@ -10,7 +10,6 @@ export interface OnboardingStatus {
 }
 
 export async function getOnboardingStatus(
-  db: typeof dbClient,
   userId: string,
 ): Promise<OnboardingStatus> {
   if (!userId) {
