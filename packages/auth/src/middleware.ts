@@ -1,5 +1,5 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import type { NextAuthConfig } from "next-auth";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
@@ -18,7 +18,12 @@ const adapter = DrizzleAdapter(db, {
 const authConfig = {
   adapter,
   secret: env.AUTH_SECRET,
-  providers: [Google],
+  providers: [
+    Google({
+      clientId: env.AUTH_GOOGLE_CLIENT_ID,
+      clientSecret: env.AUTH_GOOGLE_CLIENT_SECRET,
+    }),
+  ],
 } satisfies NextAuthConfig;
 
 export const { auth: middleware } = NextAuth(authConfig);
