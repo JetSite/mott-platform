@@ -34,6 +34,7 @@
     "@mott/db": "workspace:*",
     "@mott/validators": "workspace:*",
     "@sindresorhus/slugify": "^2.2.1",
+    "@t3-oss/env-nextjs": "^0.11.1",
     "@trpc/server": "^11.0.0-rc.633",
     "mime-types": "^2.1.35",
     "superjson": "2.2.1",

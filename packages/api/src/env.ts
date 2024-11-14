@@ -1,4 +1,4 @@
-import { createEnv } from "@t3-oss/env-core";
+import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 export const env = createEnv({
@@ -9,7 +9,8 @@ export const env = createEnv({
     STORAGE_BUCKET_NAME: z.string(),
     STORAGE_REGION: z.string(),
   },
-  runtimeEnv: process.env,
+  client: {},
+  experimental__runtimeEnv: {},
   skipValidation:
     !!process.env.CI || process.env.npm_lifecycle_event === "lint",
 });
