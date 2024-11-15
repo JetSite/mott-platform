@@ -3,7 +3,7 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-import { db } from "@mott/db/client";
+import { db } from "@mott/db/client.edge";
 import { Account, Session, User, VerificationToken } from "@mott/db/schema";
 
 import { env } from "../env";
